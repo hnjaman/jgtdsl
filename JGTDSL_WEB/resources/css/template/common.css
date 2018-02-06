@@ -1,0 +1,427 @@
+/* Layout Theme */
+.ui-layout-pane {  
+	background: #99ffff; 
+	border: 1px solid #BBB; 
+	padding: 10px; 
+} 
+.ui-layout-resizer {  
+	background: #DDD; 
+} 
+.ui-layout-toggler { 
+	background: #AAA; 
+} 
+body {
+	font-family:"Helvetica Neue",Helvetica,Arial,sans-serif; 
+	font-size: 0.85em;
+	margin:0px;
+	color:#333 !important; /* Added by Ifti */
+}
+p {
+	margin: 1em 0;
+}
+
+ol li, ul li {
+	font-size:1em;
+	line-height:1.5em;
+	margin:0pt;
+}
+#result {
+	font-size: 12px;
+	margin-bottom: 15px;
+}
+.ui-layout-pane-south {           
+	border-top:none;
+	padding-bottom:2px;
+	overflow:hidden;
+}
+.ui-layout-pane-north {           
+	border-bottom:none;
+}
+.ui-layout-toggler-west-open {  
+ 	background:url("../../images/toggle-lt.gif") no-repeat center;  
+}  
+.ui-layout-toggler-west-closed {  
+ 	background:url("../../images/toggle-rt.gif") no-repeat center;  
+}
+.ui-layout-toggler-east-open {  
+ 	background:url("../../images/toggle-rt.gif") no-repeat center;  
+}  
+.ui-layout-toggler-east-closed {  
+ 	background:url("../../images/toggle-lt.gif") no-repeat center;  
+}
+.ui-layout-toggler-north-open {  
+ 	background:url("../../images/toggle-up.gif") no-repeat center;  
+}  
+.ui-layout-toggler-north-closed {  
+ 	background:url("../../images/toggle-dn.gif") no-repeat center;  
+}
+
+#footer{
+	text-align:right;font-size:12px; color:black;background: rgba(226,226,226,1);
+	background: -moz-linear-gradient(top, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 27%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(226,226,226,1)), color-stop(27%, rgba(219,219,219,1)), color-stop(51%, rgba(209,209,209,1)), color-stop(100%, rgba(254,254,254,1)));
+	background: -webkit-linear-gradient(top, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 27%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
+	background: -o-linear-gradient(top, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 27%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
+	background: -ms-linear-gradient(top, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 27%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
+	background: linear-gradient(to bottom, rgba(226,226,226,1) 0%, rgba(219,219,219,1) 27%, rgba(209,209,209,1) 51%, rgba(254,254,254,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe', GradientType=0 );
+	z-index:2 !important;
+}
+#westPanelHeader{
+	background: rgba(235,233,249,1);
+	background: -moz-linear-gradient(top, rgba(235,233,249,1) 0%, rgba(216,208,239,1) 50%, rgba(206,199,236,1) 51%, rgba(193,191,234,1) 100%);
+	background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(235,233,249,1)), color-stop(50%, rgba(216,208,239,1)), color-stop(51%, rgba(206,199,236,1)), color-stop(100%, rgba(193,191,234,1)));
+	background: -webkit-linear-gradient(top, rgba(235,233,249,1) 0%, rgba(216,208,239,1) 50%, rgba(206,199,236,1) 51%, rgba(193,191,234,1) 100%);
+	background: -o-linear-gradient(top, rgba(235,233,249,1) 0%, rgba(216,208,239,1) 50%, rgba(206,199,236,1) 51%, rgba(193,191,234,1) 100%);
+	background: -ms-linear-gradient(top, rgba(235,233,249,1) 0%, rgba(216,208,239,1) 50%, rgba(206,199,236,1) 51%, rgba(193,191,234,1) 100%);
+	background: linear-gradient(to bottom, rgba(235,233,249,1) 0%, rgba(216,208,239,1) 50%, rgba(206,199,236,1) 51%, rgba(193,191,234,1) 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ebe9f9', endColorstr='#c1bfea', GradientType=0 ); width:100%;height:24px;
+	font: 13px 'Lucida Grande', Tahoma, Verdana, sans-serif;
+	padding-left:12px;padding-top:5px;color: black;
+}
+
+#contentPanel{
+	clear:both;
+	overflow: auto;
+	padding:1px;
+}
+
+.ui-layout-center #contentPanel {
+    width: 99.85%;
+    height:99.65%;
+	overflow: auto;
+	padding:1px;
+	padding-top: 2px;	
+}
+
+.JGTDSL-icon-alert{
+	background-image: url('../../images/red-alert.png');
+}
+.ui-jqgrid tr.jqgrow td {
+	font-size:1.1em;
+	font-family: Lucida Grande,Lucida Sans,Arial,sans-serif;
+}
+
+.altRowClass{ 
+	background: #eeefff; 
+}
+
+.ui-jqgrid .ui-pg-input{
+	width:auto !important;
+}
+.ui-jqgrid .ui-pg-selbox{
+	height:auto !important;
+	width:auto !important;
+}
+.ui-jqgrid .ui-jqgrid-pager{
+	height: auto !important;
+}
+table {
+	border-collapse: separate !important; 
+}
+.ui-state-error{
+   	background: url('/JGTDSL_WEB/resources/images/ui-bg_glass_95_fef1ec_1x400.png') repeat-x scroll 50% 50% #CD0A0A !important;
+   	color: red !important;
+   	font-size: 12px !important;
+   	border: 1px solid #cd0a0a !important
+   	padding:1px 1px 1px 2px;
+}
+.JGTDSL-red-alert {
+   	background-image: url("/JGTDSL_WEB/resources/images/red-alert.png") !important;
+}
+.ui-icon-alert {
+   	background-position: 0px !important;
+}
+.ui-state-error .ui-icon, .ui-state-error-text .ui-icon {
+   background-image: url('/JGTDSL_WEB/resources/images/ui-bg_glass_95_fef1ec_1x400.png') !important;
+}
+
+/* this is for placing the +/- button right place in search modal */	
+button, html input[type="button"], input[type="reset"], input[type="submit"] {
+   margin-bottom:10px;
+}
+	
+span.cellWithoutBackground{
+	display:block;
+	background-image:none;
+	margin-right:-2px;
+	margin-left:-2px;
+	padding:2px;
+}
+       
+.redBackgroundCell{
+    display:block;
+    background-image:none;
+    background-color:#FFF4F4;
+    color:red;
+    padding:2px;
+}
+.redBackgroundRow { background-color: #FFF4F4; background-image: none; }
+.newlyAppliedRow { background-color: #FFFF00; background-image: none; }
+.installmentRow { background-color: #CCFFCC; background-image: none; }
+
+.disconnectedMeterRow { background-color: #E41B17; background-image: none;color: white; }
+        
+
+.z-accordion.vertical{
+	font-size: 15px;       
+}
+/* Background Gradient for Complementary Colors */
+.swMain:after
+{
+	/* White Smoke Code : #F5F5F5; */
+    background-color: #FFFFFF;
+    /* For WebKit (Safari, Chrome, etc) */
+    background: #FFFFFF -webkit-gradient(linear, left top, left bottom, from(#E2E3E5), to(#FFFFFF)) no-repeat;
+    /* Mozilla,Firefox/Gecko */
+    background: #FFFFFF -moz-linear-gradient(top, #F9F8F6, #FFFFFF) no-repeat;
+    /* IE 5.5 - 7 */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#F9F8F6, endColorstr=#FFFFFF) no-repeat;
+    /* IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#F9F8F6, endColorstr=#E2E3E5)" no-repeat;
+    position: absolute;
+    top: 65px;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    content: '';
+    display: block;
+}
+
+#formContent
+{
+	/* White Smoke Code : #F5F5F5; */
+    background-color: #FFFFFF;
+    /* For WebKit (Safari, Chrome, etc) */
+    background: #FFFFFF -webkit-gradient(linear, left top, left bottom, from(#E2E3E5), to(#FFFFFF)) no-repeat;
+    /* Mozilla,Firefox/Gecko */
+    background: #FFFFFF -moz-linear-gradient(top, #F9F8F6, #FFFFFF) no-repeat;
+    /* IE 5.5 - 7 */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#F9F8F6, endColorstr=#FFFFFF) no-repeat;
+    /* IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=#F9F8F6, endColorstr=#E2E3E5)" no-repeat;
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    content: '';
+    display: block;
+}
+input, textarea, .uneditable-input{
+	width:210px;
+}	 
+
+/* Pie Menu*/
+.pie_load {
+background: url('/JGTDSL_WEB/resources/thirdParty/pieMenu/img/pressure.png') no-repeat scroll center center / 20px 20px transparent !important;	
+}
+.pie_reconnect {
+background: url('/JGTDSL_WEB/resources/thirdParty/pieMenu/img/connect1.png') no-repeat scroll center center / 20px 20px transparent !important;	
+}
+.pie_disconnect {
+background: url('/JGTDSL_WEB/resources/thirdParty/pieMenu/img/disconnect1.png') no-repeat scroll center center / 20px 20px transparent !important;	
+}
+.pie_burner {
+background: url('/JGTDSL_WEB/resources/thirdParty/pieMenu/img/burner1.png') no-repeat scroll center center / 20px 20px transparent !important;	
+}
+.pie_meter {
+background: url('/JGTDSL_WEB/resources/thirdParty/pieMenu/img/meter1.png') no-repeat scroll center center / 20px 20px transparent !important;
+}
+
+/* jqGrid Selectbox Width and mergin */
+.ui-jqdialog-content select.FormElement{
+	 margin-left: 5px !important;
+     width: 55% !important;
+}
+.EditTable td textarea
+{
+	width:52% !important;
+}
+.ui-jqdialog-content input.FormElement
+{
+	width:53% !important;
+}
+#userImg
+{
+	 width: auto !important;
+}
+.tdS1{
+color: #0088cc;padding-bottom: 10px;
+}
+.data{
+	/*padding-top:10px; */
+}
+.delete-rule.ui-del {
+    margin-top: 8px;
+}
+.cm:focus
+{
+  outline: 1px solid #add9e4;
+  background-color: #d9edf2;
+}
+
+.w-box-header{
+height: 25px !important;
+line-height: 25px !important;
+border-top-right-radius: 6px;
+border-top-left-radius: 6px;
+}
+.w-box-header h4
+{
+	font-size: 12px !important;
+	text-transform: none !important;
+}
+.ui-widget
+{
+	font-size: 12.5px !important;
+}
+.ui-jqgrid .ui-jqgrid-title
+{
+	margin-left: 6px !important;
+}
+
+/* Zozo tabs customization */
+.z-tabs > .z-container > .z-content > .z-content-inner
+{
+padding: 5px !important;
+padding-top: 1px !important;
+}
+.z-tabs.medium > ul > li > a
+{
+	padding: 4px 12px !important;
+}
+.z-tabs.horizontal.z-shadows > .z-container{
+box-shadow:none !important;
+}
+.z-tabs.crystal > ul, .z-tabs.crystal > ul > li > a, .z-tabs.crystal > .z-container
+{
+	border: none !important;
+}
+.z-tabs > .z-container{
+	background: none !important; 
+}
+/* Zozo tabs end */
+
+.validateTips{ 
+	border: 1px solid transparent; 
+	padding: 0.3em;
+	font-size: 13px;
+	color: blue; 
+}
+
+.w-box{
+	height: 99% !important;
+}
+.span12{
+	height: 92% !important;
+}
+.swMain{
+	height: 92% !important;
+}
+.swMain .stepContainer{
+	height: 92% !important;
+}
+.swMain div.actionBar {
+    margin: -22px 0 0 !important;
+}
+.swMain .msgBox{
+	min-width: 65% !important;
+	margin: 0px !important;
+}
+.alert{
+/*padding-bottom: 0px !important; commented by ifti(because it creates a problem in bill creation interface)*/ 
+}
+.sepH_b {
+    text-align: right;
+}
+/* Taken out from meterReading.css and now it will be applied for all */
+input[type="text"] {
+	height: 16px !important;
+}
+select{
+	height: 28px !important;
+}
+select, textarea, input[type="text"] {
+	margin-bottom: 0px !important;
+}
+.row-fluid .span4{
+	margin-bottom:-2 px !important;
+}
+.row-fluid .span12{
+	margin-bottom:-2 px !important;
+}
+.row-fluid + .row-fluid {
+    margin-top: 1px !important;
+}
+label, input, button, select, textarea{
+	font-size: 14.5px !important;
+}
+.ui-dialog .ui-state-error { padding: .3em; }
+/* End*/
+select, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], .uneditable-input {
+    border-radius: 0px !important;
+}
+
+.ui-pg-input{
+	padding: 2px 5px !important;
+	text-align: center !important;
+}
+.ui-pg-selbox{
+	padding: 2px 5px !important;
+	text-align: center !important;
+}
+
+.add-rule.ui-add{
+	margin-top: 2px;
+}
+.data input[type="text"] {
+    width: 120px !important;
+}
+.searchFilter table{
+width: 100%;
+}
+
+.btn.disabled:hover, .btn[disabled]:hover {
+    text-shadow: none;
+}
+#dialog-confirm{
+	display: none;
+}
+
+.msg_div{
+float: right;padding-right: 5px;height: 8px;text-align: right;padding-right: 5px;font-size: 13px;padding-top: 5px;color: rgba(0,0,0,0.6);text-shadow: 2px 8px 6px rgba(0,0,0,0.2),0px -5px 35px rgba(255,255,255,0.3);
+}
+.count_div{
+float: left;padding-left: 5px;height: 8px;text-align: right;padding-right: 5px;font-size: 13px;padding-top: 5px;color: #ff0066;text-shadow: 2px 8px 6px rgba(0,0,0,0.2),0px -5px 35px rgba(255,255,255,0.3);
+}
+
+/*  Table design used in sub grid of installment billing */
+.hor-minimalist-b
+{
+	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
+	font-size: 12px;
+	background: #fff;
+	margin: 5px;
+	width: 85%;
+	margin-left:8%;
+	border-collapse: collapse;
+	text-align: left;
+}
+.hor-minimalist-b th
+{
+	font-size: 12px;
+	font-weight: normal;
+	color: #039;
+	padding: 10px 8px;
+	border-bottom: 2px solid #6678b1;
+}
+.hor-minimalist-b td
+{
+	border-bottom: 1px solid #ccc;
+	color: #669;
+	padding: 6px 8px;
+}
+.hor-minimalist-b tbody tr:hover td
+{
+	color: #009;
+}
+/* End of Table Design */

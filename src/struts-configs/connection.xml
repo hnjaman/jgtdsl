@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "../../dtds/struts-2.3.dtd">
+<!--
+  - This file is included by the struts.xml file as an example
+  - of how to break up the configuration file into multiple files.
+-->
+<struts>
+  <package name="connection"  extends="struts-securityaddon">
+  
+    <!-- |>>>>>>>>>> Meter Information <<<<<<<<<<|-->
+ 	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  -->
+    
+	<action name="meterInformationHome" class="org.jgtdsl.actions.connection.MeterInformation" method="meterInformationHome">
+		<result name="success">/WEB-INF/jsp/connection/MeterInformation.jsp</result>
+	</action>
+	<action name="saveMeterInfo" class="org.jgtdsl.actions.connection.MeterInformation" method="saveMeterInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<action name="deleteMeter" class="org.jgtdsl.actions.connection.MeterInformation" method="deleteMeter">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<action name="meterEditStatusCheck" class="org.jgtdsl.actions.connection.MeterInformation" method="meterEditStatusCheck">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	
+	<!-- |>>>>>>>>>> Meter Repairment <<<<<<<<<<|-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<action name="meterRepairmentHome">
+		<result name="success">/WEB-INF/jsp/connection/MeterRepairment.jsp</result>
+	</action>
+	
+	<action name="saveMeterRepairmentInfo" class="org.jgtdsl.actions.Meter" method="saveMeterRepairmentInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<action name="getRepairInfo" class="org.jgtdsl.actions.Meter" method="getRepairInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	
+	<!-- |>>>>>>>>>> Meter Replacement <<<<<<<<<<|-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<action name="meterReplacementHome" class="org.jgtdsl.actions.connection.MeterReplacement" method="meterReplacementHome">
+		<result name="success">/WEB-INF/jsp/connection/MeterReplacement.jsp</result>
+	</action>
+	<action name="saveMeterReplacementInfo" class="org.jgtdsl.actions.connection.MeterReplacement" method="saveMeterReplacementInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<action name="getMeterReplacementInfo" class="org.jgtdsl.actions.connection.MeterReplacement" method="getMeterReplacementInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>	
+	<action name="deleteMeterReplacementInfo" class="org.jgtdsl.actions.connection.MeterReplacement" method="deleteMeterReplacementInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	
+	
+	
+	<!-- |>>>>>>>>>> Meter Disconnection Information <<<<<<<<<<|-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  -->
+	
+	<action name="meterDisconnectionHome" class="org.jgtdsl.actions.connection.Disconnection" method="meterDisconnectionHome">
+		<result name="success">/WEB-INF/jsp/connection/MeterDisconnection.jsp</result>
+	</action>
+	<action name="saveMeterDisconnInfo" class="org.jgtdsl.actions.connection.Disconnection" method="saveMeterDisconnInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<action name="getMeterDisconnInfo" class="org.jgtdsl.actions.connection.Disconnection" method="getMeterDisconnInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<action name="deleteMeterDisconnInfo" class="org.jgtdsl.actions.connection.Disconnection" method="deleteMeterDisconnInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>	
+	
+
+	<!-- |>>>>>>>>>> Non-Meter Disconnection Information <<<<<<<<<<|-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  -->
+	<action name="nonMeterDisconnectionHome" class="org.jgtdsl.actions.connection.Disconnection" method="nonMeterDisconnectionHome">
+		<result name="success">/WEB-INF/jsp/connection/NonMeterDisconnection.jsp</result>
+	</action>
+	<action name="saveNonMeterDisconnInfo" class="org.jgtdsl.actions.connection.Disconnection" method="saveNonMeterDisconnInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<action name="getNonMeterDisconnInfo" class="org.jgtdsl.actions.connection.Disconnection" method="getNonMeterDisconnInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<action name="deleteNonMeterDisconnInfo" class="org.jgtdsl.actions.connection.Disconnection" method="deleteNonMeterDisconnInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>	
+	
+	<!-- |>>>>>>>>>> Meter Reconnection Information <<<<<<<<<<|-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  -->
+	
+	<action name="meterReconnectionHome" class="org.jgtdsl.actions.connection.Reconnection" method="meterReconnectionHome">
+		<result name="success">/WEB-INF/jsp/connection/MeterReconnection.jsp</result>
+	</action>
+	<action name="saveMeterReconnInfo" class="org.jgtdsl.actions.connection.Reconnection" method="saveMeterReconnInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<action name="getMeterReconnInfo" class="org.jgtdsl.actions.connection.Reconnection" method="getMeterReconnInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<action name="deleteMeterReconnInfo" class="org.jgtdsl.actions.connection.Reconnection" method="deleteMeterDisconnInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+
+	<!-- |>>>>>>>>>> Meter Load-Pressure Change Information <<<<<<<<<<|-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  -->
+	
+	<action name="loadPressureChangeHome" class="org.jgtdsl.actions.connection.LoadPressureChange" method="loadPressureChangeHome">
+		<result name="success">/WEB-INF/jsp/connection/LoadPressureChange.jsp</result>
+	</action>
+	<action name="hhvVatRebateChangHome" class="org.jgtdsl.actions.connection.HhvVatRebateChange" method="hhvVatRebateChangeHome">
+		<result name="success">/WEB-INF/jsp/connection/HhvVatRebatChange.jsp</result>
+	</action>	
+	<action name="saveLoadPressureChangeInfo" class="org.jgtdsl.actions.connection.LoadPressureChange" method="saveLoadPressureChangeInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<action name="getLoadPressureChangeInfo" class="org.jgtdsl.actions.connection.LoadPressureChange" method="getLoadPressureChangeInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<action name="deleteLoadPressureChagneInfo" class="org.jgtdsl.actions.connection.LoadPressureChange" method="deleteLoadPressureChagneInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>	
+	
+	
+	<!-- |>>>>>>>>>> Non-Meter Customer Reconnection <<<<<<<<<<|-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  -->	
+	
+	<action name="nonMeterReconnectionHome" class="org.jgtdsl.actions.connection.Reconnection" method="nonMeterReconnectionHome">
+		<result name="success">/WEB-INF/jsp/connection/NonMeterReconnection.jsp</result>
+	</action>	
+	<action name="saveNonMeterReconnInfo" class="org.jgtdsl.actions.connection.Reconnection" method="saveNonMeterReconnInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<action name="getNonMeterReconnInfo" class="org.jgtdsl.actions.connection.Reconnection" method="getNonMeterReconnInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<action name="deleteNonMeterReconnInfo" class="org.jgtdsl.actions.connection.Reconnection" method="deleteNonMeterReconnInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>		
+	
+	
+	<!-- |>>>>>>>>>> Non-Meter Burner Change <<<<<<<<<<|-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~  -->	
+	
+	<action name="burnerQntChangeHome" class="org.jgtdsl.actions.connection.BurnerQntChange" method="burnerQntChangeHome">
+		<result name="success">/WEB-INF/jsp/connection/BurnerQntChange.jsp</result>
+	</action>		
+	<action name="saveBurnerQntChangeInfo" class="org.jgtdsl.actions.connection.BurnerQntChange" method="saveBurnerQntChangeInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<action name="saveNewApplianceInfo" class="org.jgtdsl.actions.connection.BurnerQntChange" method="saveNewApplianceInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<action name="getBurnerQntChangeInfo" class="org.jgtdsl.actions.connection.BurnerQntChange" method="getBurnerQntChangeInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<action name="getApplianceInfoById" class="org.jgtdsl.actions.connection.BurnerQntChange" method="getApplianceInfoById">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<action name="deleteBurnerQntChagneInfo" class="org.jgtdsl.actions.connection.BurnerQntChange" method="deleteBurnerQntChagneInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<action name="dissconnectRaizer" class="org.jgtdsl.actions.connection.BurnerQntChange" method="dissconnectRaizer">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<action name="getRaizerDisconnectionListInfo" class="org.jgtdsl.actions.connection.BurnerQntChange"
+			method="getRaizerDisconnectionListInfo">
+			<result name="success">/WEB-INF/jsp/connection/RaizerDisconnectionList.jsp</result>
+	</action>
+	<action name="reconnectRaizer" class="org.jgtdsl.actions.connection.BurnerQntChange" method="reconnectRaizer">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<!-- |>>>>>>>>>> Meter Rent <<<<<<<<<<|-->
+	<!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+		
+	<action name="meterRentChangeHome" class="org.jgtdsl.actions.connection.MeterRentChange" method="meterRentChangeHome">
+		<result name="success">/WEB-INF/jsp/connection/MeterRentChange.jsp</result>
+	</action>
+	<action name="saveMeterRentChangeInfo" class="org.jgtdsl.actions.connection.MeterRentChange" method="saveMeterRentChangeInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<action name="getMeterRentChangeInfo" class="org.jgtdsl.actions.connection.MeterRentChange" method="getMeterRentChangeInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<action name="deleteMeterRentChagneInfo" class="org.jgtdsl.actions.connection.MeterRentChange" method="deleteMeterRentChagneInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	
+	
+	<action name="customerTypeChangeHome" class="org.jgtdsl.actions.connection.CustomerTypeChange" method="customerTypeChangeHome">
+		<result name="success">/WEB-INF/jsp/connection/CustomerTypeChange.jsp</result>
+	</action>
+	
+	<action name="saveCustomerTypeChangeInfo" class="org.jgtdsl.actions.connection.CustomerTypeChange" method="saveCustomerTypeChangeInfo">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+
+	
+
+	
+	
+  </package>
+</struts>  

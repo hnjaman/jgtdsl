@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "../../dtds/struts-2.3.dtd">
+<!--
+  - This file is included by the struts.xml file as an example
+  - of how to break up the configuration file into multiple files.
+-->
+<struts>
+  <package name="selectbox"  extends="struts-securityaddon">
+
+		<action name="fetchAllRoleTypes" class="org.jgtdsl.actions.SelectBoxDataFetcher" method="fetchAllRoleTypes">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+			</result>
+	</action>
+	<action name="fetchCustomerCategory" class="org.jgtdsl.actions.SelectBoxDataFetcher" method="fetchCustomerCategory">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+			</result>
+	</action>
+	<action name="fetchBanks" class="org.jgtdsl.actions.SelectBoxDataFetcher" method="fetchBanks">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+			</result>
+	</action>
+	<action name="fetchAllBanks" class="org.jgtdsl.actions.SelectBoxDataFetcher" method="fetchAllBanks">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+			</result>
+	</action>
+	<action name="fetchBranches" class="org.jgtdsl.actions.SelectBoxDataFetcher" method="fetchBranches">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+			</result>
+	</action>
+	
+	
+	<action name="fetchZones" class="org.jgtdsl.actions.SelectBoxDataFetcher" method="fetchZones">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+			</result>
+	</action>
+	
+	
+	<action name="fetchBankAccountTypes" class="org.jgtdsl.actions.SelectBoxDataFetcher" method="fetchBankAccountTypes">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+			</result>
+	</action>	
+	<action name="fetchAccounts" class="org.jgtdsl.actions.SelectBoxDataFetcher" method="fetchAccounts">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+			</result>
+	</action>
+	<action name="fetchMohollahs" class="org.jgtdsl.actions.SelectBoxDataFetcher" method="fetchMohollahs">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+			</result>
+	</action>
+	<action name="fetchDesignations" class="org.jgtdsl.actions.SelectBoxDataFetcher" method="fetchDesignations">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+			</result>
+	</action>
+	<action name="fetchAreas" class="org.jgtdsl.actions.SelectBoxDataFetcher" method="fetchAreas">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+			</result>
+	</action>
+	<action name="fetchZone" class="org.jgtdsl.actions.SelectBoxDataFetcher" method="fetchZone">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+			</result>
+	</action>
+	
+	<action name="fetchOrgDivisions" class="org.jgtdsl.actions.SelectBoxDataFetcher" method="fetchOrgDivisions">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+			</result>
+	</action>
+	<action name="fetchOrgDepartments" class="org.jgtdsl.actions.SelectBoxDataFetcher" method="fetchOrgDepartments">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+			</result>
+	</action>
+	<action name="fetchOrgSections" class="org.jgtdsl.actions.SelectBoxDataFetcher" method="fetchOrgSections">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+			</result>
+	</action>
+
+	<action name="fetchDivision" class="org.jgtdsl.actions.SelectBoxDataFetcher" method="fetchDivision">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+			</result>
+	</action>	
+	<action name="fetchDistrict" class="org.jgtdsl.actions.SelectBoxDataFetcher" method="fetchDistrict">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+			</result>
+	</action>
+	<action name="fetchUpazila" class="org.jgtdsl.actions.SelectBoxDataFetcher" method="fetchUpazila">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+			</result>
+	</action>	
+	<action name="fetchCustomerIdList" class="org.jgtdsl.actions.SelectBoxDataFetcher" method="fetchCustomerIdList">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+			</result>
+	</action>
+	
+	
+  </package>
+
+</struts>

@@ -1,0 +1,481 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "../../dtds/struts-2.3.dtd">
+<!--
+  - This file is included by the struts.xml file as an example
+  - of how to break up the configuration file into multiple files.
+-->
+<struts>
+  <package name="reports"  extends="struts-securityaddon">
+  <!--  [Start] Reports[Master Data] -->	
+	<action name="customerCategoryReport"  class="org.jgtdsl.reports.masterData.CustomerCategory">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	<action name="designationReport"  class="org.jgtdsl.reports.masterData.Designation">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	
+	<action name="userReport"  class="org.jgtdsl.reports.masterData.User">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	<action name="employeeReport"  class="org.jgtdsl.reports.masterData.Employee">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+		
+	<action name="ministryReport"  class="org.jgtdsl.reports.masterData.Ministry">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	
+	<action name="areaReport"  class="org.jgtdsl.reports.masterData.Area">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>	
+	<action name="meterStatusReport"  class="org.jgtdsl.reports.masterData.MeterStatus">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	
+	
+	
+	<action name="meterGRatingReport"  class="org.jgtdsl.reports.masterData.MeterGRating">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	
+	<action name="tariffRateReport"  class="org.jgtdsl.reports.masterData.TariffRate">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	
+	<action name="bankInformationReport"  class="org.jgtdsl.reports.masterData.BankInformation">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	
+	<action name="depositTypeReport"  class="org.jgtdsl.reports.masterData.DepositType">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	
+		
+	<action name="meterManufacturerReport"  class="org.jgtdsl.reports.masterData.MeterManufacturer">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	
+	<action name="meterTypeReport"  class="org.jgtdsl.reports.masterData.MeterType">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>					
+<!--  [End] Reports[Master Data] -->
+
+<!-- [Start] Sales Statement -->
+
+	<action name="monthlySalesStmtReport"  class="org.jgtdsl.reports.MonthlySalesStatement">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	
+		<action name="nonmeterLoadIncraseInfo"  class="org.jgtdsl.reports.NonmeterLoadIncraseReport">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	
+	<action name="nonmeterReconnectionInfo"  class="org.jgtdsl.reports.NonMeterReconnectionReport">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	
+	<action name="nonmeterConnectionInfo"  class="org.jgtdsl.reports.NonMeterConnectionReport">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	<action name="nonmeterDisconnectionInfo"  class="org.jgtdsl.reports.NonMeterDisconnectionReport">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	
+	<action name="meterReadingInfo"  class="org.jgtdsl.reports.MeterReadingReport">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	
+	<action name="securityDepositInfo"  class="org.jgtdsl.reports.DepositReport">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	
+	<action name="defaulterCustomerInfo"  class="org.jgtdsl.reports.DefaulterCustomerList">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	
+	<action name="maximumLoadExceedInfo"  class="org.jgtdsl.reports.MaximumLoadExceedReport">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	<action name="securityDepositRequiredInfo"  class="org.jgtdsl.reports.SecurityDepositRequiredReport">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	
+	<action name="advancePaidCustomerInfo"  class="org.jgtdsl.reports.AdvancedPaidCustomerListReport">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	
+	<!-- Start Collection Report  Statement 
+			
+			sujon
+	-->
+	
+	<action name="monthlyCollectionStmntReport"  class="org.jgtdsl.reports.MonthlyCollectionReport">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	
+	<!-- Bindu fees collection -->
+	<action name="FeesCollectionStmntReport"  class="org.jgtdsl.reports.FeesCollectionStmntReport">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	<!-- Bindu fees collection -->
+	
+	<action name="collectionStatementInfo"  class="org.jgtdsl.reports.CollectionBankStatement">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+		<result name="input">/WEB-INF/jsp/reports/DatewiseCollectionReportHome.jsp</result>
+	</action>
+	
+	<action name="bankBookInfo"  class="org.jgtdsl.reports.BankBookRevenue">
+		  <result type="stream">
+		    <param name="contentType">application/pdf</param>
+		    <param name="inputName">inputStream</param>
+		  </result> 
+ 	</action>
+	
+	
+	<action name="marginCalculationInfo"  class="org.jgtdsl.reports.MarginCalculationReport">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	<action name="clearnessCertificateInfo"  class="org.jgtdsl.reports.DefaulterCertificate">
+	  <result type="stream">
+	    <param name="contentType">application/pdf</param>
+	    <param name="inputName">inputStream</param>
+	  </result> 
+	</action>
+	
+	<action name="reconciliationReport"  class="org.jgtdsl.reports.ReconciliationReport">
+	  <result type="stream">
+	    <param name="contentType">application/pdf</param>
+	    <param name="inputName">inputStream</param>
+	  </result> 
+	</action>
+	
+	<action name="yearlyBalanceSheetInfo"  class="org.jgtdsl.reports.YearlyBalanceSheet">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	
+	<action name="disconnInfo"  class="org.jgtdsl.reports.DisconnectionDetails">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	
+	<action name="gasConsumptionInfo"  class="org.jgtdsl.reports.GasConsumptionReport">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	
+	<action name="variousMarginInfo"  class="org.jgtdsl.reports.VariousMarginReport">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	<action name="balanceSheetInfo"  class="org.jgtdsl.reports.CustomerBalanceSheet">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	<action name="nonMeterBillSummeryReport"  class="org.jgtdsl.reports.NonMeterBillSummeryReport">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+	
+	<action name="vatRebateInfo"  class="org.jgtdsl.reports.VatTaxFFReport">
+  		<result type="stream">
+    		<param name="contentType">application/pdf</param>
+    		<param name="inputName">inputStream</param>
+  		</result> 
+ 	</action>
+	<action name="accountsPayableInfo"  class="org.jgtdsl.reports.AccountsPayableReport">
+	  	<result type="stream">
+	    	<param name="contentType">application/pdf</param>
+	    	<param name="inputName">inputStream</param>
+	  	</result> 
+	 </action>
+	 <action name="securityBankBookInfo"  class="org.jgtdsl.reports.SecurityBankBook">
+	  	<result type="stream">
+	    	<param name="contentType">application/pdf</param>
+	    	<param name="inputName">inputStream</param>
+	  	</result> 
+	 </action>
+
+	  <action name="securityAdjustInfo"  class="org.jgtdsl.reports.SecurityAdjustReport">
+	  	<result type="stream">
+	    	<param name="contentType">application/pdf</param>
+	    	<param name="inputName">inputStream</param>
+	  	</result> 
+	 </action>
+	 <action name="jvInfo"  class="org.jgtdsl.reports.JournalVoucher">
+	  	<result type="stream">
+	    	<param name="contentType">application/pdf</param>
+	    	<param name="inputName">inputStream</param>
+	  	</result> 
+	 </action>
+	  <action name="securityNoticeInfo"  class="org.jgtdsl.reports.SecurityNotice">
+	  	<result type="stream">
+	    	<param name="contentType">application/pdf</param>
+	    	<param name="inputName">inputStream</param>
+	  	</result> 
+	 </action>
+	 <action name="monthlySalesSummaryReport"  class="org.jgtdsl.reports.MonthlySalesSummary">
+	  	<result type="stream">
+	    	<param name="contentType">application/pdf</param>
+	    	<param name="inputName">inputStream</param>
+	  	</result> 
+	 </action>
+	 <action name="custListInfo"  class="org.jgtdsl.reports.CustomerListReport">
+	  	<result type="stream">
+	    	<param name="contentType">application/pdf</param>
+	    	<param name="inputName">inputStream</param>
+	  	</result> 
+	 </action>
+	 
+  <action name="certificationSummeryReport"  class="org.jgtdsl.reports.CertificationSummaryReport">
+	  	<result type="stream">
+	    	<param name="contentType">application/pdf</param>
+	    	<param name="inputName">inputStream</param>
+	  	</result> 
+	 </action>	
+	 <action name="totalSecurityInfo"  class="org.jgtdsl.reports.TotalSecurityDepositReport">
+	  	<result type="stream">
+	    	<param name="contentType">application/pdf</param>
+	    	<param name="inputName">inputStream</param>
+	  	</result> 
+	 </action>
+	 <action name="areaSecurityInfo"  class="org.jgtdsl.reports.AreaWiseSecurityReport">
+	  	<result type="stream">
+	    	<param name="contentType">application/pdf</param>
+	    	<param name="inputName">inputStream</param>
+	  	</result> 
+	 </action>
+	 <action name="purchasejvInfo"  class="org.jgtdsl.reports.JVPurchaseReport">
+	  	<result type="stream">
+	    	<param name="contentType">application/pdf</param>
+	    	<param name="inputName">inputStream</param>
+	  	</result> 
+	 </action>
+	 <action name="salesjvInfo"  class="org.jgtdsl.reports.JVSalesStatement">
+	  	<result type="stream">
+	    	<param name="contentType">application/pdf</param>
+	    	<param name="inputName">inputStream</param>
+	  	</result> 
+	 </action>
+	 <action name="tdsjvInfo"  class="org.jgtdsl.reports.TDSReport">
+	  	<result type="stream">
+	    	<param name="contentType">application/pdf</param>
+	    	<param name="inputName">inputStream</param>
+	  	</result> 
+	 </action>
+	 
+	 <action name="freedomjvInfo"  class="org.jgtdsl.reports.FreedomFighterJV">
+	  	<result type="stream">
+	    	<param name="contentType">application/pdf</param>
+	    	<param name="inputName">inputStream</param>
+	  	</result> 
+	 </action>
+	 <action name="bankBookjvInfo"  class="org.jgtdsl.reports.BankBookJV">
+		  <result type="stream">
+		    <param name="contentType">application/pdf</param>
+		    <param name="inputName">inputStream</param>
+		  </result> 
+ 	</action>
+ 	<action name="securitybankBookjvInfo"  class="org.jgtdsl.reports.SecurityBankBookJV">
+		  <result type="stream">
+		    <param name="contentType">application/pdf</param>
+		    <param name="inputName">inputStream</param>
+		  </result> 
+ 	</action>
+ 	<action name="vatRebatejvInfo"  class="org.jgtdsl.reports.VatRevateJV">
+		  <result type="stream">
+		    <param name="contentType">application/pdf</param>
+		    <param name="inputName">inputStream</param>
+		  </result> 
+ 	</action>
+ 	<action name="sgInfo"  class="org.jgtdsl.reports.SGFLPayableReport">
+		  <result type="stream">
+		    <param name="contentType">application/pdf</param>
+		    <param name="inputName">inputStream</param>
+		  </result> 
+ 	</action>
+ 	<action name="bgInfo"  class="org.jgtdsl.reports.BGFCLPayableReport">
+		  <result type="stream">
+		    <param name="contentType">application/pdf</param>
+		    <param name="inputName">inputStream</param>
+		  </result> 
+ 	</action>
+ 	<action name="avalueInfo"  class="org.jgtdsl.reports.AssetValueReport">
+		  <result type="stream">
+		    <param name="contentType">application/pdf</param>
+		    <param name="inputName">inputStream</param>
+		  </result> 
+ 	</action>
+ 	<action name="bapexInfo"  class="org.jgtdsl.reports.BAPEXReport">
+		  <result type="stream">
+		    <param name="contentType">application/pdf</param>
+		    <param name="inputName">inputStream</param>
+		  </result> 
+ 	</action>
+ 	<action name="distInfo"  class="org.jgtdsl.reports.DistributionMarginReport">
+		  <result type="stream">
+		    <param name="contentType">application/pdf</param>
+		    <param name="inputName">inputStream</param>
+		  </result> 
+ 	</action>
+ 	<action name="dwmbInfo"  class="org.jgtdsl.reports.DWMBReport">
+		  <result type="stream">
+		    <param name="contentType">application/pdf</param>
+		    <param name="inputName">inputStream</param>
+		  </result> 
+ 	</action>
+ 	<action name="gdfInfo"  class="org.jgtdsl.reports.GDFPayableReport">
+		  <result type="stream">
+		    <param name="contentType">application/pdf</param>
+		    <param name="inputName">inputStream</param>
+		  </result> 
+ 	</action>
+ 	<action name="pdfInfo"  class="org.jgtdsl.reports.PDFMarginReport">
+		  <result type="stream">
+		    <param name="contentType">application/pdf</param>
+		    <param name="inputName">inputStream</param>
+		  </result> 
+ 	</action>
+ 	<action name="gtclInfo"  class="org.jgtdsl.reports.GTCLReport">
+		  <result type="stream">
+		    <param name="contentType">application/pdf</param>
+		    <param name="inputName">inputStream</param>
+		  </result> 
+ 	</action>
+ 	
+ 	<action name="billPreviewInfo"  class="org.jgtdsl.reports.BillPreviewReport">
+		  <result type="stream">
+		    <param name="contentType">application/pdf</param>
+		    <param name="inputName">inputStream</param>
+		  </result> 
+ 	</action>
+ 	
+ 	
+ 	<action name="categoryWiseGasConsumptionForm"  class="org.jgtdsl.reports.CategoryWiseGasConsumption">
+		  <result type="stream">
+		    <param name="contentType">application/pdf</param>
+		    <param name="inputName">inputStream</param>
+		  </result> 
+ 	</action>
+ 	
+ 	
+ 	<action name="monthlyCollectionCustomerTypeWiseForm"  class="org.jgtdsl.reports.MonthlyCollectionCustomerTypeWise">
+		  <result type="stream">
+		    <param name="contentType">application/pdf</param>
+		    <param name="inputName">inputStream</param>
+		  </result> 
+ 	</action>
+ 	
+ 	
+ 	
+<!-- [End] Sales Statement -->
+<!-- [Start] Security Deposit Report -->
+	<action name="securityDepositExpireReport"  class="org.jgtdsl.reports.SecurityDepositExpireReport">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
+<!-- [End] Security Deposit Report -->
+
+</package>
+
+</struts>

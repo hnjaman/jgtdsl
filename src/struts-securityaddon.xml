@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+    <constant name="struts.enable.DynamicMethodInvocation" value="true" />
+    <constant name="struts.devMode" value="true" />
+    
+    <package name="struts-securityaddon" abstract="true" extends="struts-default" >
+    
+        <interceptors>
+			<interceptor-stack name="defaultSecurityStack">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="fileUpload" />
+				<interceptor-ref name="tokenSession">
+					<param name="excludeMethods">*</param>
+				</interceptor-ref>
+			</interceptor-stack>
+		</interceptors>
+
+        <default-interceptor-ref name="defaultSecurityStack" />
+		<!-- 
+		<global-results>						
+            <result name="invalid.token" type="chain">CustomError</result>
+			<result name="custom_error" type="chain">CustomError</result>
+            <result name="error">CustomError</result>
+            <result name="custom_error">/WEB-INF/jsp/CustomError.jsp</result>
+		</global-results>
+
+        <action name="CustomError">
+        	<result>/WEB-INF/jsp/CustomError.jsp</result>
+        </action>
+		<action name="*">
+            <result>/WEB-INF/jsp/CustomError.jsp</result>
+        </action>
+        -->
+        
+    </package>   
+
+</struts>

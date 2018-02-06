@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>jQuery NS Window Plugin Demo</title>
+<link rel="stylesheet" href="css/ns-window.css" />
+
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="ns-window.js"></script>
+<style>
+* {
+font-family:Tahoma;
+font-size:11px;
+}
+h1,h2,h3 {
+	color:#CC3366;
+	font-size:20px;
+	padding:20px;
+}
+</style>
+<script type="text/javascript">
+	function showWindow(theme) {
+		$.nsWindow.open({
+			title: 'Member Login',
+			width: 660,
+			height: 400,
+			dataUrl: 'content.html',
+			theme:theme
+        });
+	}
+</script>
+</head>
+<body>
+<div id="jquery-script-menu">
+<div class="jquery-script-center">
+<ul>
+<li><a href="http://www.jqueryscript.net/lightbox/Minimal-jQuery-Popup-Modal-Window-Plugin-NS-Window.html">Download This Plugin</a></li>
+<li><a href="http://www.jqueryscript.net/">Back To jQueryScript.Net</a></li>
+</ul>
+<div class="jquery-script-ads"><script type="text/javascript"><!--
+google_ad_client = "ca-pub-2783044520727903";
+/* jQuery_demo */
+google_ad_slot = "2780937993";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script></div>
+<div class="jquery-script-clear"></div>
+</div>
+</div>
+<h1 style="margin-top:150px;">jQuery NS Window Plugin Demo</h1>
+
+<input type="button" onclick="showWindow('yellow');" value="Window - Yellow"/>
+<input type="button" onclick="showWindow('black');" value="Window - Black"/>
+<input type="button" onclick="showWindow('orange');" value="Window - Orange"/>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36251023-1']);
+  _gaq.push(['_setDomainName', 'jqueryscript.net']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+#nswindow {
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    position: fixed;
+    -moz-box-shadow: 0 0 15px #252525;
+    -webkit-box-shadow: 0 0 15px #252525;
+    box-shadow: 0 0 15px #252525;
+    position: absolute;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+#nswindow #nswindowContent {
+    left: 4px;
+    right: 4px;
+    top: 4px;
+    bottom: 4px;
+    position: absolute;
+    background: #fff;
+    border: 1px solid #ccc;
+    overflow: auto; /*contains floating elements*/
+    /*IE6 rule*/
+    _zoom: 1;
+}
+
+#nswindow .loader {
+    background: url(../img/ns-window/loader.gif) 50% 20px no-repeat;
+    left: 0px;
+    right: 0px;
+    top: 50%;
+    width: 100%;
+    margin-top: -15px;
+    height: 30px;
+    position: absolute;
+    text-align: center;
+    color: #666;
+    border: none;
+}
+
+#nswindow .title {
+    font-weight: bold;
+    font-size: 11px;
+    float: left;
+    /*IE6 rules*/
+    _display: block;
+    _position: relative;
+    margin-top: 0px;
+}
+
+#nswindow .controlbar {
+    overflow: hidden;
+    padding: 0px 30px 0px 10px;
+    cursor: move;
+    /*IE6 rule*/
+    _zoom: 1;
+}
+
+#nswindow a.close {
+    display: block;
+    float: right;
+    height: 20px;
+    width: 20px;
+    margin-right: -30px;
+    text-indent: -999em;
+    border-left: 1px solid #7f7f7f;
+    border-bottom: 1px solid #7f7f7f;
+    -moz-border-radius-bottomleft: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    border-bottom-left-radius: 3px;
+    /*rules for IE7 and below*/ 
+    /*IE6 rule*/
+	_display:inline;
+}
+
+#nswindow a.close:hover {
+    background-position: bottom left;
+}
+
+.nswindowOverlay, .nswindowContainer {
+    padding: 0px;
+    margin: 0px;
+    height: 100%;
+    width: 100%;
+    left: 0px;
+    top: 0px;
+    position: fixed;
+}
+* html .nswindowOverlay, * html .nswindowContainer { /* ie6 hack */
+    position: absolute;
+    height: expression(document.body.scrollHeight > document.body.offsetHeight ? document.body.scrollHeight : document.body.offsetHeight + 'px');
+ width: expression(document.body.scrollWidth> document.body.offsetWidth? document.body.scrollWidth: document.body.offsetWidth+ 'px');
+}
+/*------------------------------------------------------*/
+#nswindow.orange {
+	background: #FCCE54;
+	border: 1px solid #eee;
+}
+#nswindow.orange .title {
+	color:#333;
+	font-weight:normal;
+}
+#nswindow.orange .controlbar {
+	background: #252525 url(../img/ns-window/orange/titlebar_orange.png) repeat-x;
+	height: 30px;
+}
+#nswindow.orange a.close {
+	background: url(../img/ns-window/c.gif) no-repeat top left;
+}
+/*------------------------------------------------------*/
+#nswindow.yellow {
+	background: url(../img/ns-window/yellow/yellow_grad.png);
+	border: 1px solid #eee;
+}
+#nswindow.yellow .title {
+	color:#555;
+	font-weight:normal;
+}
+#nswindow.yellow .controlbar {
+	background: #FAB810 url(../img/ns-window/yellow/titlebar_yellow.png) 0px -4px repeat-x;
+	height: 25px;
+}
+#nswindow.yellow a.close {
+	background: url(../img/ns-window/yellow/close_yellow.gif) no-repeat top left;
+}
+/*------------------------------------------------------*/
+
+#nswindow.black {
+	background: #444;
+	border: 1px solid #7f7f7f;
+}
+#nswindow.black .title {
+	font-weight: normal;
+	color:#fff;
+}
+#nswindow.black .controlbar {
+	background: #252525 url(../img/ns-window/black/navbar_black.gif) repeat-x;
+	border-bottom:1px solid #252525;
+	height: 22px;
+}
+#nswindow.black a.close {
+	background: url(../img/ns-window/black/wowwindow-close2.gif) no-repeat top left;
+}
+
+/*------------------------------------------------------*/
+
+#nswindow.progress {
+	background:url(../img/shop-online.jpg);
+	border: 1px solid #fff;
+	width:220px;
+	height:80px;
+}
+#nswindow.progress #nswindowContent {
+	left: 8px;
+	right: 8px;
+	top: 8px;
+	bottom: 8px;
+	background:url(../img/shop-online2.jpg);
+	border: none;
+}
+
+/*#nswindow.progress  .loader {
+	background: url(../img/progress.gif) 15px 25px no-repeat;
+}*/

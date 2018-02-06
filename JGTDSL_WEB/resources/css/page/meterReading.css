@@ -1,0 +1,17 @@
+.meter-reading{
+	width: 65%;
+	float: left;
+	height: 62%;
+}
+.reading-history{
+	width: 33%;
+	float: left;
+	height: 62%;
+	margin-left: 1%;
+	border: none;
+}
+.reading-list{
+	clear: both;
+	height: 36%;
+	width: 99%;
+}

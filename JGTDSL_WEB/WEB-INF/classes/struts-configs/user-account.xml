@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "../../dtds/struts-2.3.dtd">
+<!--
+  - This file is included by the struts.xml file as an example
+  - of how to break up the configuration file into multiple files.
+-->
+<struts>
+  <package name="user-account"  extends="struts-securityaddon">
+  
+	<action name="changePasswordHome" class="org.jgtdsl.actions.UserAccount" method="changePasswordHome">
+		<result name="success">/WEB-INF/jsp/user-account/PasswordChange.jsp</result>
+	</action>
+	<action name="changePassword" class="org.jgtdsl.actions.UserAccount" method="changePassword">
+		<result type="stream">
+			<param name="contentType">json</param>
+			<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<action name="resetUserPassword" class="org.jgtdsl.actions.UserAccount" method="resetUserPassword">
+		<result type="stream">
+			<param name="contentType">json</param>
+			<param name="inputName">inputStream</param>
+		</result>
+	</action>	
+	<action name="accountInfo">
+		<result name="success">/WEB-INF/jsp/user-account/AccountInfo.jsp</result>
+	</action>
+	<action name="updateAccountInfo" class="org.jgtdsl.actions.UserAccount" method="updateAccountInfo">
+		<result type="stream">
+			<param name="contentType">json</param>
+			<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	
+	<action name="themeSelection">
+		<result name="success">/WEB-INF/jsp/user-account/ThemeSelection.jsp</result>
+	</action>
+	<action name="changeTheme" class="org.jgtdsl.actions.UserAccount" method="changeTheme">
+		<result type="stream">
+			<param name="contentType">json</param>
+			<param name="inputName">inputStream</param>
+		</result>
+	</action>
+  </package>
+
+</struts>

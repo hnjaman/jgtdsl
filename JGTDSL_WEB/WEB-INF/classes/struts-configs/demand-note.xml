@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "../../dtds/struts-2.3.dtd">
+<!--
+  - This file is included by the struts.xml file as an example
+  - of how to break up the configuration file into multiple files.
+-->
+<struts>
+  <package name="demand-note"  extends="struts-securityaddon">
+  	
+  	<action name="createDemandNote" class="org.jgtdsl.actions.DemandNote"  method="createDemandNote">
+		<result name="success">/WEB-INF/jsp/customer/DemandNote.jsp</result>
+	</action>
+	
+	<action name="newlyAppliedCustomerList">
+		<result name="success">/WEB-INF/jsp/customer/NewlyAppliedCustomerList.jsp</result>
+	</action>
+	
+	<action name="demandNoteDataEntry" class="org.jgtdsl.actions.DemandNote" method="demandNoteDataEntry">
+		<result name="success">/WEB-INF/jsp/customer/DemandNoteMainHome.jsp</result>
+		<result name="input">/WEB-INF/jsp/customer/DemandNoteHome.jsp</result>
+	</action>
+	<action name="getDemandNoteList" class="org.jgtdsl.actions.DemandNote" method="getListOfDemandNote">
+		<result name="success">/WEB-INF/jsp/customer/view/DemandNoteList.jsp</result>
+	</action>
+	<action name="getdemandNoteDataEntry" class="org.jgtdsl.actions.DemandNote" method="getDemandNoteDataEntry">
+		<result name="success">/WEB-INF/jsp/customer/DemandNote.jsp</result>
+		<result name="input">/WEB-INF/jsp/customer/DemandNoteHome.jsp</result>
+	</action>
+	
+	<action name="getdemandNoteDataEntryForEdit" class="org.jgtdsl.actions.DemandNote" method="getDemandNoteDataEntry">
+		<result name="success">/WEB-INF/jsp/customer/DemandNote.jsp</result>
+		<result name="input">/WEB-INF/jsp/customer/DemandNoteHome.jsp</result>
+	</action>
+	<action name="updateDemandNote" class="org.jgtdsl.actions.DemandNote" method="updateDemandNote">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<action name="saveDemandNote" class="org.jgtdsl.actions.DemandNote" method="saveDemandNote">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	
+	<action name="demandNoteDownloadHome" class="org.jgtdsl.actions.DowloadHome" method="demandNoteDownloadHome">
+		<result name="success">/WEB-INF/jsp/reports/DemandNoteHome.jsp</result>
+	</action>
+	
+	<action name="downloadDemandNote" class="org.jgtdsl.reports.DemandNote">
+		<result type="stream">
+			<param name="contentType">application/pdf</param>
+			<param name="inputName">inputStream</param>
+		</result>
+	</action>	
+	
+  </package>
+</struts>

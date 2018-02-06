@@ -1,0 +1,65 @@
+.w-box-header{
+ background: linear-gradient(to bottom, #f7fbfc 0%, #d9edf2 40%, #add9e4 100%) repeat scroll 0 0 rgba(0, 0, 0, 0) !important;
+    color: #004b5e !important;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.1) !important;
+    border: 1px solid #add9e4 !important;
+}    
+label{
+    display: inline-block !important;
+    float: left !important;
+    clear: left !important;
+    width: 40%;
+    text-align: left !important;
+    color: black !important;
+}
+input[type=text] {
+	display: inline-block !important;
+	border: 1px solid #add9e4;
+}
+textarea{
+	border: 1px solid #add9e4;
+}
+select {
+	float: left !important;
+	border: 1px solid #add9e4;
+	color: #333 !important;
+}
+.chosen-container-multi .chosen-choices{
+	border: 1px solid #add9e4 !important;
+}
+
+.menu_option li a{
+	background:none !important;
+	border: 3px solid #208bbd !important;
+	box-shadow: none !important;
+}
+
+.w-box-content{
+	background-color: #FAFAFA !important;
+}
+
+fieldset{ 
+	border:1px solid #38a1bb;
+	padding-left: 3px;
+	padding-top: 2px;
+	padding-bottom: 5px; 
+}
+
+legend {
+	padding: 0.2em 0.5em;
+	border:1px solid #38a1bb;
+	color:#38a1bb;
+	font-size:90%;
+	text-align:right;
+	margin-left: 3px;
+	font-weight: bold;
+	line-height: normal;
+	margin-bottom: auto;
+	width: auto;
+}
+.cPanel{
+	background-color: #f0f7fd;	
+}  
+.ui-widget-header {
+    color: #004b5e !important;
+}

@@ -1,0 +1,128 @@
+
+div.report {
+	margin: 20px auto;
+	width: 100%;
+}
+ul.column {
+	float: left;
+	padding: 0;
+	list-style: none;
+	width: 90%;
+}
+ul.column li {
+	/*background: #fff;*/
+	float: left;
+	margin: 25px 0 0 25px;
+	display: block;
+	text-align: center;
+	width: 100px;
+	padding:20px;
+	border-radius: 2px 2px 2px 2px;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+
+}
+ul.column li.boxG {
+	-webkit-box-shadow: 0 10px 6px -6px #777;
+	-moz-box-shadow: 0 10px 6px -6px #777;
+	box-shadow: 0 10px 6px -6px #777;
+	background: #A9DFBF;
+	color:black;
+}
+ul.column li.boxV {
+	-webkit-box-shadow: 0 10px 6px -6px #777;
+	-moz-box-shadow: 0 10px 6px -6px #777;
+	box-shadow: 0 10px 6px -6px #777;
+	background: #E8DAEF;
+	color:black;
+}
+ul.column li.boxY {
+	-webkit-box-shadow: 0 10px 6px -6px #777;
+	-moz-box-shadow: 0 10px 6px -6px #777;
+	box-shadow: 0 10px 6px -6px #777;
+	background: #FFF3E0;
+	color:black;
+}
+ul.column li.box2 {
+	-webkit-box-shadow: 0 1px 2px #777;
+	-moz-box-shadow: 0 2px 1px #777;
+	box-shadow: 0 2px 1px #777;
+}
+ul.column li.box3 {
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+}
+ul.column li.box4 {
+	box-shadow: 0 0 4px 1px rgba(0, 0, 0, 0.3);
+}
+ul.column li.box5 {
+	box-shadow: 0 0 1px rgba(34, 25, 25, 0.4);
+}
+ul.column li.box6 {
+	box-shadow: 0 1px #FFFFFF inset, 0 1px 3px rgba(34, 25, 25, 0.4);
+}
+ul.column li.box7 {
+	box-shadow: 0 4px 2px -3px;
+}
+ul.column li.box8 {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
+}
+ul.column li.box9 {
+	border-bottom: 0 none;
+	box-shadow: 0 1px 5px rgba(0, 0, 0, 0.46);
+}
+ul.column li.box10 {
+	-webkit-box-shadow: 0 7px 4px #777;
+	-moz-box-shadow: 0 7px 4px #777;
+	box-shadow: 0 7px 4px #777;
+}
+ul.column li.box11 {
+	-webkit-box-shadow: 0 3px 2px #777;
+	-moz-box-shadow: 0 3px 2px #777;
+	box-shadow: 0 3px 2px #777;
+}
+ul.column li.box12 {
+	box-shadow: 0 0.5px 0 0 #ffffff inset, 0 1px 2px 0 #B3B3B3;
+}
+ul.column li.box13 {
+	-webkit-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+	box-shadow:0 0 10px rgba(0, 0, 0, 0.5);
+}
+ul.column li.box14 {
+	-webkit-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+	-moz-box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+	box-shadow:0 1px 4px rgba(0, 0, 0, 0.3), 0 0 40px rgba(0, 0, 0, 0.1) inset;
+}
+ul.column li.box15 {
+	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12) inset;
+	border-color: -moz-use-text-color #FFFFFF #FFFFFF -moz-use-text-color;
+	border-style: none solid solid none;
+	border-width: medium 1px 1px medium;
+	background: none repeat scroll 0 0 rgba(0, 0, 0, 0.07);
+	-moz-border-bottom-colors: none;
+	-moz-border-image: none;
+	-moz-border-left-colors: none;
+	-moz-border-right-colors: none;
+	-moz-border-top-colors: none;
+}
+ul.column li.box16 {
+	box-shadow: 0 1px 1px 0 #C7C7C7 inset;
+	background: none repeat scroll 0 0 #E9E9E9;
+}
+/* Clear Float */
+.column:after, .box-collection:after, .clearfix:after, div.project-info:after {
+	clear: both;
+	content: ' ';
+	display: block;
+	font-size: 0;
+	line-height: 0;
+	visibility: hidden;
+	width: 0;
+	height: 0;
+}

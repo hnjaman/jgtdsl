@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+    "../../dtds/struts-2.3.dtd">
+<!--
+  - This file is included by the struts.xml file as an example
+  - of how to break up the configuration file into multiple files.
+-->
+<struts>
+  <package name="master-data"  extends="struts-securityaddon">
+
+
+	<action name="getCustomerCategoryList">
+		<result name="success">/WEB-INF/jsp/master-data/CustomerCategoryList.jsp</result>
+	</action>	
+	<action name="getMeterTypeList">
+		<result name="success">/WEB-INF/jsp/master-data/MeterTypeList.jsp</result>
+	</action>
+	<action name="getDepositTypeList">
+		<result name="success">/WEB-INF/jsp/master-data/DepositTypeList.jsp</result>
+	</action>	
+	<action name="getBankList">
+		<result name="success">/WEB-INF/jsp/master-data/BankList.jsp</result>
+	</action>
+	<action name="getBranchList">
+		<result name="success">/WEB-INF/jsp/master-data/BranchList.jsp</result>
+	</action>
+	<action name="getAccountList">
+		<result name="success">/WEB-INF/jsp/master-data/AccountList.jsp</result>
+	</action>
+	<action name="getUserList">
+		<result name="success">/WEB-INF/jsp/master-data/UserList.jsp</result>
+	</action>
+	<action name="getAreaList">
+		<result name="success">/WEB-INF/jsp/master-data/AreaList.jsp</result>
+	</action>
+	<action name="getTariffList">
+		<result name="success">/WEB-INF/jsp/master-data/TariffList.jsp</result>
+	</action>
+	<action name="getTariffDistribution">
+		<result name="success">/WEB-INF/jsp/master-data/TariffDistribution.jsp</result>
+	</action>
+
+	<action name="holidayHome">
+		<result name="success">/WEB-INF/jsp/master-data/HolidayHome.jsp</result>
+	</action>
+	<action name="getHolidays" class="org.jgtdsl.actions.Holiday" method="getHolidays">
+			<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+			</result>
+	</action>
+	<action name="getNewHolidayForm">
+		<result name="success">/WEB-INF/jsp/master-data/HolidayNew.jsp</result>
+	</action>
+	<action name="saveHoliday" class="org.jgtdsl.actions.Holiday" method="saveHoliday">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<action name="fetchHolidayList" class="org.jgtdsl.actions.Holiday" method="fetchHolidayList">
+		<result name="success">/WEB-INF/jsp/master-data/HolidayList.jsp</result>
+	</action>
+	<action name="deleteHoliday" class="org.jgtdsl.actions.Holiday" method="deleteHoliday">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	<action name="updateHome" class="org.jgtdsl.actions.Holiday" method="updateHome">
+		<result name="success">/WEB-INF/jsp/master-data/HolidayEdit.jsp</result>
+	</action>
+	<action name="updateHoliday" class="org.jgtdsl.actions.Holiday" method="updateHoliday">
+		<result type="stream">
+				<param name="contentType">json</param>
+				<param name="inputName">inputStream</param>
+		</result>
+	</action>
+	
+  </package>
+
+</struts>	
