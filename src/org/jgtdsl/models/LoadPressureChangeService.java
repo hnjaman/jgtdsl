@@ -399,11 +399,11 @@ public class LoadPressureChangeService {
 				    reading.setBilling_month(r.getInt("BILLING_MONTH"));
 					reading.setBilling_year(r.getInt("BILLING_YEAR"));
 				    reading.setReading_purpose_str(r.getString("READING_PURPOSE"));
-				    reading.setPrev_reading(r.getFloat("PREV_READING"));
+				    reading.setPrev_reading(r.getLong("PREV_READING"));
 				    reading.setPrev_reading_date(r.getString("PREV_READING_DATE"));
-				    reading.setCurr_reading(r.getFloat("CURR_READING"));
+				    reading.setCurr_reading(r.getLong("CURR_READING"));
 				    reading.setCurr_reading_date(r.getString("CURR_READING_DATE"));
-				    reading.setDifference(r.getFloat("DIFFERENCE"));
+				    reading.setDifference(r.getLong("DIFFERENCE"));
 				    reading.setHhv_nhv(r.getFloat("HHV_NHV"));
 				    reading.setMeasurement_type_str(r.getString("MEASUREMENT_TYPE"));
 				    reading.setMeasurement_type_name(MeterMeasurementType.values()[r.getInt("MEASUREMENT_TYPE")].getLabel());
