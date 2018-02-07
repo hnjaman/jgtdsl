@@ -549,9 +549,9 @@ public class BillingService {
 					readingDTO=new MeterReadingDTO();
 					readingDTO.setReading_purpose_str(r.getString("READING_PURPOSE"));
 					readingDTO.setReading_purpose_name(ReadingPurpose.values()[r.getInt("READING_PURPOSE")].getLabel());
-					readingDTO.setCurr_reading(r.getFloat("CURR_READING"));
-					readingDTO.setPrev_reading(r.getFloat("PREV_READING"));
-					readingDTO.setDifference(r.getFloat("DIFFERENCE"));
+					readingDTO.setCurr_reading(r.getLong("CURR_READING"));
+					readingDTO.setPrev_reading(r.getLong("PREV_READING"));
+					readingDTO.setDifference(r.getLong("DIFFERENCE"));
 					readingDTO.setPressure_factor(r.getFloat("PRESSURE_FACTOR"));
 					readingDTO.setHhv_nhv(r.getFloat("HHV_NHV"));
 					readingDTO.setRate(r.getFloat("RATE"));
@@ -563,9 +563,9 @@ public class BillingService {
 						readingDTO=new MeterReadingDTO();
 						readingDTO.setReading_purpose_str(r.getString("READING_PURPOSE"));
 						readingDTO.setReading_purpose_name(ReadingPurpose.values()[r.getInt("READING_PURPOSE")].getLabel());
-						readingDTO.setCurr_reading(r.getFloat("CURR_READING"));
-						readingDTO.setPrev_reading(r.getFloat("PREV_READING"));
-						readingDTO.setDifference(r.getFloat("DIFFERENCE"));
+						readingDTO.setCurr_reading(r.getLong("CURR_READING"));
+						readingDTO.setPrev_reading(r.getLong("PREV_READING"));
+						readingDTO.setDifference(r.getLong("DIFFERENCE"));
 						readingDTO.setPressure_factor(r.getFloat("PRESSURE_FACTOR"));
 						readingDTO.setHhv_nhv(r.getFloat("HHV_NHV"));
 						readingDTO.setRate(r.getFloat("RATE"));
