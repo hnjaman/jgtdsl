@@ -855,9 +855,9 @@ public class MeterReadingReport extends BaseAction {
         		meterReadingDto.setActual_consumption(resultSet.getFloat("ACTUAL_CONSUMPTION"));
         		meterReadingDto.setPressure(resultSet.getFloat("PRESSURE"));
         		meterReadingDto.setPressure_factor(resultSet.getFloat("PRESSURE_FACTOR"));
-        		meterReadingDto.setPrev_reading(resultSet.getFloat("PREV_READING"));
-        		meterReadingDto.setCurr_reading(resultSet.getFloat("CURR_READING"));
-        		meterReadingDto.setDifference(resultSet.getFloat("DIFFERENCE"));
+        		meterReadingDto.setPrev_reading(resultSet.getLong("PREV_READING"));
+        		meterReadingDto.setCurr_reading(resultSet.getLong("CURR_READING"));
+        		meterReadingDto.setDifference(resultSet.getLong("DIFFERENCE"));
         		meterReadingDto.setMax_load(resultSet.getFloat("PMAX_LOAD"));
         		meterReadingDto.setMin_load(resultSet.getFloat("PMIN_LOAD"));
         		meterReadingDto.setMeter_rent(resultSet.getFloat("METER_RENT"));
@@ -925,11 +925,11 @@ public class MeterReadingReport extends BaseAction {
         		meterReadingDto.setAddress(resultSet.getString("ADDRESS_LINE1"));
         		meterReadingDto.setMonth(resultSet.getString("BILLING_MONTH"));
         		meterReadingDto.setYear(resultSet.getString("BILLING_YEAR"));
-        		meterReadingDto.setPrev_reading(resultSet.getFloat("PREV_READING"));
+        		meterReadingDto.setPrev_reading(resultSet.getLong("PREV_READING"));
         		meterReadingDto.setPrev_reading_date(resultSet.getString("PREV_READING_DATE"));
-        		meterReadingDto.setCurr_reading(resultSet.getFloat("CURR_READING"));
+        		meterReadingDto.setCurr_reading(resultSet.getLong("CURR_READING"));
         		meterReadingDto.setCurr_reading_date(resultSet.getString("CURR_READING_DATE"));
-        		meterReadingDto.setDifference(resultSet.getFloat("DIFFERENCE"));
+        		meterReadingDto.setDifference(resultSet.getLong("DIFFERENCE"));
         		meterReadingDto.setPressure(resultSet.getFloat("PRESSURE"));
         		meterReadingDto.setPressure_factor(resultSet.getFloat("PRESSURE_FACTOR"));
         		meterReadingDto.setActual_consumption(resultSet.getFloat("ACTUAL_CONSUMPTION"));

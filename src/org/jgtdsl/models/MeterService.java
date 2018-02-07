@@ -334,7 +334,7 @@ public class MeterService {
 					if(!Utils.isNullOrEmpty(meter_id))
 					{
 						String[] pre_reading_array=r.getString("reading_prev_info").split(",");
-						reading.setPrev_reading(Float.valueOf(pre_reading_array[0]));
+						reading.setPrev_reading(Long.valueOf(pre_reading_array[0]));
 						reading.setPrev_reading_date(pre_reading_array[1]);
 						meter.setReading(reading);
 					}

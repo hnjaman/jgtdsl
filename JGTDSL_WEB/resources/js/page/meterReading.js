@@ -351,6 +351,7 @@ function validateAndSubmitReading()
 		
 	var form = document.getElementById('meterReadingForm');
 	var formData = new FormData(form);
+	alert(formData);
 	  $.ajax({
 	    url: 'saveMeterReading.action',
 	    type: 'POST',

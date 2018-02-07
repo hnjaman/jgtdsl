@@ -18,9 +18,11 @@ public class MeterReadingDTO {
 	private String reading_purpose_name;
 	private int billing_month;
 	private int billing_year;
-	private double prev_reading;
+	private long prev_reading;
 	private String prev_reading_date;
-	private double curr_reading;
+	
+	private long curr_reading;
+	
 	private String curr_reading_date;
 	private double hhv_nhv;
 	private MeterMeasurementType measurement_type;
@@ -30,7 +32,7 @@ public class MeterReadingDTO {
 	private int latest_tariff_id;
 	private double rate;
 	private double latest_rate;
-	private double difference;
+	private long difference;
 	private float min_load;
 	private float max_load;
 	private double percent;
@@ -260,7 +262,12 @@ public class MeterReadingDTO {
 
 
 
-	public double getPrev_reading() {
+
+
+
+
+
+	public long getPrev_reading() {
 		return prev_reading;
 	}
 
@@ -268,8 +275,24 @@ public class MeterReadingDTO {
 
 
 
-	public void setPrev_reading(double prev_reading) {
+	public void setPrev_reading(long prev_reading) {
 		this.prev_reading = prev_reading;
+	}
+
+
+
+
+
+	public long getCurr_reading() {
+		return curr_reading;
+	}
+
+
+
+
+
+	public void setCurr_reading(long curr_reading) {
+		this.curr_reading = curr_reading;
 	}
 
 
@@ -292,17 +315,7 @@ public class MeterReadingDTO {
 
 
 
-	public double getCurr_reading() {
-		return curr_reading;
-	}
 
-
-
-
-
-	public void setCurr_reading(double curr_reading) {
-		this.curr_reading = curr_reading;
-	}
 
 
 
@@ -452,7 +465,7 @@ public class MeterReadingDTO {
 
 
 
-	public double getDifference() {
+	public long getDifference() {
 		return difference;
 	}
 
@@ -460,7 +473,7 @@ public class MeterReadingDTO {
 
 
 
-	public void setDifference(double difference) {
+	public void setDifference(long difference) {
 		this.difference = difference;
 	}
 

@@ -78,7 +78,7 @@ function readingCallBack(data){
 }
 function setReadingInfo(data)
 {
-	
+	//alert(data.prev_reading);
 	$("#reading_id").val(data.reading_id);
 	$("#meter_rent").val(data.meter_rent);
 	$("#tariff_id").val(data.tariff_id);
@@ -188,6 +188,8 @@ function getReadingDifference(prev_reading,current_reading)
 	 var pReading=parseFloat(prev_reading);
 	 var cReading=parseFloat(current_reading);
 	 var difference=cReading-pReading;
+	 //alert(pReading+"####"+cReading+"###"+difference+"###"+parseFloat(difference.toFixed(2)));
+	 
 	 return parseFloat(difference.toFixed(2));
 }
 
@@ -369,10 +371,10 @@ function validateMeterReadingInfo(){
 	 
 	 var c = $("#curr_reading").val();
 	 var p = $("#prev_reading").val();
-	 var cc = Number(c);
-	 var pp = Number(p);
+	 var cc = parseFloat(c);
+	 var pp = parseFloat(p);
 	 
-	 alert(cc);
+	 //alert(cc);
 	 
 	// if($("#curr_reading").val()<$("#prev_reading").val()){
 	if(cc<pp){

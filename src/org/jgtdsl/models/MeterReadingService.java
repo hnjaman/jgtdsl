@@ -92,7 +92,7 @@ public class MeterReadingService {
 						reading.setCustomer_name(r.getString("FULL_NAME"));
 						reading.setMeter_id(r.getString("METER_ID"));
 						reading.setMeter_sl_no(r.getString("METER_SL_NO"));
-						reading.setDifference(r.getFloat("DIFFERENCE"));
+						reading.setDifference(r.getLong("DIFFERENCE"));
 						reading.setActual_consumption(r.getFloat("ACTUAL_CONSUMPTION"));
 						reading.setTotal_consumption(r.getFloat("TOTAL_CONSUMPTION"));
 						reading.setInsert_date(r.getString("insert_date_formatted"));
@@ -175,9 +175,9 @@ public class MeterReadingService {
 					reading.setReading_id(r.getString("READING_ID"));
 					reading.setInsert_date(r.getString("INSERT_DATE"));
 					reading.setMonth_year(r.getString("MONTH_YEAR"));
-					reading.setPrev_reading(r.getFloat("PREV_READING"));
-					reading.setCurr_reading(r.getFloat("CURR_READING"));
-					reading.setDifference(r.getFloat("DIFFERENCE"));
+					reading.setPrev_reading(r.getLong("PREV_READING"));
+					reading.setCurr_reading(r.getLong("CURR_READING"));
+					reading.setDifference(r.getLong("DIFFERENCE"));
 					
 					readingList.add(reading);
 				}
@@ -426,7 +426,7 @@ public class MeterReadingService {
 						if(!Utils.isNullOrEmpty(r.getString("pre_reading"))){
 							String[] reading_date_arr=r.getString("pre_reading").split(",");
 							if(reading_date_arr.length>0){
-								reading.setPrev_reading(Float.valueOf(reading_date_arr[0]));
+								reading.setPrev_reading(Long.valueOf(reading_date_arr[0]));
 								reading.setPrev_reading_date(reading_date_arr[1]);
 							}
 						}
@@ -443,12 +443,12 @@ public class MeterReadingService {
 					else{
 						
 						reading.setReading_id(r.getString("READING_ID"));
-						reading.setPrev_reading(r.getFloat("MR_PREV_READING"));
+						reading.setPrev_reading(r.getLong("MR_PREV_READING"));
 						reading.setPrev_reading_date(r.getString("MR_PREV_READING_DATE"));
-						reading.setCurr_reading(r.getFloat("MR_CURR_READING"));
+						reading.setCurr_reading(r.getLong("MR_CURR_READING"));
 						reading.setCurr_reading_date(r.getString("MR_CURR_READING_DATE"));
 						
-						reading.setDifference(r.getFloat("MR_DIFFERENCE"));
+						reading.setDifference(r.getLong("MR_DIFFERENCE"));
 						reading.setHhv_nhv(r.getFloat("MR_HHV_NHV"));
 						reading.setMin_load(r.getFloat("MR_MIN_LOAD"));
 						reading.setMax_load(r.getFloat("MR_MAX_LOAD"));
