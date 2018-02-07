@@ -309,7 +309,7 @@ public class BurnerQntChangeService {
 		Connection conn = ConnectionManager.getConnection();
 		String sql="";
 		
-		whereClause=whereClause.replace("Area_Id=", "MST_AREA.Area_Id=");
+		//whereClause=whereClause.replace("Area_Id=", "MST_AREA.Area_Id=");
 		
 		String orderByQuery="";
 		whereClause=whereClause.replace("Area_Id", "MST_AREA.Area_Id");
