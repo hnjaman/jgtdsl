@@ -369,8 +369,10 @@ function validateMeterReadingInfo(){
 	 
 	 var c = $("#curr_reading").val();
 	 var p = $("#prev_reading").val();
-	 var cc = parseInt(c);
-	 var pp = parseInt(p);
+	 var cc = Number(c);
+	 var pp = Number(p);
+	 
+	 alert(cc);
 	 
 	// if($("#curr_reading").val()<$("#prev_reading").val()){
 	if(cc<pp){
