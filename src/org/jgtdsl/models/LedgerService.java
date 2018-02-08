@@ -85,8 +85,7 @@ public class LedgerService {
 					"                 NULL CMS_RENT, " +
 					"                 ACTUAL_SURCHARGE SURCHARGE_AMOUNT, " +
 					"                 ACTUAL_PAYABLE_AMOUNT PAYABLE_AMOUNT, " +
-					"                 COLLECTED_SURCHARGE, " +
-					"                 COLLECTED_PAYABLE_AMOUNT COLLECTED_AMOUNT, " +
+					"                 COLLECTED_SURCHARGE_AMOUNT COLLECTED_SURCHARGE, COLLECTED_BILL_AMOUNT COLLECTED_AMOUNT " +
 					"                 TO_CHAR (DUE_DATE, 'dd-mm-rrrr') DUE_DATE " +
 					"            FROM bill_non_metered bnm, BILL_COLLECTION_NON_METERED bcnm, MST_MONTH mm " +
 					"           WHERE bnm.BILL_ID = bcnm.BILL_ID(+) and BNM.BILL_MONTH = MM.M_ID AND bnm.CUSTOMER_ID = ? " +
