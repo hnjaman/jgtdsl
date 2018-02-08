@@ -172,7 +172,7 @@ public class BillMeteredCustomer extends BaseAction implements ServletContextAwa
 			
 			//over.setTextMatrix(93, 496);
 			//over.showText(bill.getCustomer_id());
-			over.setFontAndSize(bfBold, 11);
+			over.setFontAndSize(bfBold, 12);
 			over.showTextAligned(PdfContentByte.ALIGN_LEFT,bill.getCustomer_id(),82, 493,0);
 			
 			//over.setTextMatrix(93, 477);
@@ -241,15 +241,16 @@ public class BillMeteredCustomer extends BaseAction implements ServletContextAwa
 			over.setTextMatrix(367, 468);
 			over.showText(bill.getIssue_date());
 			
-			
+			over.setFontAndSize(bfBold, 10);
 			over.setTextMatrix(367, 447);
 			over.showText(bill.getLast_pay_date_wo_sc());
 			
+			over.setFontAndSize(bf, 10);
 			over.setTextMatrix(367, 425);
 			over.showText(bill.getLast_pay_date_w_sc());
 			
 			
-			over.setFontAndSize(bfBold, 8);
+			over.setFontAndSize(bfBold, 10);
 			over.setTextMatrix(367, 397);
 			over.showText(bill.getLast_disconn_reconn_date()==null?"":bill.getLast_disconn_reconn_date());
 			
@@ -309,7 +310,7 @@ public class BillMeteredCustomer extends BaseAction implements ServletContextAwa
 			over.showTextAligned(PdfContentByte.ALIGN_RIGHT,taka_format.format(bill.getPbMarginDTO().getSurcharge_amount()),442, 239,0);//240
 			//others
 			over.showTextAligned(PdfContentByte.ALIGN_RIGHT,taka_format.format(bill.getPbMarginDTO().getOthers()),442, 221,0);//220
-			over.setFontAndSize(bfBold, 9);
+			over.setFontAndSize(bfBold, 11);
 			//total bill to pay
 			over.showTextAligned(PdfContentByte.ALIGN_RIGHT,taka_format.format(bill.getPayable_amount()),442, 202,0);//200
 			
