@@ -21,8 +21,14 @@ public class CustomerLedgerDTO {
 	private String status;
 	private String vat_rebate;
 	private String bank_id;
+	private String bank_name;
 	
-	
+	public String getBank_name() {
+		return bank_name;
+	}
+	public void setBank_name(String bank_name) {
+		this.bank_name = bank_name;
+	}
 	public String getCustomer_id() {
 		return customer_id;
 	}
