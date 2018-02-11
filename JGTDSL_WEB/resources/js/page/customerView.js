@@ -32,7 +32,7 @@ $("#customer_ledger_grid").jqGrid($.extend(true, {}, scrollPagerGridOptions, {
     	repeatitems: true,
         id: "issue_paid_date"
 	},
-    colNames: ['Payment_Date','Description', 'Bank ID', 'Volum of Gas Sold(m'+txt.sup()+')', 'Sales(Tk.)','Debit Surcharge(Tk.)' ,'Debit(Tk.)', 'Credit Surcharge(Tk.)','Credit(Tk.)','Balance(Tk.)','Bill Due Date'],
+    colNames: ['Payment_Date','Description', 'Bank', 'Volum of Gas Sold(m'+txt.sup()+')', 'Sales(Tk.)','Debit Surcharge(Tk.)' ,'Debit(Tk.)', 'Credit Surcharge(Tk.)','Credit(Tk.)','Balance(Tk.)','Bill Due Date'],
     colModel: [{
 	                name: 'issue_paid_date',
 	                index: 'issue_paid_date',
@@ -47,9 +47,9 @@ $("#customer_ledger_grid").jqGrid($.extend(true, {}, scrollPagerGridOptions, {
 	                width:40
             	},
             	{
-	                name: 'bank_id',
-	                index: 'bank_id',
-	                align:'center',
+	                name: 'bank_name',
+	                index: 'bank_name',
+	                align:'left',
 	                width:40
             	},
             	{
