@@ -83,6 +83,14 @@
 										</select> 
 									</div>
 								</div>	
+								
+								<div class="row-fluid">
+									<div class="span12">
+										<label style="width: 40%">Collection Date</label>
+										<input type="text" name="collection.collection_date" id="collection_date" style="width: 51%"/>
+									</div>
+								</div>	
+								
 								<div class="row-fluid">								
 							  	<div class="span12">									    
 									<label style="width: 40%">Code</label>
@@ -129,12 +137,7 @@
 									</div>
 								</div>	
 								
-								<div class="row-fluid">
-									<div class="span12">
-										<label style="width: 40%">Collection Date</label>
-										<input type="text" name="collection.collection_date" id="collection_date" style="width: 51%"/>
-									</div>
-								</div>	
+								
 								<div class="row-fluid">
 								<div class="span12">
 										<label style="width: 40%">Billing Month</label>
