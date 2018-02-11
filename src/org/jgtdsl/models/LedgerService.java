@@ -29,42 +29,31 @@ public class LedgerService {
 		
 		if(customer.getConnectionInfo().getIsMetered_name().equalsIgnoreCase("Metered")){
 		
-		 sql="  SELECT * " +
-						 "    FROM (SELECT bm.BILL_ID, " +
-						 "                 bm.CUSTOMER_ID, " +
-						 "                 BANK_ID, " +
-						 "                 TO_CHAR (bm.COLLECTION_DATE) COLLECTION_DATE, " +
-						 "                 MON || ', ' || BILL_YEAR DESCRIPTION, " +
-						 "                 BILLED_CONSUMPTION, " +
-						 "                 BILLED_AMOUNT, " +
-						 "                 bm.METER_RENT, " +
-						 "                 CMS_RENT, " +
-						 "                 SURCHARGE_AMOUNT, " +
-						 "                 bm.PAYABLE_AMOUNT, " +
-						 "                 COLLECTED_SURCHARGE, " +
-						 "                 COLLECTED_AMOUNT, " +
-						 "                 TO_CHAR (LAST_PAY_DATE_WO_SC, 'dd-mm-rrrr') DUE_DATE " +
-						 "  FROM bill_metered bm, bill_collection_metered bcm, MST_MONTH mm " +
-						 " WHERE bm.BILL_ID = bcm.BILL_ID(+) and BM.BILL_MONTH = MM.M_ID and bm.CUSTOMER_ID= ? " +
-						 "          UNION ALL " +
-						 "          SELECT NULL BILL_ID, " +
-						 "                 CUSTOMER_ID, " +
-						 "                 BANK_ID, " +
-						 "                 TO_CHAR (TRANS_DATE) COLLECTION_DATE, " +
-						 "                 'Advanced' DESCRIPTION, " +
-						 "                 NULL BILLED_CONSUMPTION, " +
-						 "                 NULL BILLED_AMOUNT, " +
-						 "                 NULL METER_RENT, " +
-						 "                 NULL CMS_RENT, " +
-						 "                 NULL SURCHARGE_AMOUNT, " +
-						 "                 NULL PAYABLE_AMOUNT, " +
-						 "                 NULL COLLECTED_SURCHARGE, " +
-						 "                 ADVANCED_AMOUNT COLLECTED_AMOUNT, " +
-						 "                 NULL DUE_DATE " +
-						 "            FROM bill_coll_advanced " +
-						 "           WHERE status = 1 AND CUSTOMER_ID = ?) " +
-						 "ORDER BY BILL_ID " 
- ;
+		 sql=	 "SELECT * "
+				 + "    FROM (SELECT bm.BILL_ID, "
+				 + "                 bm.CUSTOMER_ID, "
+				 + "                 bcm.BANK_ID, "
+				 + "                 MBI.BANK_NAME, "
+				 + "                 TO_CHAR (bm.COLLECTION_DATE) COLLECTION_DATE, "
+				 + "                 MON || ', ' || BILL_YEAR DESCRIPTION, "
+				 + "                 BILLED_CONSUMPTION, "
+				 + "                 BILLED_AMOUNT, "
+				 + "                 bm.METER_RENT, "
+				 + "                 CMS_RENT, "
+				 + "                 SURCHARGE_AMOUNT, "
+				 + "                 bm.PAYABLE_AMOUNT, "
+				 + "                 COLLECTED_SURCHARGE, "
+				 + "                 (COLLECTED_AMOUNT + NVL (TAX_AMOUNT, 0)) COLLECTED_AMOUNT, "
+				 + "                 TO_CHAR (LAST_PAY_DATE_WO_SC, 'dd-mm-rrrr') DUE_DATE "
+				 + "            FROM bill_metered bm, "
+				 + "                 bill_collection_metered bcm, "
+				 + "                 MST_MONTH mm, "
+				 + "                 mst_bank_info mbi "
+				 + "           WHERE     bm.BILL_ID = bcm.BILL_ID(+) "
+				 + "                 AND BM.BILL_MONTH = MM.M_ID "
+				 + "                 AND MBI.BANK_ID = BCM.BANK_ID "
+				 + "                 AND bm.CUSTOMER_ID = ?) "
+				 + "     ORDER BY BILL_ID";
 
 				 
 				 
@@ -73,10 +62,10 @@ public class LedgerService {
 				//"COLLECTED_AMOUNT,to_char(LAST_PAY_DATE_WO_SC,'dd-mm-rrrr') DUE_DATE FROM BILL_METERED BM,MST_MONTH mm where BM.BILL_MONTH=MM.M_ID AND CUSTOMER_ID=? order by BILL_ID";
 				
 		}else{
-			sql=" SELECT * " +
+			sql=	" SELECT * " +
 					"    FROM (SELECT bnm.BILL_ID, " +
 					"                 bnm.CUSTOMER_ID, " +
-					"                 BANK_ID, " +
+					"                 bcnm.BANK_ID, mbi.BANK_NAME , " +
 					"                 TO_CHAR (bnm.COLLECTION_DATE) COLLECTION_DATE, " +
 					"                 MON || ', ' || BILL_YEAR DESCRIPTION, " +
 					"                 TOTAL_CONSUMPTION BILLED_CONSUMPTION, " +
@@ -85,14 +74,14 @@ public class LedgerService {
 					"                 NULL CMS_RENT, " +
 					"                 ACTUAL_SURCHARGE SURCHARGE_AMOUNT, " +
 					"                 ACTUAL_PAYABLE_AMOUNT PAYABLE_AMOUNT, " +
-					"                 COLLECTED_SURCHARGE_AMOUNT COLLECTED_SURCHARGE, COLLECTED_BILL_AMOUNT COLLECTED_AMOUNT " +
+					"                 COLLECTED_SURCHARGE_AMOUNT COLLECTED_SURCHARGE, COLLECTED_BILL_AMOUNT COLLECTED_AMOUNT, " +
 					"                 TO_CHAR (DUE_DATE, 'dd-mm-rrrr') DUE_DATE " +
-					"            FROM bill_non_metered bnm, BILL_COLLECTION_NON_METERED bcnm, MST_MONTH mm " +
-					"           WHERE bnm.BILL_ID = bcnm.BILL_ID(+) and BNM.BILL_MONTH = MM.M_ID AND bnm.CUSTOMER_ID = ? " +
+					"            FROM bill_non_metered bnm, BILL_COLLECTION_NON_METERED bcnm, MST_MONTH mm ,  MST_BANK_INFO mbi" +
+					"           WHERE bnm.BILL_ID = bcnm.BILL_ID(+)  and MBI.BANK_ID=bcnm.BANK_ID and BNM.BILL_MONTH = MM.M_ID AND bnm.CUSTOMER_ID = ? " +
 					"          UNION ALL " +
 					"          SELECT NULL BILL_ID, " +
 					"                 CUSTOMER_ID, " +
-					"                 BANK_ID, " +
+					"                 BANK_ID, NULL BANK_NAME, " +
 					"                 TO_CHAR (TRANS_DATE) COLLECTION_DATE, " +
 					"                 'Advanced' DESCRIPTION, " +
 					"                 NULL BILLED_CONSUMPTION, " +
@@ -106,9 +95,7 @@ public class LedgerService {
 					"                 NULL DUE_DATE " +
 					"            FROM bill_coll_advanced " +
 					"           WHERE status = 1 AND CUSTOMER_ID = ?) " +
-					"ORDER BY BILL_ID " 
-;
-
+					"			ORDER BY BILL_ID " ;
 		}
 				
 				/*" Select TRANS_ID,to_char(TRANS_DATE,'DD-MON-RRRR') TRANS_DATE_F1,PARTICULARS,DEBIT,CREDIT,BALANCE,STATUS" +
@@ -120,14 +107,21 @@ public class LedgerService {
 			try
 			{
 				stmt = conn.prepareStatement(sql);
-				stmt.setString(1,customer_id);
-				stmt.setString(2,customer_id);
+				if(customer.getConnectionInfo().getIsMetered_name().equalsIgnoreCase("Metered")){
+					stmt.setString(1,customer_id);
+				}else{
+					stmt.setString(1,customer_id);
+					stmt.setString(2,customer_id);
+				}				
+				
 				r = stmt.executeQuery();
+				
 				while (r.next())
 				{
 					entry=new CustomerLedgerDTO();
 					entry.setEntry_type(r.getString("BILL_ID"));
 					entry.setBank_id(r.getString("BANK_ID"));
+					entry.setBank_name(r.getString("BANK_NAME"));
 					entry.setIssue_paid_date(r.getString("COLLECTION_DATE"));
 					entry.setParticulars(r.getString("DESCRIPTION"));
 					entry.setGas_sold(r.getString("BILLED_CONSUMPTION"));
