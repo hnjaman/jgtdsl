@@ -20,7 +20,34 @@ jQuery("#gridTable")
         sortorder: "desc",
         ondblClickRow: function(rowid) {
         	callAction('viewCustomer.action?customer_id='+rowid); // customer.java
-        }        
-    }).navGrid('#gridPager',$.extend(footerButton,{search:true,refresh:true}),{},{},{},{},{});
-
-
+        },
+        
+    }).navGrid('#gridPager',$.extend(
+    		$.jgrid.search, {
+    		    // ... some other default which you use
+    		    afterRedraw: function (p) {
+    		        var $form = $(this), formId = this.id, // fbox_list
+    		            bindKeydown = function () {
+    		                $form.find("td.data>.input-elm").keydown(function (e) {
+    		                    if (e.which === $.ui.keyCode.ENTER) {
+    		                        $(e.target).change();
+    		                        $("#" + $.jgrid.jqID(formId) + "_search").click();
+    		                    }
+    		                });
+    		            },
+    		            oldOnChange = p.onChange,
+    		            myOnChange = function (param) {
+    		                var $input = $form.find("td.data>.input-elm"), events;
+    		                oldOnChange.call(this, param);
+    		                if ($input.length > 0) {
+    		                    events = $._data($input[0], "events");
+    		                    if (events && !events.keydown) {
+    		                        bindKeydown();
+    		                    }
+    		                }
+    		            };
+    		        p.onChange = myOnChange;
+    		        bindKeydown.call(this);
+    		    }
+    		},    		
+    		footerButton,{search:true,refresh:true}),{},{},{},{},{});
