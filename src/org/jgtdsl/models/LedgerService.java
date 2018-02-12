@@ -33,7 +33,7 @@ public class LedgerService {
 				 + "    FROM (SELECT bm.BILL_ID, "
 				 + "                 bm.CUSTOMER_ID, "
 				 + "                 bcm.BANK_ID, "
-				 + "                 MBI.BANK_NAME, "
+				 + "                 (select BANK_NAME from MST_BANK_INFO where BANK_ID=bcm.BANK_ID) BANK_NAME, "
 				 + "                 TO_CHAR (bm.COLLECTION_DATE) COLLECTION_DATE, "
 				 + "                 MON || ', ' || BILL_YEAR DESCRIPTION, "
 				 + "                 BILLED_CONSUMPTION, "
@@ -43,15 +43,13 @@ public class LedgerService {
 				 + "                 SURCHARGE_AMOUNT, "
 				 + "                 bm.PAYABLE_AMOUNT, "
 				 + "                 COLLECTED_SURCHARGE, "
-				 + "                 (COLLECTED_AMOUNT + NVL (TAX_AMOUNT, 0)) COLLECTED_AMOUNT, "
+				 + "                 (COLLECTION_AMOUNT + NVL (TAX_AMOUNT, 0)) COLLECTED_AMOUNT, "
 				 + "                 TO_CHAR (LAST_PAY_DATE_WO_SC, 'dd-mm-rrrr') DUE_DATE "
 				 + "            FROM bill_metered bm, "
 				 + "                 bill_collection_metered bcm, "
-				 + "                 MST_MONTH mm, "
-				 + "                 mst_bank_info mbi "
+				 + "                 MST_MONTH mm "				
 				 + "           WHERE     bm.BILL_ID = bcm.BILL_ID(+) "
-				 + "                 AND BM.BILL_MONTH = MM.M_ID "
-				 + "                 AND MBI.BANK_ID = BCM.BANK_ID "
+				 + "                 AND BM.BILL_MONTH = MM.M_ID "				
 				 + "                 AND bm.CUSTOMER_ID = ?) "
 				 + "     ORDER BY BILL_ID";
 
@@ -65,7 +63,8 @@ public class LedgerService {
 			sql=	" SELECT * " +
 					"    FROM (SELECT bnm.BILL_ID, " +
 					"                 bnm.CUSTOMER_ID, " +
-					"                 bcnm.BANK_ID, mbi.BANK_NAME , " +
+					"                 bcnm.BANK_ID," +
+					"             (select BANK_NAME from MST_BANK_INFO where BANK_ID=bcnm.BANK_ID) BANK_NAME, " +
 					"                 TO_CHAR (bnm.COLLECTION_DATE) COLLECTION_DATE, " +
 					"                 MON || ', ' || BILL_YEAR DESCRIPTION, " +
 					"                 TOTAL_CONSUMPTION BILLED_CONSUMPTION, " +
@@ -76,8 +75,8 @@ public class LedgerService {
 					"                 ACTUAL_PAYABLE_AMOUNT PAYABLE_AMOUNT, " +
 					"                 COLLECTED_SURCHARGE_AMOUNT COLLECTED_SURCHARGE, COLLECTED_BILL_AMOUNT COLLECTED_AMOUNT, " +
 					"                 TO_CHAR (DUE_DATE, 'dd-mm-rrrr') DUE_DATE " +
-					"            FROM bill_non_metered bnm, BILL_COLLECTION_NON_METERED bcnm, MST_MONTH mm ,  MST_BANK_INFO mbi" +
-					"           WHERE bnm.BILL_ID = bcnm.BILL_ID(+)  and MBI.BANK_ID=bcnm.BANK_ID and BNM.BILL_MONTH = MM.M_ID AND bnm.CUSTOMER_ID = ? " +
+					"            FROM bill_non_metered bnm, BILL_COLLECTION_NON_METERED bcnm, MST_MONTH mm " +
+					"           WHERE bnm.BILL_ID = bcnm.BILL_ID(+)   and BNM.BILL_MONTH = MM.M_ID AND bnm.CUSTOMER_ID = ? " +
 					"          UNION ALL " +
 					"          SELECT NULL BILL_ID, " +
 					"                 CUSTOMER_ID, " +
@@ -104,6 +103,7 @@ public class LedgerService {
 		
 		   PreparedStatement stmt = null;
 		   ResultSet r = null;
+		
 			try
 			{
 				stmt = conn.prepareStatement(sql);
@@ -144,7 +144,7 @@ public class LedgerService {
 					
 					//System.out.println("Balance : "+balance+", Debit : "+ledger.get(i).getDebit_amount()+", Credit : "+ledger.get(i).getCredit_amount());
 					balance=balance+Double.valueOf(ledger.get(i).getDebit_amount()==null?"0":ledger.get(i).getDebit_amount())-Double.valueOf(ledger.get(i).getCredit_amount()==null?"0":ledger.get(i).getCredit_amount());
-					//System.out.print(" ===>> New Balance : "+balance);
+					//System.out.print("\n ===>> New Balance : "+balance);
 					ledger.get(i).setBalance_amount(balance);
 				}
 				
