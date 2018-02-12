@@ -26,6 +26,7 @@ public class CollectionDTO {
 	private String invoice_no;
 	private String bill_month;
 	private String bill_month_name;
+	private int bill_month_value;
 	private String bill_year;
 	private String bill_month_year;
 	private String is_metered;
@@ -131,6 +132,14 @@ public class CollectionDTO {
 
 	public String getYear_to() {
 		return year_to;
+	}
+
+	public int getBill_month_value() {
+		return bill_month_value;
+	}
+
+	public void setBill_month_value(int i) {
+		this.bill_month_value = i;
 	}
 
 	public void setYear_to(String year_to) {
