@@ -296,7 +296,7 @@ public class BillingService {
 		if(download_type.equalsIgnoreCase("S")) //Single Bill
 			where_condition= " AND bill.bill_id = ? ";
 		else if(download_type.equalsIgnoreCase("M")) //Multiple bill [given multiple bill id]
-			where_condition= " AND bill.bill_id in ( ? )";
+			where_condition= " AND bill.bill_id in ( "+bill_id+" )";
 		
 		
 		
@@ -480,7 +480,7 @@ public class BillingService {
 					stmt.setString(2,customer_category);
 					stmt.setString(3,area_id);
 				}
-				else if(download_type.equalsIgnoreCase("S") || download_type.equalsIgnoreCase("M")){
+				else if(download_type.equalsIgnoreCase("S") ){////download_type.equalsIgnoreCase("M")
 					stmt.setString(1,bill_id);
 				}
 				r = stmt.executeQuery();
@@ -1045,6 +1045,7 @@ public class BillingService {
 					dues=new DuesSurchargeDTO();
 					dues.setBill_id(r.getString("BILL_ID"));
 					dues.setBill_month(Month.values()[r.getInt("BILL_MONTH")-1].getLabel());
+					dues.setBill_month_value(r.getInt("BILL_MONTH"));
 					dues.setBill_year(r.getString("BILL_YEAR"));
 					dues.setBilled_amount(r.getDouble("BILLED_AMOUNT"));
 					dues.setDue_date(r.getString("LAST_PAY_DATE_WO_SC"));					
