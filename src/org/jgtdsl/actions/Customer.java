@@ -50,7 +50,7 @@ public class Customer extends BaseAction implements SessionAware{
 		HttpServletResponse response = ServletActionContext.getResponse();
 		boolean validate=false;
 		
-		if(customer_id.length()!=9)
+		if(customer_id.length()<9 && customer_id.length()>11)
 			validate=false;
 		else
 			validate=CustomerService.validateCustomerId(customer_id);

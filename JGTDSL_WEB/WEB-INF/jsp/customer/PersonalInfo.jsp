@@ -52,7 +52,7 @@
                     </label>
                     <input type="text" id="id_area" style="border: 1px solid #add9e4;width: 4%;font-weight: bold;margin-right: 10px;color: blue;" readonly="readonly" />
                     <input type="text" id="id_category" style="border: 1px solid #add9e4;width: 4%;font-weight: bold;margin-right: 10px;color: blue;" readonly="readonly" />
-                    <input type="text" id="id_code" maxlength="5" style="border: 1px solid #add9e4;width: 30%;;font-weight: bold;color: blue;" />
+                    <input type="text" id="id_code" maxlength="7" style="border: 1px solid #add9e4;width: 30%;;font-weight: bold;color: blue;" />
                     <input type="hidden" name="customer.customer_id" id="customer_id" value="" />
                 </div>
                 <div class="span6">
