@@ -22,6 +22,8 @@ jQuery("#dues_bill_grid").jqGrid({
 	                sorttype: 'string',
 	                search: true
             	},
+            	            	            	
+            	
 		    	{
 		            name: 'bill_year',
 		            index: 'bill_year',
@@ -194,15 +196,42 @@ function saveAndDownloadBill(){
 	var rows = jQuery("#dues_bill_grid").getDataIDs();
     var billInfo="";
     var bill_ids="";
+    
 	for(var a=0;a<rows.length;a++)
 	 {	
 	    row=jQuery("#dues_bill_grid").getRowData(rows[a]);
 	    if($("#jqg_dues_bill_grid_"+row.bill_id).prop('checked')==true) 
 	    { 
 	    	billInfo+=$("#customer_id").val()+"#"+$("#pay_date").val()+"#"+$("#surcharge_rate").val()+"#"+$("#bill_id_"+row.bill_id).val()+"#"+$("#surcharge_amount_"+row.bill_id).val()+"@";
-	    	bill_ids+=$("#bill_id_"+row.bill_id).val()+",";
+	    	bill_ids+="'"+$("#bill_id_"+row.bill_id).val()+"'"+",";	    	
+	    
 	    }
 	}
+	
+//	var myGrid = $('#dues_bill_grid'),
+////	selRowId = myGrid.jqGrid ('getGridParam', 'selrow'),
+////    bill_month = myGrid.jqGrid ('getCell', selRowId, 'bill_month_value');
+////	bill_year = myGrid.jqGrid ('getCell', selRowId, 'bill_year');
+////	
+//	
+//	
+//	selIds = myGrid.jqGrid("getGridParam", "selarrrow"), i, n,
+//	bill_month = [];
+//	bill_year=[];
+//	for (i = 0, n = selIds.length; i < n; i++) {
+//		
+//		bill_month.push(myGrid.jqGrid("getCell", selIds[i], "bill_month_value"));
+//		bill_year.push(myGrid.jqGrid("getCell", selIds[i], "bill_year"));
+//		
+//		if(bill_month[i].length<2){
+//			bill_month[i]="0"+bill_month[i];
+//		}
+//	}
+//	bill_year.join(",");
+//	bill_month.join(",");
+//	
+	
+	
 
 	$("#surcharge_bills").val(billInfo);
 	var formData = new FormData($('form')[0]);	
@@ -225,6 +254,7 @@ function saveAndDownloadBill(){
 		    	
 		  		if(response.status=="OK"){
 		  			
+		  			//window.location="downloadMeteredBill.action?download_type=M&bill_id="+bill_ids+"&customer_id="+$("#customer_id").val()+"&customer_category=02"+"&bill_month="+bill_month+"&bill_year="+bill_year;
 		  			window.location="downloadMeteredBill.action?download_type=M&bill_id="+bill_ids;
 		  		}
 		   
