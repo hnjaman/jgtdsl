@@ -38,7 +38,7 @@
 								 addUser,getCustomerCategoryList,getUserList,getCustomerCategoryList,
 								 getMeterTypeList,getBankList,getBranchList,getAccountList,getAreaList,getTariffList,newCustomer,
 								 ownershipChange,updateOwnershipInfo,updateCustomerInformation,editCustomerInfoHome,updateCustomerInfo,
-								 validateCustomerId,getDepositTypeList,newMeter,getMeterInfo,getApplianceInfo,getTariffDistribution,editTariffMargin,getDueBillList,
+								 validateCustomerId,getDepositTypeList,newMeter,getMeterInfo,getApplianceInfoPlain,getApplianceInfo,getTariffDistribution,editTariffMargin,getDueBillList,
 								 								 								
 								 getCustomerInfoAsJson,getMeterListAsJson,getMeterInfoAsJson,
 								 saveDisconnInfo,saveReconnInfo,
@@ -64,7 +64,7 @@
 								 loadPressureChangeHome,saveLoadPressureChangeInfo,getLoadPressureChangeInfo,deleteLoadPressureChagneInfo,
 								 hhvVatRebateChangHome,securityAdjustmentHome,saveSecurityAdjustment,getSecurityBalance,
 								 
-								 burnerQntChangeHome,saveBurnerQntChangeInfo,getBurnerQntChangeInfo,getApplianceInfo,deleteBurnerQntChagneInfo,
+								 burnerQntChangeHome,saveBurnerQntChangeInfo,getBurnerQntChangeInfo,getApplianceInfoPlain,getApplianceInfo,deleteBurnerQntChagneInfo,
 								 
 								 meterRentChangeHome,saveMeterRentChangeInfo,getMeterRentChangeInfo,deleteMeterRentChagneInfo,
 								 bankGarantieManagementHome,saveGankGarantieExpireExtentionInfo,
@@ -123,7 +123,7 @@
 								 iBankingXlsUploadHome,iBankingFileUploader,
 								 saveReconcilationInfo,deleteReconcilation,
 								 saveAdditonalShurcharge,
-								 getApplianceInfoById,saveNewApplianceInfo,dissconnectRaizer,getRaizerDisconnectionListInfo,reconnectRaizer,
+								 getApplianceInfoPlain,getApplianceInfoById,saveNewApplianceInfo,dissconnectRaizer,getRaizerDisconnectionListInfo,reconnectRaizer,
 								 smsHome,smsDefalter,fetchDefaulter,smsAction,deleteCollection,fetchCollection4Delete,ExecuteDeleteCollection,getProcessedTotalSMSCount,getTotalCustomerToSendSMS
 								 ;
 								 
@@ -134,7 +134,7 @@
 								 addUser,getCustomerCategoryList,getUserList,getCustomerCategoryList,
 								 getMeterTypeList,getBankList,getBranchList,getAccountList,getAreaList,getTariffList,newCustomer,
 								 ownershipChange,updateOwnershipInfo,updateCustomerInformation,editCustomerInfoHome,updateCustomerInfo,getDueBillList,
-								 validateCustomerId,getDepositTypeList,newMeter,getMeterInfo,getApplianceInfo,
+								 validateCustomerId,getDepositTypeList,newMeter,getMeterInfo,getApplianceInfoPlain,getApplianceInfo,
 								 								 								
 								 getCustomerInfoAsJson,getMeterListAsJson,getMeterInfoAsJson,
 								 saveDisconnInfo,saveReconnInfo,
@@ -223,7 +223,7 @@
 								 addUser,getCustomerCategoryList,getUserList,getCustomerCategoryList,
 								 getMeterTypeList,getBankList,getBranchList,getAccountList,getAreaList,getTariffList,newCustomer,
 								 ownershipChange,updateOwnershipInfo,updateCustomerInformation,editCustomerInfoHome,updateCustomerInfo,getDueBillList,
-								 validateCustomerId,getDepositTypeList,newMeter,getMeterInfo,getApplianceInfo,
+								 validateCustomerId,getDepositTypeList,newMeter,getMeterInfo,getApplianceInfoPlain,getApplianceInfo,
 								 								 								
 								 getCustomerInfoAsJson,getMeterListAsJson,getMeterInfoAsJson,
 								 saveDisconnInfo,saveReconnInfo,
@@ -473,6 +473,10 @@
 	</action>
 	<action name="getApplianceInfo" class="org.jgtdsl.actions.Customer" method="getApplianceInfo">
 		<result name="success">/WEB-INF/jsp/connection/Appliance.jsp</result>
+	</action>
+	
+	<action name="getApplianceInfoPlain" class="org.jgtdsl.actions.Customer" method="getApplianceInfo">
+		<result name="success">/WEB-INF/jsp/connection/AppliancePlain.jsp</result>
 	</action>
 	
 
