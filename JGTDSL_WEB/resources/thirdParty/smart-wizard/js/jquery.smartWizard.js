@@ -31,7 +31,7 @@ function SmartWizard(target, options) {
      */
 
     var _init = function($this) {
-        var elmActionBar = $('<div><textarea rows="1" style="width: 85%; color:red;" name="" id="dueListbyString" disabled="disabled"/></div>').addClass("actionBar");//inserted by Tanmay
+        var elmActionBar = $('<div><div style="padding-bottom:7px; font-size:17px;" id="applianceInfo">Info</div><textarea rows="1" style="width: 85%; color:red;" name="" id="dueListbyString" disabled="disabled"/></div>').addClass("actionBar");//inserted by Tanmay
         elmActionBar.append($this.msgBox);
         $('.close',$this.msgBox).click(function() {
             $this.msgBox.fadeOut("normal");

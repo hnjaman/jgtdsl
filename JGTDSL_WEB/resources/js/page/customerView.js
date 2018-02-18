@@ -25,6 +25,7 @@ $("a[href*=#sw-basic-step-5]").attr("isdone","1");
 $(".btn.btn-inverse.buttonFinish").remove();
 
 var txt="3";
+ajaxLoad("applianceInfo","getApplianceInfoPlain.action?customer_id="+$("#customer_id").val());
 var customerLedgerUrl="getCustomerLedger.action?customer_id="+$("#customer_id").val();
 $("#customer_ledger_grid").jqGrid($.extend(true, {}, scrollPagerGridOptions, {
 	url: customerLedgerUrl,

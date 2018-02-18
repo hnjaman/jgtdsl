@@ -22,6 +22,7 @@
 	width: 80%;
 	height: 67%;
 }
+
 .month_help{
     position:absolute;
     top:4%;
@@ -46,7 +47,7 @@
     				<h4 id="rightSpan_caption">Non Meter Bill Collection Information</h4>
 		 </div>
 				<div class="w-box-content" style="padding: 10px;" id="content_div">					
-						<div style="width: 50%;height: 100%;float: left;">
+						<div style="width: 80%;height: 100%;float: left;">
 							<div >
 								<!-- Start -->
 								<div class="bank_info" id="bank_info">
@@ -74,7 +75,7 @@
 									</div>
 									<div class="span6">
 										<label style="width: 41%">Customer ID </label>
-										<input type="text" name="collection.customer_id" id="customer_id" style="font-weight: bold;color: #3b5894; z-index: 2; background: transparent;width: 51%;margin-top: 2px;" readonly/>
+										<input type="text" name="collection.customer_id" id="customer_id"  style="font-weight: bold;color: #3b5894; z-index: 2; background: transparent;width: 51%;margin-top: 2px;" readonly/>
 										
 									</div>
 								</div>	
@@ -137,22 +138,24 @@
 									
 								</div>
 								
-								
+									
 								
 							</div>
 							
 							<div class="row-fluid" id="from_bill_month_div">
 					        	<div class="span12">
 					         		<label style="width: 20%">From Month Year</label>        
-					         			<input type="text" name="collection.from_month" id="from_month" tabindex="1" style="text-align: right;font-weight: bold;color: black;width: 11.2%; background-color: #FFFFF;"/>
-					         			<input type="text" name="collection.from_year" id="from_year" tabindex="2" style="text-align: right;font-weight: bold;color: black;width: 11.2%; background-color: #FFFFF;"/>
-					        	</div>              
+					         			<input placeholder="Month" type="text" name="collection.from_month" id="from_month" tabindex="1" style="text-align: right;font-weight: bold;color: black;width: 11.2%; background-color: #FFFFF;"/>
+					         			<input placeholder="Year" type="text" name="collection.from_year" id="from_year" tabindex="2" style="text-align: right;font-weight: bold;color: black;width: 11.2%; background-color: #FFFFF;"/>
+					        	</div> 
+					        	
+					        	             
 					       </div>
 					       <div class="row-fluid" id="to_bill_month_div">
 					        	<div class="span12">
 					         		<label style="width: 20%">To Month Year</label>        
-					         			<input type="text" name="collection.to_month" id="to_month" tabindex="3" style="text-align: right;font-weight: bold;color: black;width: 11.2%; background-color: #FFFFF;"/>
-					         			<input type="text" name="collection.to_year" id="to_year" tabindex="4" style="text-align: right;font-weight: bold;color: black;width: 11.2%; background-color: #FFFFF;"/>
+					         			<input placeholder="Month" type="text" name="collection.to_month" id="to_month" tabindex="3" style="text-align: right;font-weight: bold;color: black;width: 11.2%; background-color: #FFFFF;"/>
+					         			<input placeholder="Year" type="text" name="collection.to_year" id="to_year" tabindex="4" style="text-align: right;font-weight: bold;color: black;width: 11.2%; background-color: #FFFFF;"/>
 					        	</div>
 					        </div>	
 								
@@ -250,18 +253,18 @@
 12 -- December </br>
 </h4>
   </div>
-  
-  <div>
-<textarea rows="1" style="width: 100%; color:red;" name="dueListbyString" id="dueListbyStringcoll" disabled="disabled">
-</textarea>
-</div>																
+<div>
+<div class="span6" style="font-size:17px; width:100%;" id="applienceAndDue" >Appliance Information</div><br/><br/>
+<textarea rows="1" style="width: 100%; color:red;" name="dueListbyString" id="dueListbyStringcoll" disabled="disabled"></textarea>  	
+</div>
+
+													
 	
 </div>	
 
 
  
 <p style="clear: both;margin-top: 5px;clear: both;"></p>
-
 <div class="collection-list" id="collection_grid_div"> 
 	<table id="collection_grid"></table>
 	<div id="collection_grid_pager" ></div>
