@@ -120,7 +120,7 @@
 								<label>Appliance Info.<m class='man'/><font style="font-size: 8px">(cond.)</font></label>
 										<select name="customer.connectionInfo.appliance_id" id="appliance_list" style="width: 20%;">
 			                                <option value="" selected="selected">N/A</option>
-			                                <s:iterator value="%{#application.ALL_APPLIANCE}" id="appliance_list">
+			                                <s:iterator value="%{#session.ALL_APPLIANCE}" id="appliance_list">
 			                                    <option value="<s:property value="applianc_id" />">
 			                                        <s:property value="applianc_name"/>
 			                                    </option>

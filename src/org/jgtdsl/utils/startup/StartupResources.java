@@ -99,7 +99,7 @@ public class StartupResources  extends HttpServlet {
 		
 		config.getServletContext().setAttribute("ACTIVE_AREA",AreaService.getAreaList(0,0,"status=1",Utils.EMPTY_STRING,Utils.EMPTY_STRING,0));
 		config.getServletContext().setAttribute("ALL_MINISTRY",MinistryService.getAllMinistry());
-		config.getServletContext().setAttribute("ALL_APPLIANCE",BurnerQntChangeService.getAllAppliance());
+		//config.getServletContext().setAttribute("ALL_APPLIANCE",BurnerQntChangeService.getAllAppliance());
 		
 		//CacheUtil.setListToCache("ALL_DIVISION", AddressService.getAllDivision());
 		config.getServletContext().setAttribute("ALL_DIVISION",AddressService.getAllDivision());

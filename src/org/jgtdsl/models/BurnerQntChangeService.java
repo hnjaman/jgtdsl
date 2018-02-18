@@ -619,6 +619,8 @@ public class BurnerQntChangeService {
 	 		return response;
 	 	
 	}
+	
+	
 	public static ArrayList<CustomerApplianceDTO> getAllAppliance()
 	{
 		CustomerApplianceDTO ministry=null;
@@ -647,6 +649,52 @@ public class BurnerQntChangeService {
 		
 		return applianceList;
 	}
+	
+	
+	public static ArrayList<CustomerApplianceDTO> getAllAppliance(String area_id)
+	{
+		CustomerApplianceDTO ministry=null;
+		ArrayList<CustomerApplianceDTO> applianceList=new ArrayList<CustomerApplianceDTO>();
+		Connection conn = ConnectionManager.getConnection();
+		String sql ="SELECT * " +
+					"    FROM APPLIANCE_RATE_HISTORY " +
+					"   WHERE     (APPLIANCE_ID, SLNO) IN " +
+					"                (  SELECT APPLIANCE_ID, MAX (SLNO) " +
+					"                     FROM APPLIANCE_RATE_HISTORY " +
+					"                    WHERE     AREA_ID = '"+area_id+"' " +
+					"                          AND Effective_From <= " +
+					"                                 TO_DATE ('01-01-2018', 'dd-mm-YYYY') " +
+					"                          AND (   Effective_To IS NULL " +
+					"                               OR Effective_To >= " +
+					"                                     TO_DATE ('01-01-2018', 'dd-mm-YYYY')) " +
+					"                 GROUP BY APPLIANCE_ID) " +
+					"         AND AREA_ID = '"+area_id+"' " +
+					"ORDER BY APPLIANCE_ID ";
+
+		   
+		   PreparedStatement stmt = null;
+		   ResultSet r = null;
+			try
+			{
+				stmt = conn.prepareStatement(sql);
+				r = stmt.executeQuery();
+				while (r.next())
+				{
+					ministry=new CustomerApplianceDTO();
+					ministry.setApplianc_id(r.getString("APPLIANCE_ID"));
+					ministry.setApplianc_name(r.getString("APPLIANCE_NAME"));					
+					applianceList.add(ministry);
+				}
+			} 
+			catch (Exception e){e.printStackTrace();}
+	 		finally{try{stmt.close();ConnectionManager.closeConnection(conn);} catch (Exception e)
+				{e.printStackTrace();}stmt = null;conn = null;}
+		
+		
+		return applianceList;
+	}
+	
+	
 	public boolean canDeleteApplianceEntry(String pid)
 	{		
 		Connection conn = ConnectionManager.getConnection();

@@ -38,7 +38,7 @@ public class ConnectionService {
 				   " Values(?,?,?,?,?,?,to_date(?,'dd-MM-YYYY HH24:MI'),?,?,?,?,?,?,?) ";
 		
 		String burnerInfoSql="INSERT INTO BURNER_QNT_CHANGE ( PID, CUSTOMER_ID,NEW_APPLIANCE_QNT,NEW_APPLIANCE_QNT_BILLCAL,EFFECTIVE_DATE, REMARKS,INSERT_BY, INSERT_DATE,OLD_APPLIANCE_QNT,OLD_APPLIANCE_QNT_BILLCALL,APPLIANCE_TYPE_CODE ) VALUES (SQN_CNG_BURNER_QNT.NEXTVAL,?,?,?,to_date(?,'dd-MM-YYYY'),?,?,SYSDATE,?,?,?)";
-		String customer_appliance_sql="INSERT INTO CUSTOMER_APPLIANCE ( CUSTOMER_ID, APPLIANCE_ID,QUANTITY)VALUES (?,?,?)";
+		//String customer_appliance_sql="INSERT INTO CUSTOMER_APPLIANCE ( CUSTOMER_ID, APPLIANCE_ID,QUANTITY)VALUES (?,?,?)";
 		PreparedStatement stmt = null;
 			try
 			{
@@ -110,15 +110,15 @@ public class ConnectionService {
 					}
 					
 					stmt.executeBatch();
-					stmt = conn.prepareStatement(customer_appliance_sql);
-					for(int i=0;i<applianceID.length;i++){
-						
-						stmt.setString(1,connection.getCustomer_id());
-						stmt.setString(2,applianceID[i]);
-						stmt.setInt(3,Integer.valueOf(applianceQnt[i]));
-						stmt.addBatch();
-					}
-					stmt.executeBatch();
+					//stmt = conn.prepareStatement(customer_appliance_sql);
+//					for(int i=0;i<applianceID.length;i++){
+//						
+//						stmt.setString(1,connection.getCustomer_id());
+//						stmt.setString(2,applianceID[i]);
+//						stmt.setInt(3,Integer.valueOf(applianceQnt[i]));
+//						stmt.addBatch();
+//					}
+//					stmt.executeBatch();
 				}
 					
 				//transactionManager.commit();

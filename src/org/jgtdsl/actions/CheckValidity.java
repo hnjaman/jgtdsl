@@ -12,6 +12,7 @@ import org.jgtdsl.dto.AutoCompleteObject;
 import org.jgtdsl.dto.UserDTO;
 import org.jgtdsl.models.AreaService;
 import org.jgtdsl.models.BankBranchService;
+import org.jgtdsl.models.BurnerQntChangeService;
 import org.jgtdsl.models.CustomerService;
 import org.jgtdsl.models.UserService;
 import org.jgtdsl.utils.Utils;
@@ -59,10 +60,19 @@ public class CheckValidity extends BaseAction{
 				session.put("role", loggedInUser.getRole_name());
 				setTheme(loggedInUser);
 				//check here for bank list
+				//if is added for admin role who can access all banks of all area ~Prince~Feb 17
+				if(loggedInUser.getDesignation_id().equals("02")){
+					session.put("USER_BANK_LIST", BankBranchService.getBankList(0,0,"bank.status=1 "+"","bank.AREA_ID","ASC",999999));				
+					session.put("USER_AREA_LIST", userService.getUserAreaList(loggedInUser.getUserId()));
+					session.put("USER_AREA", AreaService.getAreaList(0,0,"status=1 and AREA_ID='"+loggedInUser.getArea_id()+"'",Utils.EMPTY_STRING,Utils.EMPTY_STRING,0));
+				}else{
+					session.put("USER_BANK_LIST", BankBranchService.getBankList(0,0,"bank.status=1 and bank.AREA_ID='"+loggedInUser.getArea_id()+"'","BANK_NAME","ASC",0));				
+					session.put("USER_AREA_LIST", userService.getUserAreaList(loggedInUser.getUserId()));
+					session.put("USER_AREA", AreaService.getAreaList(0,0,"status=1 and AREA_ID='"+loggedInUser.getArea_id()+"'",Utils.EMPTY_STRING,Utils.EMPTY_STRING,0));
+				}
 
-				session.put("USER_BANK_LIST", BankBranchService.getBankList(0,0,"bank.status=1 and bank.AREA_ID='"+loggedInUser.getArea_id()+"'","BANK_NAME","ASC",0));				
-				session.put("USER_AREA_LIST", userService.getUserAreaList(loggedInUser.getUserId()));
-				session.put("USER_AREA", AreaService.getAreaList(0,0,"status=1 and AREA_ID='"+loggedInUser.getArea_id()+"'",Utils.EMPTY_STRING,Utils.EMPTY_STRING,0));
+				session.put("ALL_APPLIANCE",BurnerQntChangeService.getAllAppliance(loggedInUser.getArea_id()));
+				
 				
 				//ServletActionContext.getServletContext().setAttribute("USER_AREA_LIST_"+loggedInUser.getArea_id(),AreaService.getAreaList(0,0,"status=1 and AREA_ID='"+loggedInUser.getArea_id()+"'",Utils.EMPTY_STRING,Utils.EMPTY_STRING,0));
 				//ServletActionContext.getServletContext().setAttribute("USER_BANK_LIST",BankBranchService.getBankList(0,0,"bank.status=1 and AREA_ID='"+loggedInUser.getArea_id()+"'","BANK_NAME","ASC",0));				
