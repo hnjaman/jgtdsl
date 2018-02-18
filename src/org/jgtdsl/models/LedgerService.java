@@ -143,7 +143,7 @@ public class LedgerService {
 						balance=Double.valueOf(ledger.get(i).getBalance_amount());
 					
 					//System.out.println("Balance : "+balance+", Debit : "+ledger.get(i).getDebit_amount()+", Credit : "+ledger.get(i).getCredit_amount());
-					balance=balance+Double.valueOf(ledger.get(i).getDebit_amount()==null?"0":ledger.get(i).getDebit_amount())-Double.valueOf(ledger.get(i).getCredit_amount()==null?"0":ledger.get(i).getCredit_amount());
+					balance=balance+Double.valueOf(ledger.get(i).getDebit_amount()==null?"0":ledger.get(i).getDebit_amount())-Double.valueOf(ledger.get(i).getCredit_amount()==null?"0":ledger.get(i).getCredit_amount())-Double.valueOf(ledger.get(i).getCredit_surcharge()==null?"0":ledger.get(i).getCredit_surcharge());
 					//System.out.print("\n ===>> New Balance : "+balance);
 					ledger.get(i).setBalance_amount(balance);
 				}
