@@ -1,6 +1,6 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
  <input type="hidden" value="<s:property value='customer_id'/>" id="customer_id" />
-<table class="table table-bordered">
+<table id="appTable" class="table table-bordered">
     <thead>
         <tr>
             <th>SL</th>           
@@ -22,7 +22,7 @@
 		</s:if>
     </tbody>
 </table>
-<br/><br/>
+
 
 
                         
