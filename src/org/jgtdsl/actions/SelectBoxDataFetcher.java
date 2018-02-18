@@ -213,6 +213,10 @@ public class SelectBoxDataFetcher extends BaseAction implements SessionAware{
 			{
 				type="";
 			}
+			//added later
+			if(loggedInUser.getDesignation_id().equals("02")){
+				type="1";
+			}
 			
 			String branches=Utils.EMPTY_STRING;
 			String whereClause=Utils.EMPTY_STRING;
