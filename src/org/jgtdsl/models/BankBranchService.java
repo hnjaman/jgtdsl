@@ -32,7 +32,24 @@ public class BankBranchService {
 		
 		if(sortFieldName!=null && !sortFieldName.equalsIgnoreCase(""))
 			orderByQuery=" ORDER BY "+sortFieldName+" " +sortOrder+" ";
-		if(total==0)
+		//for admin role who can see the list of all banks of all area ~Prince ~feb 17
+		if(total==999999)
+			     sql="  SELECT DISTINCT bank.bank_id, " +
+			    		 "                  bank.AREA_ID, " +
+			    		 "                  bank.AREA_ID ||' - '|| bank.bank_name  bank_name, " +
+			    		 "                  bank.address, " +
+			    		 "                  bank.phone, " +
+			    		 "                  bank.fax, " +
+			    		 "                  bank.email, " +
+			    		 "                  bank.url, " +
+			    		 "                  bank.description, " +
+			    		 "                  bank.status " +
+			    		 "    FROM MST_BANK_INFO bank, MST_BRANCH_INFO branch " +
+			    		 "   WHERE bank.bank_id = branch.bank_id "+
+			    		 (whereClause.equalsIgnoreCase("")?"":(" And ( "+whereClause+" )"))+
+			    		 " "+orderByQuery ;
+		//end of additional code
+		else if(total==0)
 				  sql = " Select distinct bank.bank_id,bank_name,bank.address,bank.phone," +
 				  		"bank.fax,bank.email,bank.url,bank.description,bank.status " +
 				  		"from MST_BANK_INFO bank,MST_BRANCH_INFO branch " +
@@ -50,8 +67,10 @@ public class BankBranchService {
 			try
 			{
 				stmt = conn.prepareStatement(sql);
-				if(total!=0)
-				{
+				if(total==999999 || total==0){
+					//do nothing
+				}
+				else{
 				stmt.setInt(1, index);
 				stmt.setInt(2, index+offset);
 				}
