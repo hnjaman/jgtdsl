@@ -2684,7 +2684,7 @@ public class CollectionBankStatement extends BaseAction {
 									"         SUM (FEES) FEESS, " +
 									"         SUM (SECURITY) SECURITY " +
 									"    FROM (  SELECT TO_CHAR (TRANS_DATE) TRANS_DATE, " +
-									"                   SUM (ACTUAL_REVENUE) ACTUAL_REVENUE, " +
+									"                   SUM (DEBIT) - SUM (SURCHARGE) as ACTUAL_REVENUE, " +
 									"                   SUM (SURCHARGE) SURCHARGE, " +
 									"                   0 FEES, " +
 									"                   0 SECURITY " +
