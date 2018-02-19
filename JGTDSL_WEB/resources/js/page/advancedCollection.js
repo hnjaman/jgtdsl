@@ -29,7 +29,7 @@ $('#customer_code').keyup(function(e){
     if(e.keyCode == 13)
     {
     	    	
-    	var fields = ["customer_name","customerType","advanced_amount","from_month","to_month","applienceAndDue"];
+    	var fields = ["customer_name","customerType","advanced_amount","from_month","to_month"];
     	clearField.apply(this,fields);
     	
         var customer_id=$("#customer_code").val();
@@ -51,9 +51,8 @@ $('#customer_code').keyup(function(e){
              
              
         	
-        	ajaxLoad("applienceAndDue","getApplianceInfoPlain.action?customer_id="+customer_id);
-        	//$("#applienceAndDue").empty();
-        	//$( "#appTable" ).removeClass( "table table-bordered" );
+        	ajaxLoad("applienceAndDue","getApplianceInfo.action?customer_id="+customer_id);
+        	$( "#appTable" ).removeClass( "table table-bordered" );
              
         	//end
 	
