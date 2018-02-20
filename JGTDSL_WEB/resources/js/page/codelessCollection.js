@@ -155,11 +155,14 @@ $("#collection_grid").jqGrid($.extend(true, {}, scrollPagerGridOptions, {
 		
 		
 		
-		$("#customer_id").val(rowData.customer_id);
+		$("#customer_id").val($.trim(rowData.customer_id));
 		$("#is_codeless").val(rowData.is_codeless);
 		$("#customer_name").val(rowData.customer_name);
 		$("#address").val(rowData.address);
 		$("#scroll_no").val(rowData.scroll_no);
+		//added later
+		$('#customer_id').focus();
+    	$('#customer_id').select();
 		
 
 		
@@ -239,8 +242,17 @@ $('#surcharge_amount').keyup(function(e){
 });
 
 $('#customer_id').keyup(function(e){
+	
 	if(e.keyCode == 13){
-		$('#customer_name').focus();
+		var isOthersDisabled = $('#customer_name').prop('disabled');
+		if(isOthersDisabled){
+			//save advanced collection
+			saveAdvancedCollection(2);
+		}
+		else{
+			$('#customer_name').focus();
+		}
+		
 	}
 });
 
@@ -288,10 +300,12 @@ function saveAdvancedCollection(x){
 		    if(response.status=="OK")
 		    {
 		    	//clearing form
-		    	$("#from_month").prop('disabled', false);
-				$("#from_year").prop('disabled', false);
-				$("#to_month").prop('disabled', false);
-				$("#to_year").prop('disabled', false);
+		    	
+		    	//
+		    	$("#from_month").prop('readonly', false);
+				$("#from_year").prop('readonly', false);
+				$("#to_month").prop('readonly', false);
+				$("#to_year").prop('readonly', false);
 				$("#advanced_amount").prop('disabled', false);
 				$("#surcharge_amount").prop('disabled', false);				
 				$("#bank_id").prop('disabled', false);
@@ -304,9 +318,10 @@ function saveAdvancedCollection(x){
 				$("#btn_save_advance").prop('disabled', true);
 				
 		    	//end of: clearing form
+				
 		    	
 		    	
-				var fields = ["customer_name","customer_id","address","customerType","advanced_amount","from_month","to_month","surcharge_amount"];
+				var fields = ["customer_name","customer_id","address","customerType","advanced_amount","from_month","to_month","from_year","to_year","surcharge_amount"];
 		    	clearField.apply(this,fields);
 		       getCollectionHistoryByDate();
 		    }
