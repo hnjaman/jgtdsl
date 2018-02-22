@@ -2205,7 +2205,7 @@ public class CollectionBankStatement extends BaseAction {
 	  
 	  try {
 		  	
-		  	String account_info_sql="select CATEGORY_ID,CATEGORY_NAME from MST_CUSTOMER_CATEGORY order by CATEGORY_NAME ";
+		  	String account_info_sql="select CATEGORY_ID,CATEGORY_NAME from MST_CUSTOMER_CATEGORY order by CATEGORY_NAME desc";
 
 	     
 	   
@@ -2919,6 +2919,10 @@ public class CollectionBankStatement extends BaseAction {
 	int collectionMonth=Integer.valueOf(collection_month);
 
 	int collectionYear=Integer.valueOf(collection_year);
+	
+	PreparedStatement ps1=null;
+	ResultSet resultSet=null;
+	
 		
 		try {
 			
@@ -2933,7 +2937,7 @@ public class CollectionBankStatement extends BaseAction {
 									"ORDER BY CUSTOMER_ID ";
 
 			
-			PreparedStatement ps1=conn.prepareStatement(transaction_sql);
+			 ps1=conn.prepareStatement(transaction_sql);
 			//ps1.setString(1, collection_month);
 			//ps1.setString(2, collection_year);
 			//ps1.setString(3, branch_id);
@@ -2944,7 +2948,7 @@ public class CollectionBankStatement extends BaseAction {
 			//ps1.setString(6, collection_year);
 			//ps1.setString(9, branch_id);
         	
-        	ResultSet resultSet=ps1.executeQuery();
+        	resultSet=ps1.executeQuery();
         	
         	
         	while(resultSet.next())
@@ -2957,11 +2961,39 @@ public class CollectionBankStatement extends BaseAction {
         		transactionListDetails.add(transactionDto1);
         		
         	}
+        	
+        	
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			System.out.println(e.getMessage());
 			e.printStackTrace();
+		} finally{
+			try {
+				resultSet.close();
+				ps1.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
+		
+		
+//		finally { 
+//		    try { 
+//		        if (resultSet != null) 
+//		        	resultSet.close(); 
+//		    } catch (SQLException sqle) {// log this} 
+//		    try { 
+//		        if (stmt != null) 
+//		            stmt.close(); 
+//		    } catch (SQLException sqle) {// log this} 
+//		    try { 
+//		        if (conn != null) 
+//		            conn.close(); 
+//		    } catch (SQLException sqle)  {// log this} }
+//		}
+		
+		
 		
 		return transactionListDetails;
 	}
