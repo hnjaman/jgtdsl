@@ -60,6 +60,7 @@ public class CollectionBankStatement extends BaseAction {
 	ArrayList<TransactionDTO> transactionList=new ArrayList<TransactionDTO>();
 	AccountDTO accountInfo=new AccountDTO();
 	ArrayList<TransactionDTO> allBnakBranchNameID=new ArrayList<TransactionDTO>();
+	ArrayList<TransactionDTO> allCategoryNameID = new ArrayList<TransactionDTO>();
 	public  ServletContext servlet;
 	Connection conn = ConnectionManager.getConnection();
 	
@@ -156,9 +157,9 @@ public class CollectionBankStatement extends BaseAction {
 			document.add(headerTable);
 			
 			
-			
-			
-			if(report_for.equals("date_wise")){
+			if(report_for.equals("security")){
+				generatePdf_for_SecurityCollection(document);
+			}else if(report_for.equals("date_wise")){
 				generatePdfDate_wise(document);
 			}else if(report_for.equals("month_wise")){
 				//generatePdfMonth_wise(document);				// per day total collection month wise for a specific bank
@@ -193,9 +194,206 @@ public class CollectionBankStatement extends BaseAction {
 		return null;
 		
 	}
+	
+	/* Security collection month wise
+	 * */
 
+	private void generatePdf_for_SecurityCollection(Document document) throws DocumentException
+	{
+
+		allCategoryNameID = getAllCategoryNameID();
+		int allcategory = allCategoryNameID.size();
+		
+		allBnakBranchNameID=getAllBnakBranchNameID();
+		//double forwardBalance=getForwardBalanceMonthwise();
+		int allbranch=allBnakBranchNameID.size();
+		
+		
+		for(int category=0;category<allcategory;category++){
+			
+			String category_id = allCategoryNameID.get(category).getCategory_id();
+			
+			for(int i=0;i<allbranch;i++){	
+				
+				String branch_id=allBnakBranchNameID.get(i).getBranch_id();
+				
+				transactionList=getAllBankWiseSecurityCollection(branch_id,category_id);
+				
+				int listSize=transactionList.size();
+				if(listSize==0){
+					continue;
+				}
+				
+				document.setMargins(20,20,48,72);
+				PdfPTable headLinetable = null;
+				PdfPCell pcell=null;
+				headLinetable = new PdfPTable(1);
+				headLinetable.setWidthPercentage(100);
+				headLinetable.setWidths(new float[]{100});
+				
+				pcell = new PdfPCell(new Paragraph("Monthly Security Collection",ReportUtil.f8B));
+				pcell.setMinimumHeight(18f);
+				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				pcell.setBorder(0);
+				headLinetable.addCell(pcell);		
+						
+				pcell=new PdfPCell(new Paragraph("COLLECTION MONTH : "+Month.values()[Integer.valueOf(collection_month)-1]+"-"+collection_year,ReportUtil.f9B));
+				pcell.setMinimumHeight(18f);
+				pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				pcell.setBorder(0);
+				pcell.setPaddingBottom(5);
+				headLinetable.addCell(pcell);
+				
+//				pcell = new PdfPCell(new Paragraph("gfhfghgf"));
+//				pcell.setBorder(0);
+//				headLinetable.addCell(pcell);
+				
+				document.add(headLinetable);
+				
+				String category_name = allCategoryNameID.get(category).getCategory_name();
+				String bank_name=allBnakBranchNameID.get(i).getBank_name();
+				String branch_name=allBnakBranchNameID.get(i).getBranch_name();
+				
+				PdfPTable categoryname = null;
+				//PdfPCell pcell=null;
+				categoryname = new PdfPTable(1);
+				categoryname.setWidthPercentage(100);
+				categoryname.setWidths(new float[]{100});
+				
+				pcell = new PdfPCell(new Paragraph(""+category_name,ReportUtil.f9B));
+				pcell.setMinimumHeight(18f);
+				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				pcell.setBorder(0);
+				categoryname.addCell(pcell);
+				
+				document.add(categoryname);
+				
+				PdfPTable bankbranch = null;
+				//PdfPCell pcell=null;
+				bankbranch = new PdfPTable(1);
+				bankbranch.setWidthPercentage(100);
+				bankbranch.setWidths(new float[]{100});
+				
+				pcell = new PdfPCell(new Paragraph(""+bank_name+", "+branch_name+" "+branch_id,ReportUtil.f8B));
+				pcell.setMinimumHeight(18f);
+				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				pcell.setBorder(0);
+				bankbranch.addCell(pcell);
+				
+				document.add(bankbranch);
+				
+				PdfPTable pdfPTable = new PdfPTable(5);
+				pdfPTable.setWidthPercentage(100);
+				pdfPTable.setWidths(new float[]{10,20,35,20,15});
+				pdfPTable.setHeaderRows(1);
+				
+				pcell = new PdfPCell(new Paragraph("SL No",ReportUtil.f11B));
+				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				pcell.setColspan(1);
+				pdfPTable.addCell(pcell);
+				
+				pcell = new PdfPCell(new Paragraph("Customer Code",ReportUtil.f11B));
+				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				pcell.setColspan(1);
+				pdfPTable.addCell(pcell);
+				
+				pcell = new PdfPCell(new Paragraph("Customer Name",ReportUtil.f11B));
+				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				pcell.setColspan(1);
+				pdfPTable.addCell(pcell);
+				
+				pcell = new PdfPCell(new Paragraph("Security",ReportUtil.f11B));
+				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				pcell.setColspan(1);
+				pdfPTable.addCell(pcell);
+				
+				pcell = new PdfPCell(new Paragraph("Comment",ReportUtil.f11B));
+				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				pcell.setColspan(1);
+				pdfPTable.addCell(pcell);
+				
+				//document.add(pdfPTable);
+				
+				
+			
+				
+				double totalSecurity=0.0;
+//				double totalSurcharge=0.0;
+//				double totalFees=0.0;
+//				double totalSecurityDeposit=0.0;
+//				double total=0.0;
+
+					for(int j=0;j<listSize;j++)
+					{
+						pcell = new PdfPCell(new Paragraph(String.valueOf(j+1),ReportUtil.f9));
+						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+						pcell.setColspan(1);
+						pdfPTable.addCell(pcell);
+						
+						pcell = new PdfPCell(new Paragraph(transactionList.get(j).getCustomer_id(),ReportUtil.f9));
+						pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
+						pcell.setColspan(1);
+						pdfPTable.addCell(pcell);
+						
+						pcell = new PdfPCell(new Paragraph(transactionList.get(j).getFull_name(),ReportUtil.f9));
+						pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
+						pcell.setColspan(1);
+						pdfPTable.addCell(pcell);
+								
+						pcell = new PdfPCell(new Paragraph(taka_format.format(transactionList.get(j).getDebit()),ReportUtil.f9));
+						pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+						pcell.setColspan(1);
+						pdfPTable.addCell(pcell);
+						
+						pcell = new PdfPCell(new Paragraph(" ",ReportUtil.f9));
+						pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
+						pcell.setColspan(1);
+						pdfPTable.addCell(pcell);
+								
+						
+						totalSecurity+=transactionList.get(j).getDebit();
+						
+//						 totalSurcharge+=transactionList.get(j).getSurcharge();
+//						 totalFees+=transactionList.get(j).getFees();
+//						 totalSecurityDeposit+=transactionList.get(j).getSecurity();
+//						 total+=transactionList.get(j).getGas_bill()+transactionList.get(j).getSurcharge()+transactionList.get(j).getFees()+transactionList.get(j).getSecurity();
+				
+					}
+				
+				pcell = new PdfPCell(new Paragraph("Total = ",ReportUtil.f9B));
+				pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				pcell.setColspan(3);
+				pdfPTable.addCell(pcell);
+				
+				pcell = new PdfPCell(new Paragraph(taka_format.format(totalSecurity),ReportUtil.f9B));
+				pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				pcell.setColspan(1);
+				pdfPTable.addCell(pcell);
+					
+				pcell = new PdfPCell(new Paragraph(" ",ReportUtil.f9B));
+				pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+				pcell.setColspan(1);
+				pdfPTable.addCell(pcell);
+				
+				document.add(pdfPTable);
+				
+//				if(i<allbranch-1){
+//					document.newPage();
+//				}
+								
+			}
+			
+		}
+		
+	}
 	
-	
+	/* Security Collection month wise end
+	 * */
 	
 	private void generatePdfDate_wise(Document document) throws DocumentException
 	{
@@ -1996,6 +2194,53 @@ public class CollectionBankStatement extends BaseAction {
 	 }
 	
 	
+	/* Get all category name id
+	 * */
+	
+	private ArrayList<TransactionDTO> getAllCategoryNameID()
+	 {
+		ArrayList<TransactionDTO> allCategoryNameID=new ArrayList<TransactionDTO>();
+		String area=loggedInUser.getArea_id();
+		
+	  
+	  try {
+		  	
+		  	String account_info_sql="select CATEGORY_ID,CATEGORY_NAME from MST_CUSTOMER_CATEGORY order by CATEGORY_NAME ";
+
+	     
+	   
+					   PreparedStatement ps1=conn.prepareStatement(account_info_sql);
+//						   ps1.setString(1, area);
+					   
+	         
+	         ResultSet resultSet=ps1.executeQuery();
+	         
+	         
+	         while(resultSet.next())
+	         {
+	        	
+	        	  TransactionDTO transactionDTO = new TransactionDTO();
+	        	 
+	        	  transactionDTO.setCategory_id(resultSet.getString("CATEGORY_ID"));
+	        	  transactionDTO.setCategory_name(resultSet.getString("CATEGORY_NAME"));
+	        	
+	        	  
+	        	  allCategoryNameID.add(transactionDTO);
+	         }
+	         
+	  } catch (SQLException e) {
+		   // TODO Auto-generated catch block
+		   e.printStackTrace();
+	  }
+	  
+	  return allCategoryNameID;
+	 }
+	
+	
+	/* get all category name id end
+	 * */
+	
+	
 	/* Get all bank name, branch name, branch id
 	 * 
 	 * sujon
@@ -2658,6 +2903,71 @@ public class CollectionBankStatement extends BaseAction {
 	}
 	
 	/* end all bank wise total collection
+	 * 
+	 * */
+	
+	
+	
+	/* security collection month wise for all category 
+	 * 
+	 * */
+	
+	private ArrayList<TransactionDTO> getAllBankWiseSecurityCollection( String branch_id, String category_id )
+	{
+	ArrayList<TransactionDTO> transactionListDetails=new ArrayList<TransactionDTO>();
+	String area=loggedInUser.getArea_id();
+	int collectionMonth=Integer.valueOf(collection_month);
+
+	int collectionYear=Integer.valueOf(collection_year);
+		
+		try {
+			
+			String transaction_sql="SELECT bal.CUSTOMER_ID,CPI.FULL_NAME, DEBIT " +
+									"    FROM bank_account_ledger bal, CUSTOMER_PERSONAL_INFO cpi " +
+									"   WHERE     BAL.CUSTOMER_ID = CPI.CUSTOMER_ID " +
+									"         AND TO_CHAR (TRANS_DATE, 'MM') = LPAD ("+collectionMonth+", 2, 0) " +
+									"         AND TO_CHAR (TRANS_DATE, 'YYYY') = "+collectionYear+" " +
+									"         AND TRANS_TYPE = 0 " +
+									"         AND ACCOUNT_NO = '"+branch_id+"' " +
+									"         and Substr(bal.CUSTOMER_ID,3,2)='"+category_id+"' " +
+									"ORDER BY CUSTOMER_ID ";
+
+			
+			PreparedStatement ps1=conn.prepareStatement(transaction_sql);
+			//ps1.setString(1, collection_month);
+			//ps1.setString(2, collection_year);
+			//ps1.setString(3, branch_id);
+			//ps1.setString(3, collection_month);
+			//ps1.setString(4, collection_year);
+			//ps1.setString(6, branch_id);
+			//ps1.setString(5, collection_month);
+			//ps1.setString(6, collection_year);
+			//ps1.setString(9, branch_id);
+        	
+        	ResultSet resultSet=ps1.executeQuery();
+        	
+        	
+        	while(resultSet.next())
+        	{
+        		TransactionDTO transactionDto1=new TransactionDTO();
+        		transactionDto1.setCustomer_id(resultSet.getString("CUSTOMER_ID"));
+        		transactionDto1.setFull_name(resultSet.getString("FULL_NAME"));
+        		transactionDto1.setDebit(resultSet.getDouble("DEBIT"));
+        		  
+        		transactionListDetails.add(transactionDto1);
+        		
+        	}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+			e.printStackTrace();
+		}
+		
+		return transactionListDetails;
+	}
+	
+	
+	/* security collection month wise for all category end
 	 * 
 	 * */
 	

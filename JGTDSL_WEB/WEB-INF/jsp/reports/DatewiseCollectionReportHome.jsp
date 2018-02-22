@@ -38,6 +38,7 @@ font-size: 12px;
 									<table width="85%" align="center">
 										<tr>
 											<td width="100%" align="center" style="font-size: 12px;font-weight: bold;">
+												<input type="radio" value="security" id="security" name="report_for" onclick="checkType(this.id)"/> Security&nbsp;&nbsp;&nbsp;
 												<input type="radio" value="date_wise" id="date_wise" name="report_for" onclick="checkType(this.id)"/> Date Wise&nbsp;&nbsp;&nbsp;
 												<input type="radio" value="month_wise" id="month_wise" name="report_for" onclick="checkType(this.id)" /> Month Wise&nbsp;&nbsp;&nbsp;
 												<input type="radio" value="month_wiseDetails" id="month_wiseDetails" name="report_for" onclick="checkType(this.id)" /> Month Wise Details&nbsp;&nbsp;&nbsp;
