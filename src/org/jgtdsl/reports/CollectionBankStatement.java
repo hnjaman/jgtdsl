@@ -272,6 +272,7 @@ public class CollectionBankStatement extends BaseAction {
 					categoryname.addCell(pcell);
 					
 					document.add(categoryname);
+					document.add(new Paragraph("\n"));
 					count=1;
 				}
 				
@@ -289,6 +290,8 @@ public class CollectionBankStatement extends BaseAction {
 				bankbranch.addCell(pcell);
 				
 				document.add(bankbranch);
+				
+				//document.add(new Paragraph("\n"));
 				
 				PdfPTable pdfPTable = new PdfPTable(5);
 				pdfPTable.setWidthPercentage(100);
@@ -386,6 +389,8 @@ public class CollectionBankStatement extends BaseAction {
 				
 				document.add(pdfPTable);
 				
+				document.add(new Paragraph("\n"));
+				
 //				if(i<allbranch-1){
 //					document.newPage();
 //				}
@@ -394,27 +399,26 @@ public class CollectionBankStatement extends BaseAction {
 			
 		}
 		
-		PdfPTable pdfPTable = new PdfPTable(5);
-		pdfPTable.setWidthPercentage(100);
-		pdfPTable.setWidths(new float[]{10,20,35,20,15});
-		pdfPTable.setHeaderRows(1);
+		PdfPTable grandTotal = new PdfPTable(5);
+		grandTotal.setWidthPercentage(100);
+		grandTotal.setWidths(new float[]{10,20,35,20,15});
 		
 		pcell = new PdfPCell(new Paragraph("Grand Total = ",ReportUtil.f9B));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pcell.setColspan(3);
-		pdfPTable.addCell(pcell);
+		grandTotal.addCell(pcell);
 		
 		pcell = new PdfPCell(new Paragraph(taka_format.format(grandtotalSecurity),ReportUtil.f9B));
 		pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 		pcell.setColspan(1);
-		pdfPTable.addCell(pcell);
+		grandTotal.addCell(pcell);
 			
 		pcell = new PdfPCell(new Paragraph(" ",ReportUtil.f9B));
 		pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 		pcell.setColspan(1);
-		pdfPTable.addCell(pcell);
+		grandTotal.addCell(pcell);
 		
-		document.add(pdfPTable);
+		document.add(grandTotal);
 		
 	}
 	
@@ -636,13 +640,7 @@ public class CollectionBankStatement extends BaseAction {
 		//document.add(pdfPTable);
 		
 		///////Balance Forward///////////////////
-		
-	
-		
-		
-		
-		
-		
+
 		
 		pcell = new PdfPCell(new Paragraph("Balance Forward :",ReportUtil.f11B));
 		pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -2385,11 +2383,6 @@ public class CollectionBankStatement extends BaseAction {
 		
 		try {
 			
-			
-			
-		
-			
-			
 			String transaction_sql="SELECT TRANS_DATE, " +
 				     "         tbl.CUSTOMER_ID, " +
 				     "         DECODE (tbl.CUSTOMER_ID, NULL, PARTICULARS, FULL_NAME) PARTICULARS, " +
@@ -2410,7 +2403,7 @@ public class CollectionBankStatement extends BaseAction {
 				     "            FROM BANK_ACCOUNT_LEDGER " +
 				     "           WHERE     TO_CHAR (TRANS_DATE, 'dd-MM-yyyy') = '"+collection_date+"' " +
 				     "                 AND ACCOUNT_NO = '"+account_no+"' " +
-				     "                 AND TRANS_TYPE <> 2 " +
+				     "                 AND TRANS_TYPE <> 0 " +
 				     "          UNION ALL " +
 				     "          SELECT TO_CHAR (TRANS_DATE) TRANS_DATE, " +
 				     "                 TRANS_ID, " +
@@ -2422,7 +2415,8 @@ public class CollectionBankStatement extends BaseAction {
 				     "            FROM BANK_ACCOUNT_LEDGER " +
 				     "           WHERE     TO_CHAR (TRANS_DATE, 'dd-MM-yyyy') = '"+collection_date+"' " +
 				     "                 AND ACCOUNT_NO = '"+account_no+"' " +
-				     "                 AND TRANS_TYPE = 2) tbl " +
+				     "                 AND TRANS_TYPE = 0" +
+				     "				   AND REF_ID not in(select DEPOSIT_ID from MST_DEPOSIT where DEPOSIT_TYPE=1)) tbl " +
 				     "         LEFT OUTER JOIN MVIEW_CUSTOMER_INFO mcf " +
 				     "            ON tbl.CUSTOMER_ID = mcf.CUSTOMER_ID " +
 				     " ORDER BY INSERTED_ON,TRANS_DATE asc,TRANS_ID asc " ;
@@ -2442,13 +2436,7 @@ public class CollectionBankStatement extends BaseAction {
         		transactionDto1.setParticulars(resultSet.getString("PARTICULARS"));
         		transactionDto1.setDebit(resultSet.getDouble("DEBIT"));
         		transactionDto1.setCredit(resultSet.getDouble("CREDIT"));
-        		
-        		
-        		
-        		
-        		
-   
-        		
+	
         		transactionList.add(transactionDto1);
         		
         	}
@@ -2655,8 +2643,8 @@ public class CollectionBankStatement extends BaseAction {
 									"                 DEBIT, " +
 									"                 CREDIT " +
 									"            FROM BANK_ACCOUNT_LEDGER " +
-									"           WHERE     ACCOUNT_NO = '10111210' " +
-									"                 AND TRANS_TYPE <> 2 " +
+									"           WHERE     ACCOUNT_NO = '"+account_no+"' " +
+									"                 AND TRANS_TYPE <> 0 " +
 									"                 AND TO_CHAR (TRANS_DATE, 'MM') = lpad("+collection_month+",2,0) " +
 									"                 AND TO_CHAR (TRANS_DATE, 'YYYY') = "+collection_year+" " +
 									"          UNION ALL " +
@@ -2667,10 +2655,11 @@ public class CollectionBankStatement extends BaseAction {
 									"                 DEBIT, " +
 									"                 CREDIT " +
 									"            FROM BANK_ACCOUNT_LEDGER " +
-									"           WHERE     ACCOUNT_NO = '10111210' " +
-									"                 AND TRANS_TYPE = 2 " +
+									"           WHERE     ACCOUNT_NO = '"+account_no+"' " +
+									"                 AND TRANS_TYPE = 0 " +
 									"                 AND TO_CHAR (TRANS_DATE, 'MM') = lpad("+collection_month+",2,0) " +
-									"                 AND TO_CHAR (TRANS_DATE, 'YYYY') = "+collection_year+") tbl " +
+									"                 AND TO_CHAR (TRANS_DATE, 'YYYY') = "+collection_year+"" +
+									"				  AND REF_ID not in(select DEPOSIT_ID from MST_DEPOSIT where DEPOSIT_TYPE=1)) tbl " +
 									"         LEFT OUTER JOIN MVIEW_CUSTOMER_INFO mcf " +
 									"            ON tbl.CUSTOMER_ID = mcf.CUSTOMER_ID " +
 									"ORDER BY TRANS_DATE ASC, TRANS_ID ASC " ;
@@ -2742,7 +2731,7 @@ public class CollectionBankStatement extends BaseAction {
 									"                   AND TRANS_TYPE = 1 " +
 									"                   AND MBRI.BRANCH_ID IN (SELECT MBRI.BRANCH_ID " +
 									"                                            FROM MST_BRANCH_INFO MBRI " +
-									"                                           WHERE AREA_ID = 02) " +
+									"                                           WHERE AREA_ID = "+area+") " +
 									"          GROUP BY BANK_NAME, BRANCH_NAME " +
 									"          UNION ALL " +
 									"            SELECT BANK_NAME, " +
@@ -2761,7 +2750,7 @@ public class CollectionBankStatement extends BaseAction {
 									"                   AND TRANS_TYPE = 7 " +
 									"                   AND MBRI.BRANCH_ID IN (SELECT MBRI.BRANCH_ID " +
 									"                                            FROM MST_BRANCH_INFO MBRI " +
-									"                                           WHERE AREA_ID = 02) " +
+									"                                           WHERE AREA_ID = "+area+") " +
 									"          GROUP BY BANK_NAME, BRANCH_NAME " +
 									"          UNION ALL " +
 									"            SELECT BANK_NAME, " +
@@ -2778,9 +2767,10 @@ public class CollectionBankStatement extends BaseAction {
 									"                   AND TO_CHAR (TRANS_DATE, 'MM') = lpad("+collectionMonth+",2,0) " +
 									"                   AND TO_CHAR (TRANS_DATE, 'YYYY') = "+collectionYear+" " +
 									"                   AND TRANS_TYPE = 0 " +
+									"					AND REF_ID not in(select DEPOSIT_ID from MST_DEPOSIT where DEPOSIT_TYPE=1)" +
 									"                   AND MBRI.BRANCH_ID IN (SELECT MBRI.BRANCH_ID " +
 									"                                            FROM MST_BRANCH_INFO MBRI " +
-									"                                           WHERE AREA_ID = 02) " +
+									"                                           WHERE AREA_ID = "+area+") " +
 									"          GROUP BY BANK_NAME, BRANCH_NAME) " +
 									"GROUP BY BANK_NAME, BRANCH_NAME " +
 									"ORDER BY BANK_NAME ";
@@ -2856,7 +2846,7 @@ public class CollectionBankStatement extends BaseAction {
 									"                   AND TRANS_TYPE = 1 " +
 									"                   AND MBRI.BRANCH_ID IN (SELECT MBRI.BRANCH_ID " +
 									"                                            FROM MST_BRANCH_INFO MBRI " +
-									"                                           WHERE AREA_ID = '02') " +
+									"                                           WHERE AREA_ID = '"+area+"') " +
 									"          GROUP BY TRANS_TYPE, MBI.BANK_NAME, MBRI.BRANCH_NAME " +
 									"          UNION ALL " +
 									"            SELECT MBI.BANK_NAME, " +
@@ -2875,7 +2865,7 @@ public class CollectionBankStatement extends BaseAction {
 									"                   AND TRANS_TYPE = 7 " +
 									"                   AND MBRI.BRANCH_ID IN (SELECT MBRI.BRANCH_ID " +
 									"                                            FROM MST_BRANCH_INFO MBRI " +
-									"                                           WHERE AREA_ID = '02') " +
+									"                                           WHERE AREA_ID = '"+area+"') " +
 									"          GROUP BY MBI.BANK_NAME, MBRI.BRANCH_NAME " +
 									"          UNION ALL " +
 									"            SELECT MBI.BANK_NAME, " +
@@ -2892,9 +2882,10 @@ public class CollectionBankStatement extends BaseAction {
 									"                   AND TO_CHAR (TRANS_DATE, 'MM') = lpad("+collectionMonth+",2,0) " +
 									"                   AND TO_CHAR (TRANS_DATE, 'YYYY') = "+collectionYear+" " +
 									"                   AND TRANS_TYPE = 0 " +
+									"					AND REF_ID not in(select DEPOSIT_ID from MST_DEPOSIT where DEPOSIT_TYPE=1)" +
 									"                   AND MBRI.BRANCH_ID IN (SELECT MBRI.BRANCH_ID " +
 									"                                            FROM MST_BRANCH_INFO MBRI " +
-									"                                           WHERE AREA_ID = '02') " +
+									"                                           WHERE AREA_ID = '"+area+"') " +
 									"          GROUP BY MBI.BANK_NAME, MBRI.BRANCH_NAME) " +
 									"GROUP BY BANK_NAME, BRANCH_NAME " +
 									"ORDER BY BANK_NAME ";
@@ -3085,7 +3076,8 @@ public class CollectionBankStatement extends BaseAction {
 									"                   AND TO_CHAR (TRANS_DATE, 'YYYY') = "+collectionYear+"" +
 									"                   AND TRANS_TYPE = 0 " +
 									"                   AND BRANCH_ID = '"+branch_id+"'" +
-									"          GROUP BY TRANS_DATE) " +
+									"          			AND REF_ID not in(select DEPOSIT_ID from MST_DEPOSIT where DEPOSIT_TYPE=1)" +
+									"				GROUP BY TRANS_DATE) " +
 									"GROUP BY TRANS_DATE " +
 									"ORDER BY TRANS_DATE ASC ";
 
