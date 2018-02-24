@@ -443,7 +443,7 @@ public class MeterReadingService {
 					else{
 						
 						reading.setReading_id(r.getString("READING_ID"));
-						reading.setPrev_reading(r.getLong("MR_PREV_READING"));
+						reading.setPrev_reading(r.getLong("MR_PREV_READING"));						
 						reading.setPrev_reading_date(r.getString("MR_PREV_READING_DATE"));
 						reading.setCurr_reading(r.getLong("MR_CURR_READING"));
 						reading.setCurr_reading_date(r.getString("MR_CURR_READING_DATE"));
@@ -479,7 +479,7 @@ public class MeterReadingService {
 					
 					reading.setBill_id(r.getString("BILL_ID"));
 					reading.setRemarks(r.getString("MR_REMARKS"));
-					
+					//reading.setUnit(r.getString("UNIT"));
 					CustomerConnectionDTO connection =new CustomerConnectionDTO();
 					connection.setMin_load(r.getString("MIN_LOAD"));
 					connection.setMax_load(r.getString("MAX_LOAD"));
@@ -506,7 +506,7 @@ public class MeterReadingService {
 		
 		if(reading_id!=null && !reading_id.equalsIgnoreCase(""))
 			return "Select tmp1.*,BILL_ID From (  " +
-			"Select MR.READING_ID,MR.CUSTOMER_ID,AREA_ID,AREA_NAME,CATEGORY_ID,CI.CATEGORY_NAME,FULL_NAME,MOBILE,  " +
+			"Select MR.READING_ID,MR.CUSTOMER_ID,AREA_ID,AREA_NAME,CATEGORY_ID,CI.CATEGORY_NAME,FULL_NAME,MOBILE, CM,UNIT,  " +
 			"CI.CONNECTION_STATUS,CM.STATUS,CI.ISMETERED,METER_TYPE,CM.METER_SL_NO,MEASUREMENT_TYPE,CI.MIN_LOAD,CI.MAX_LOAD,CI.HHV_NHV,  " +
 			"MR.METER_ID,MR.READING_PURPOSE MR_READING_PURPOSE,  " +
 			"MR.TARIFF_ID MR_TARIFF_ID,MR.RATE MR_RATE,  " +
