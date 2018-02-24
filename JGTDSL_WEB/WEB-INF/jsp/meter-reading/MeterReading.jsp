@@ -57,10 +57,14 @@
 	</div>
 </div>
 
+<!--  
 <div class="reading-history" id="reading_history_grid_div">
 	<table id="reading_history_grid"></table>
 	<div id="reading_history_grid_pager" ></div>
 </div>
+
+-->
+
 
 <p style="clear: both;margin-top: 5px;"></p>
 

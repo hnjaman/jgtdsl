@@ -116,6 +116,7 @@ function clearSearchOptions(){
 }
 
 //Reading History Grid
+/*
 jQuery("#reading_history_grid").jqGrid({
    	url: jsEnum.GRID_RECORED_FETCHER+'?service='+jsEnum.METER_READING_SERVICE+'&method='+jsEnum.METER_READING_HISTORY_LIST,
    	jsonReader: {
@@ -210,7 +211,9 @@ $('#reading_history_grid').jqGrid('navGrid','#reading_history_grid_pager')
         onClickButton: function(){        
 			showReadingHistory("this_year");
         }
-});    
+});   
+*/
+// end of reading-history grid
 
 function fetchMeterReadingInfo(reading_id){
 	$.ajax({

@@ -51,7 +51,7 @@ $("#customer_ledger_grid").jqGrid($.extend(true, {}, scrollPagerGridOptions, {
 	                name: 'bank_name',
 	                index: 'bank_name',
 	                align:'left',
-	                width:40
+	                width:70
             	},
             	{
 	                name: 'gas_sold',
@@ -65,7 +65,7 @@ $("#customer_ledger_grid").jqGrid($.extend(true, {}, scrollPagerGridOptions, {
 	                index: 'sales_amount',
 	                sorttype: "number",
 	                align:'right',
-	                width:40
+	                width:35
             	},
             	{
 	                name: 'surcharge',
