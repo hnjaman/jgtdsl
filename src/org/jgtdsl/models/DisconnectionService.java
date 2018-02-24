@@ -68,7 +68,7 @@ public class DisconnectionService {
 				+ "And customer_id=? and meter_id=? ";
 		String sqlInsert = " Insert Into DISCONN_METERED(PID,CUSTOMER_ID,METER_ID,DISCONNECT_CAUSE,DISCONNECT_TYPE,DISCONNECT_BY,DISCONNECT_DATE,REMARKS,INSERT_BY,READING_ID) "
 				+ " Values(SQN_DISC_ME.nextval,?,?,?,?,?,to_date(?,'dd-MM-YYYY'),?,?,?)";
-		String sqlUpdate = " Update CUSTOMER_METER set status=? where customer_id=? and meter_ID=?";
+		String sqlUpdate = " Update CUSTOMER_METER set status=? where customer_id=? and meter_ID=? ";
 
 		try {
 			coll_stmt = conn
@@ -95,8 +95,8 @@ public class DisconnectionService {
 				actual_consumption = reading.getActual_consumption();
 				total_consumption = reading.getTotal_consumption();
 			} else if (unit.equals("FT")) {
-				actual_consumption = reading.getActual_consumption() / 35.3147;
-				total_consumption = reading.getTotal_consumption() / 35.3147;
+				actual_consumption = round((reading.getActual_consumption() / 35.3147),2);
+				total_consumption = round((reading.getTotal_consumption() / 35.3147),2);				
 			}
 
 			if (r.next())
@@ -122,11 +122,14 @@ public class DisconnectionService {
 //			stmt.setDouble(17, reading.getActual_consumption());
 //			stmt.setDouble(18, reading.getTotal_consumption());
 			stmt.setDouble(17,actual_consumption );
-			stmt.setDouble(17,total_consumption);
+			stmt.setDouble(18,total_consumption);
+			
+			double pressurefactd;
+			pressurefactd=round( reading.getPressure(),2);
 			
 			stmt.setDouble(19, reading.getMeter_rent());
 			stmt.setDouble(20, reading.getPressure());
-			stmt.setDouble(21, reading.getPressure_factor());
+			stmt.setDouble(21, pressurefactd);
 			stmt.setDouble(22, reading.getTemperature());
 			stmt.setDouble(23, reading.getTemperature_factor());
 			stmt.setString(24, reading.getRemarks());
@@ -919,4 +922,12 @@ public class DisconnectionService {
 		return disConnList;
 	}
 
+	public static double round(double value, int places) {
+	    if (places < 0) throw new IllegalArgumentException();
+
+	    long factor = (long) Math.pow(10, places);
+	    value = value * factor;
+	    long tmp = Math.round(value);
+	    return (double) tmp / factor;
+	}
 }
