@@ -503,7 +503,7 @@ public class CustomerService {
 		
 		Connection conn = ConnectionManager.getConnection();
 		
-		String sql= "SELECT * FROM SURCHARGE_DEFAULT_RANGE where CATEGORY_NAME=?";
+		String sql= "SELECT * FROM MST_CUSTOMER_CATEGORY where CATEGORY_NAME=?";
 		
 		
 		PreparedStatement stmt = null;
