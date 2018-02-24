@@ -208,14 +208,47 @@ public class CollectionBankStatement extends BaseAction {
 		//double forwardBalance=getForwardBalanceMonthwise();
 		int allbranch=allBnakBranchNameID.size();
 		
+		document.setMargins(20,20,48,72);
+		PdfPTable headLinetable = null;
+		PdfPCell pcell=null;
+		headLinetable = new PdfPTable(1);
+		headLinetable.setWidthPercentage(100);
+		headLinetable.setWidths(new float[]{100});
+		
+		pcell = new PdfPCell(new Paragraph("Monthly Security Collection",ReportUtil.f8B));
+		pcell.setMinimumHeight(18f);
+		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		pcell.setBorder(0);
+		headLinetable.addCell(pcell);		
+				
+		pcell=new PdfPCell(new Paragraph("COLLECTION MONTH : "+Month.values()[Integer.valueOf(collection_month)-1]+"-"+collection_year,ReportUtil.f9B));
+		pcell.setMinimumHeight(18f);
+		pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
+		pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+		pcell.setBorder(0);
+		pcell.setPaddingBottom(5);
+		headLinetable.addCell(pcell);
+		
+//		pcell = new PdfPCell(new Paragraph("gfhfghgf"));
+//		pcell.setBorder(0);
+//		headLinetable.addCell(pcell);
+		
+		document.add(headLinetable);
+		
+		double grandtotalSecurity=0.0;
 		
 		for(int category=0;category<allcategory;category++){
 			
 			String category_id = allCategoryNameID.get(category).getCategory_id();
+			int count=0;
 			
 			for(int i=0;i<allbranch;i++){	
 				
 				String branch_id=allBnakBranchNameID.get(i).getBranch_id();
+				String category_name = allCategoryNameID.get(category).getCategory_name();
+				String bank_name=allBnakBranchNameID.get(i).getBank_name();
+				String branch_name=allBnakBranchNameID.get(i).getBranch_name();
 				
 				transactionList=getAllBankWiseSecurityCollection(branch_id,category_id);
 				
@@ -224,52 +257,23 @@ public class CollectionBankStatement extends BaseAction {
 					continue;
 				}
 				
-				document.setMargins(20,20,48,72);
-				PdfPTable headLinetable = null;
-				PdfPCell pcell=null;
-				headLinetable = new PdfPTable(1);
-				headLinetable.setWidthPercentage(100);
-				headLinetable.setWidths(new float[]{100});
-				
-				pcell = new PdfPCell(new Paragraph("Monthly Security Collection",ReportUtil.f8B));
-				pcell.setMinimumHeight(18f);
-				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				pcell.setBorder(0);
-				headLinetable.addCell(pcell);		
-						
-				pcell=new PdfPCell(new Paragraph("COLLECTION MONTH : "+Month.values()[Integer.valueOf(collection_month)-1]+"-"+collection_year,ReportUtil.f9B));
-				pcell.setMinimumHeight(18f);
-				pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
-				pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				pcell.setBorder(0);
-				pcell.setPaddingBottom(5);
-				headLinetable.addCell(pcell);
-				
-//				pcell = new PdfPCell(new Paragraph("gfhfghgf"));
-//				pcell.setBorder(0);
-//				headLinetable.addCell(pcell);
-				
-				document.add(headLinetable);
-				
-				String category_name = allCategoryNameID.get(category).getCategory_name();
-				String bank_name=allBnakBranchNameID.get(i).getBank_name();
-				String branch_name=allBnakBranchNameID.get(i).getBranch_name();
-				
-				PdfPTable categoryname = null;
-				//PdfPCell pcell=null;
-				categoryname = new PdfPTable(1);
-				categoryname.setWidthPercentage(100);
-				categoryname.setWidths(new float[]{100});
-				
-				pcell = new PdfPCell(new Paragraph(""+category_name,ReportUtil.f9B));
-				pcell.setMinimumHeight(18f);
-				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-				pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
-				pcell.setBorder(0);
-				categoryname.addCell(pcell);
-				
-				document.add(categoryname);
+				if(count==0){
+					PdfPTable categoryname = null;
+					//PdfPCell pcell=null;
+					categoryname = new PdfPTable(1);
+					categoryname.setWidthPercentage(100);
+					categoryname.setWidths(new float[]{100});
+					
+					pcell = new PdfPCell(new Paragraph(""+category_name,ReportUtil.f9B));
+					pcell.setMinimumHeight(18f);
+					pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					pcell.setBorder(0);
+					categoryname.addCell(pcell);
+					
+					document.add(categoryname);
+					count=1;
+				}
 				
 				PdfPTable bankbranch = null;
 				//PdfPCell pcell=null;
@@ -277,7 +281,7 @@ public class CollectionBankStatement extends BaseAction {
 				bankbranch.setWidthPercentage(100);
 				bankbranch.setWidths(new float[]{100});
 				
-				pcell = new PdfPCell(new Paragraph(""+bank_name+", "+branch_name+" "+branch_id,ReportUtil.f8B));
+				pcell = new PdfPCell(new Paragraph(""+bank_name+",    "+branch_name+"    "+branch_id,ReportUtil.f8B));
 				pcell.setMinimumHeight(18f);
 				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -291,28 +295,28 @@ public class CollectionBankStatement extends BaseAction {
 				pdfPTable.setWidths(new float[]{10,20,35,20,15});
 				pdfPTable.setHeaderRows(1);
 				
-				pcell = new PdfPCell(new Paragraph("SL No",ReportUtil.f11B));
+				pcell = new PdfPCell(new Paragraph("SL No",ReportUtil.f9B));
 				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				pcell.setColspan(1);
 				pdfPTable.addCell(pcell);
 				
-				pcell = new PdfPCell(new Paragraph("Customer Code",ReportUtil.f11B));
+				pcell = new PdfPCell(new Paragraph("Customer Code",ReportUtil.f9B));
 				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				pcell.setColspan(1);
 				pdfPTable.addCell(pcell);
 				
-				pcell = new PdfPCell(new Paragraph("Customer Name",ReportUtil.f11B));
+				pcell = new PdfPCell(new Paragraph("Customer Name",ReportUtil.f9B));
 				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				pcell.setColspan(1);
 				pdfPTable.addCell(pcell);
 				
-				pcell = new PdfPCell(new Paragraph("Security",ReportUtil.f11B));
+				pcell = new PdfPCell(new Paragraph("Security",ReportUtil.f9B));
 				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				pcell.setColspan(1);
 				pdfPTable.addCell(pcell);
 				
-				pcell = new PdfPCell(new Paragraph("Comment",ReportUtil.f11B));
+				pcell = new PdfPCell(new Paragraph("Comment",ReportUtil.f9B));
 				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				pcell.setColspan(1);
 				pdfPTable.addCell(pcell);
@@ -355,7 +359,7 @@ public class CollectionBankStatement extends BaseAction {
 						pcell.setColspan(1);
 						pdfPTable.addCell(pcell);
 								
-						
+						grandtotalSecurity+=transactionList.get(j).getDebit();
 						totalSecurity+=transactionList.get(j).getDebit();
 						
 //						 totalSurcharge+=transactionList.get(j).getSurcharge();
@@ -389,6 +393,28 @@ public class CollectionBankStatement extends BaseAction {
 			}
 			
 		}
+		
+		PdfPTable pdfPTable = new PdfPTable(5);
+		pdfPTable.setWidthPercentage(100);
+		pdfPTable.setWidths(new float[]{10,20,35,20,15});
+		pdfPTable.setHeaderRows(1);
+		
+		pcell = new PdfPCell(new Paragraph("Grand Total = ",ReportUtil.f9B));
+		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		pcell.setColspan(3);
+		pdfPTable.addCell(pcell);
+		
+		pcell = new PdfPCell(new Paragraph(taka_format.format(grandtotalSecurity),ReportUtil.f9B));
+		pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+		pcell.setColspan(1);
+		pdfPTable.addCell(pcell);
+			
+		pcell = new PdfPCell(new Paragraph(" ",ReportUtil.f9B));
+		pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+		pcell.setColspan(1);
+		pdfPTable.addCell(pcell);
+		
+		document.add(pdfPTable);
 		
 	}
 	
@@ -2205,7 +2231,7 @@ public class CollectionBankStatement extends BaseAction {
 	  
 	  try {
 		  	
-		  	String account_info_sql="select CATEGORY_ID,CATEGORY_NAME from MST_CUSTOMER_CATEGORY order by CATEGORY_NAME desc";
+		  	String account_info_sql="select CATEGORY_ID,CATEGORY_NAME from MST_CUSTOMER_CATEGORY order by CATEGORY_NAME";
 
 	     
 	   
