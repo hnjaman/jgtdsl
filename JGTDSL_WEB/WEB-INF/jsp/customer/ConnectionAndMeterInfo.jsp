@@ -271,7 +271,6 @@
         </div>
         
         <s:if test="customer.connectionInfo.isMetered.label==@org.jgtdsl.enums.MeteredStatus@NONMETERED.label">
-        
         <div class="span6" id="non_meter_info_div">
             <div class="w-box">
                 <div class="w-box-header">
@@ -291,8 +290,15 @@
         </script>
       
       </s:if>
+      
+      
+
+
+
+ 
+      
+      
       <s:if test="customer.connectionInfo.isMetered.label==@org.jgtdsl.enums.MeteredStatus@METERED.label">
-        
         <div class="span6" id="meter_info_div">
             <div class="w-box">
                 <div class="w-box-header">
@@ -390,6 +396,7 @@ function checkConnectionType(connectionType)
 
 function changeMeteredStatus(meteredStatus)
 {
+
  if(meteredStatus==0){
   $("#appliance_info_div").show();
   $("#non_meter_appliance_info_div").show();
@@ -410,7 +417,10 @@ function changeMeteredStatus(meteredStatus)
   $("#hhv_nhv_div").show();
   $("#pay_within_div").show();
   getDefaultSurchargePayWithin();
-  ajaxLoad('meter_div','newMeter.action?customer_id=<s:property value="customer.customer_id" />')
+  
+  
+  ajaxLoad("meter_div","getMeterInfo.action?customer_id=<s:property value='customer.customer_id' />");
+  
   }
 }
 
@@ -435,11 +445,44 @@ function getDefaultSurchargePayWithin()
 
 function submitConnectionInfo()
 {
+
+
   var isValid=true;
 /*  if($("#ministry_id").length && $.trim($("#ministry_id").val())=="")
   	{cbColor($("#ministry_id"),"e");isValid=false;}
   else cbColor($("#ministry_id"),"v");
 */
+
+//meter 
+ if($("#isMetered").length && $("#isMetered").val()==1){
+	  if($("#min_load") && $.trim($("#min_load").val())=="")
+	  	{cbColor($("#min_load"),"e");isValid=false;}
+	  else cbColor($("#min_load"),"v");
+	  if($("#max_load") && $.trim($("#max_load").val())=="")
+	  	{cbColor($("#max_load"),"e");isValid=false;}
+	  else cbColor($("#max_load"),"v");
+	  if($("#hhv_nhv") && $.trim($("#hhv_nhv").val())=="")
+	  	{cbColor($("#hhv_nhv"),"e");isValid=false;}
+	  else cbColor($("#hhv_nhv"),"v");
+	  if($("#pay_within_wo_sc") && $.trim($("#pay_within_wo_sc").val())=="")
+	  	{cbColor($("#pay_within_wo_sc"),"e");isValid=false;}
+	  else cbColor($("#pay_within_wo_sc"),"v");
+  	  if($("#pay_within_w_sc") && $.trim($("#pay_within_w_sc").val())=="")
+	  	{cbColor($("#pay_within_w_sc"),"e");isValid=false;}
+	  else cbColor($("#pay_within_w_sc"),"v"); 
+	  
+	   if(isValid==true)
+  			$('#connectionForm').submit();
+	  
+  }
+//end of meter
+
+
+
+
+
+
+
 	if($("#tblBody tr").size()== 0){
 		cbColor($("#appliance_list"),"e");
 		cbColor($("#appliance_qnt"),"e");
@@ -469,35 +512,14 @@ function submitConnectionInfo()
   else cbColor($("#isMetered"),"v");
  
 //     alert(isValid);
-  
-  
-  if($("#isMetered").length && $("#isMetered").val()==1){
-	  if($("#min_load") && $.trim($("#min_load").val())=="")
-	  	{cbColor($("#min_load"),"e");isValid=false;}
-	  else cbColor($("#min_load"),"v");
-	  if($("#max_load") && $.trim($("#max_load").val())=="")
-	  	{cbColor($("#max_load"),"e");isValid=false;}
-	  else cbColor($("#max_load"),"v");
-	  if($("#hhv_nhv") && $.trim($("#hhv_nhv").val())=="")
-	  	{cbColor($("#hhv_nhv"),"e");isValid=false;}
-	  else cbColor($("#hhv_nhv"),"v");
-	  if($("#pay_within_wo_sc") && $.trim($("#pay_within_wo_sc").val())=="")
-	  	{cbColor($("#pay_within_wo_sc"),"e");isValid=false;}
-	  else cbColor($("#pay_within_wo_sc"),"v");
-  	  if($("#pay_within_w_sc") && $.trim($("#pay_within_w_sc").val())=="")
-	  	{cbColor($("#pay_within_w_sc"),"e");isValid=false;}
-	  else cbColor($("#pay_within_w_sc"),"v"); 
-  }
-  
 
-	  
 	  if(isValid==true)
-  			$('form#connectionForm').submit();
+  			$('#connectionForm').submit();
 }
 
-$('form#connectionForm').unbind("submit");
+$('#connectionForm').unbind("submit");
 
-$("form#connectionForm").submit(function(event){
+$("#connectionForm").submit(function(event){
 	disableButton("btn_save");
   event.preventDefault();
   var formData = new FormData($(this)[0]);
