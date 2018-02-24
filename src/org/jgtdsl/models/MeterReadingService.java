@@ -241,8 +241,8 @@ public class MeterReadingService {
 					actual_consumption=reading.getActual_consumption();
 					total_consumption=reading.getTotal_consumption();
 				}else if(unit.equals("FT")){
-					actual_consumption=reading.getActual_consumption()/35.3147;
-					total_consumption=reading.getTotal_consumption()/35.3147;
+					actual_consumption=round((reading.getActual_consumption()/35.3147),2);
+					total_consumption=round((reading.getTotal_consumption()/35.3147),2);
 				}
 				
 				stmt = conn.prepareStatement(sql);
@@ -267,7 +267,7 @@ public class MeterReadingService {
 				stmt.setDouble(19, total_consumption);
 				stmt.setDouble(20, reading.getMeter_rent());
 				stmt.setDouble(21, reading.getPressure());
-				stmt.setDouble(22, reading.	getPressure_factor_latest());
+				stmt.setDouble(22, round(reading.getPressure_factor_latest(),2));
 				stmt.setDouble(23, reading.getTemperature());
 				stmt.setDouble(24, reading.getTemperature_factor());
 				stmt.setString(25, reading.getRemarks());
@@ -696,6 +696,14 @@ public class MeterReadingService {
 		return false;	 	
 	}
 	
+	public static double round(double value, int places) {
+	    if (places < 0) throw new IllegalArgumentException();
+
+	    long factor = (long) Math.pow(10, places);
+	    value = value * factor;
+	    long tmp = Math.round(value);
+	    return (double) tmp / factor;
+	}
 		
 }
 
