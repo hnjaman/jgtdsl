@@ -830,10 +830,10 @@ public class DefaulterCustomerList extends BaseAction {
 			}
 
 			if (report_for.equals("area_wise")) {
-				wClause = " area_id=" + area;
+				wClause = " area_id= '" + area + "'";
 			} else if (report_for.equals("category_wise")) {
-				wClause = " area_id=" + area + " And CUSTOMER_CATEGORY="
-						+ customer_category;
+				wClause = " area_id= '" + area + "' And CUSTOMER_CATEGORY= '"
+						+ customer_category +"'";
 				
 				if (!(customer_category.equals("01") || customer_category.equals("09"))) {
 					
