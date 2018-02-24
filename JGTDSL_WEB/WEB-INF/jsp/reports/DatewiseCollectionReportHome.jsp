@@ -145,6 +145,7 @@ font-size: 12px;
 
 hideElement("month_div","year_div","date_div");
 function checkType(type){
+
 	if(type=="area_wise")
 	{
 	 disableChosenField("customer_id");
@@ -164,7 +165,14 @@ function checkType(type){
 	 resetSelectBoxSelectedValue("customer_category","area_id");
 	}
 	
-	if(type=="month_wise"){
+	if(type=="security"){
+		hideElement("date_div");
+		showElement("month_div","year_div");
+		disableField("bank_id");
+		disableField("branch_id");
+		disableField("account_id");
+	}
+	else if(type=="month_wise"){
 		hideElement("date_div");
 		showElement("month_div","year_div");
 		disableField("bank_id");
