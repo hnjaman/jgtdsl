@@ -249,8 +249,8 @@ public class DepositService {
 		TransactionManager transactionManager = new TransactionManager();
 		Connection conn = transactionManager.getConnection();
 		String mstDepositSql = " Insert Into MST_DEPOSIT(DEPOSIT_ID,CUSTOMER_ID,DEPOSIT_TYPE,DEPOSIT_PURPOSE,VALID_FROM,VALID_TO,BANK_ID,BRANCH_ID, "
-				+ " ACCOUNT_NO,DEPOSIT_DATE,TOTAL_DEPOSIT,INSERTED_BY) "
-				+ " Values(?,?,?,?,to_date(?,'dd-MM-YYYY'),to_date(?,'dd-MM-YYYY'),?,?,?,to_date(?,'dd-MM-YYYY'),?,?)";
+				+ " ACCOUNT_NO,DEPOSIT_DATE,TOTAL_DEPOSIT,INSERTED_BY,REMARKS) "
+				+ " Values(?,?,?,?,to_date(?,'dd-MM-YYYY'),to_date(?,'dd-MM-YYYY'),?,?,?,to_date(?,'dd-MM-YYYY'),?,?,?)";
 		
 		//no need for dtl_deposit now
 
@@ -365,11 +365,11 @@ public class DepositService {
 					9,
 					(Integer.valueOf(deposit.getStr_deposit_type()) == DepositType.BANK_GURANTEE
 							.getId() || Integer.valueOf(deposit
-							.getStr_deposit_type()) == DepositType.FDR.getId()) ? deposit
-							.getRemarks_on_bg() : deposit.getAccount_no());
+							.getStr_deposit_type()) == DepositType.FDR.getId()) ? "B.G." : deposit.getAccount_no());
 			mst_stmt.setString(10, deposit.getDeposit_date());
 			mst_stmt.setString(11, deposit.getTotal_deposit());
 			mst_stmt.setString(12, deposit.getInserted_by());
+			mst_stmt.setString(13, deposit.getRemarks_on_bg());
 			mst_stmt.execute();
 
 			// Transaction for Bank Account Ledger
@@ -720,6 +720,8 @@ public class DepositService {
 			stmt.setString(1, deposit_id);
 			r = stmt.executeQuery();
 			while (r.next()) {
+				
+				
 				deposit = new DepositDTO();
 				deposit.setDeposit_id(r.getString("DEPOSIT_ID"));
 				deposit.setDeposit_type(DepositType.values()[r
@@ -727,9 +729,10 @@ public class DepositService {
 				deposit.setStr_deposit_type(DepositType.values()[r
 						.getInt("DEPOSIT_TYPE")].getLabel());
 				deposit.setStr_deposit_purpose(DepositPurpose.values()[r
-						.getInt("DEPOSIT_PURPOSE")-9].getLabel());
+						.getInt("DEPOSIT_PURPOSE")].getLabel());
+				
 				deposit.setDeposit_purpose(DepositPurpose.values()[r
-						.getInt("DEPOSIT_PURPOSE")-9]);
+						.getInt("DEPOSIT_PURPOSE")]);
 				deposit.setTotal_deposit(r.getString("TOTAL_DEPOSIT"));
 
 				deposit.setCustomer_id(r.getString("CUSTOMER_ID"));
