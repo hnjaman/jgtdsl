@@ -2729,9 +2729,7 @@ public class CollectionBankStatement extends BaseAction {
 									"                   AND TO_CHAR (TRANS_DATE, 'MM') = lpad("+collectionMonth+",2,0) " +
 									"                   AND TO_CHAR (TRANS_DATE, 'YYYY') = "+collectionYear+" " +
 									"                   AND TRANS_TYPE = 1 " +
-									"                   AND MBRI.BRANCH_ID IN (SELECT MBRI.BRANCH_ID " +
-									"                                            FROM MST_BRANCH_INFO MBRI " +
-									"                                           WHERE AREA_ID = "+area+") " +
+									"                   AND MBRI.AREA_ID ='"+area+"' " +
 									"          GROUP BY BANK_NAME, BRANCH_NAME " +
 									"          UNION ALL " +
 									"            SELECT BANK_NAME, " +
@@ -2748,9 +2746,7 @@ public class CollectionBankStatement extends BaseAction {
 									"                   AND TO_CHAR (TRANS_DATE, 'MM') = lpad("+collectionMonth+",2,0) " +
 									"                   AND TO_CHAR (TRANS_DATE, 'YYYY') = "+collectionYear+" " +
 									"                   AND TRANS_TYPE = 7 " +
-									"                   AND MBRI.BRANCH_ID IN (SELECT MBRI.BRANCH_ID " +
-									"                                            FROM MST_BRANCH_INFO MBRI " +
-									"                                           WHERE AREA_ID = "+area+") " +
+									"                   AND MBRI.AREA_ID ='"+area+"' " +
 									"          GROUP BY BANK_NAME, BRANCH_NAME " +
 									"          UNION ALL " +
 									"            SELECT BANK_NAME, " +
@@ -2768,9 +2764,7 @@ public class CollectionBankStatement extends BaseAction {
 									"                   AND TO_CHAR (TRANS_DATE, 'YYYY') = "+collectionYear+" " +
 									"                   AND TRANS_TYPE = 0 " +
 									"					AND REF_ID not in(select DEPOSIT_ID from MST_DEPOSIT where DEPOSIT_TYPE=1)" +
-									"                   AND MBRI.BRANCH_ID IN (SELECT MBRI.BRANCH_ID " +
-									"                                            FROM MST_BRANCH_INFO MBRI " +
-									"                                           WHERE AREA_ID = "+area+") " +
+									"                   AND MBRI.AREA_ID ='"+area+"'" +
 									"          GROUP BY BANK_NAME, BRANCH_NAME) " +
 									"GROUP BY BANK_NAME, BRANCH_NAME " +
 									"ORDER BY BANK_NAME ";
