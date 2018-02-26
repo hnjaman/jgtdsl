@@ -427,6 +427,7 @@ public class MeterReadingService {
 							String[] reading_date_arr=r.getString("pre_reading").split(",");
 							if(reading_date_arr.length>0){
 								reading.setPrev_reading(Long.valueOf(reading_date_arr[0]));
+								//reading.setPrev_reading(Long.parseLong(reading_date_arr[0]));
 								reading.setPrev_reading_date(reading_date_arr[1]);
 							}
 						}
