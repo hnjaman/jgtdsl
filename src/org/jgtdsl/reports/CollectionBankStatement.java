@@ -2726,6 +2726,7 @@ public class CollectionBankStatement extends BaseAction {
 									"                   MST_BRANCH_INFO MBRI " +
 									"             WHERE     BAL.BRANCH_ID = MBRI.BRANCH_ID " +
 									"                   AND MBI.BANK_ID = MBRI.BANK_ID " +
+									"					 and MBRI.area_id=MBI.area_id" +
 									"                   AND TO_CHAR (TRANS_DATE, 'MM') = lpad("+collectionMonth+",2,0) " +
 									"                   AND TO_CHAR (TRANS_DATE, 'YYYY') = "+collectionYear+" " +
 									"                   AND TRANS_TYPE = 1 " +
@@ -2743,6 +2744,7 @@ public class CollectionBankStatement extends BaseAction {
 									"                   MST_BRANCH_INFO MBRI " +
 									"             WHERE     BAL.BRANCH_ID = MBRI.BRANCH_ID " +
 									"                   AND MBI.BANK_ID = MBRI.BANK_ID " +
+									"					 and MBRI.area_id=MBI.area_id" +
 									"                   AND TO_CHAR (TRANS_DATE, 'MM') = lpad("+collectionMonth+",2,0) " +
 									"                   AND TO_CHAR (TRANS_DATE, 'YYYY') = "+collectionYear+" " +
 									"                   AND TRANS_TYPE = 7 " +
@@ -2760,6 +2762,7 @@ public class CollectionBankStatement extends BaseAction {
 									"                   MST_BRANCH_INFO MBRI " +
 									"             WHERE     BAL.BRANCH_ID = MBRI.BRANCH_ID " +
 									"                   AND MBI.BANK_ID = MBRI.BANK_ID " +
+									"					 and MBRI.area_id=MBI.area_id" +
 									"                   AND TO_CHAR (TRANS_DATE, 'MM') = lpad("+collectionMonth+",2,0) " +
 									"                   AND TO_CHAR (TRANS_DATE, 'YYYY') = "+collectionYear+" " +
 									"                   AND TRANS_TYPE = 0 " +
