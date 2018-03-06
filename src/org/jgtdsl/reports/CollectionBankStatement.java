@@ -1076,9 +1076,18 @@ public class CollectionBankStatement extends BaseAction {
 	private void generatePdf_PerDay_AllBank_MonthWise(Document document) throws DocumentException
 	{
 
+		double grandTotalGasBill=0.0;
+		double grandTotalSurcharge=0.0;
+		double grandTotalFees=0.0;
+		double grandTotalSecurityDeposit=0.0;
+		double grandTotal=0.0;
+		
 		allBnakBranchNameID=getAllBnakBranchNameID();
 		//double forwardBalance=getForwardBalanceMonthwise();
 		int allbranch=allBnakBranchNameID.size();
+		
+		PdfPTable pdfPTable = null;
+		PdfPCell pcell=null;
 		
 		for(int i=0;i<allbranch;i++){
 			
@@ -1092,7 +1101,7 @@ public class CollectionBankStatement extends BaseAction {
 			
 			document.setMargins(20,20,48,72);
 			PdfPTable headLinetable = null;
-			PdfPCell pcell=null;
+			//PdfPCell pcell=null;
 			headLinetable = new PdfPTable(1);
 			headLinetable.setWidthPercentage(100);
 			headLinetable.setWidths(new float[]{100});
@@ -1137,9 +1146,10 @@ public class CollectionBankStatement extends BaseAction {
 			
 			document.add(bankbranch);
 			
-			PdfPTable pdfPTable = new PdfPTable(8);
+			//PdfPTable pdfPTable = new PdfPTable(8);
+			pdfPTable = new PdfPTable(8);
 			pdfPTable.setWidthPercentage(100);
-			pdfPTable.setWidths(new float[]{5,19,20,12,12,10,10,12});
+			pdfPTable.setWidths(new float[]{5,19,15,12,12,10,15,12});
 			pdfPTable.setHeaderRows(1);
 			
 			pcell = new PdfPCell(new Paragraph("SL",ReportUtil.f11B));
@@ -1194,6 +1204,8 @@ public class CollectionBankStatement extends BaseAction {
 			double totalFees=0.0;
 			double totalSecurityDeposit=0.0;
 			double total=0.0;
+			
+			
 
 				for(int j=0;j<listSize;j++)
 				{
@@ -1246,9 +1258,14 @@ public class CollectionBankStatement extends BaseAction {
 					 totalSecurityDeposit+=transactionList.get(j).getSecurity();
 					 total+=transactionList.get(j).getGas_bill()+transactionList.get(j).getSurcharge()+transactionList.get(j).getFees()+transactionList.get(j).getSecurity();
 			
+					grandTotalGasBill+=totalGasBill;
+					grandTotalSurcharge+=totalSurcharge;
+					grandTotalFees+=totalFees;
+					grandTotalSecurityDeposit+=totalSecurityDeposit;
+					grandTotal+=total;
 				}
 			
-			pcell = new PdfPCell(new Paragraph("Grand Total = ",ReportUtil.f9B));
+			pcell = new PdfPCell(new Paragraph("Total = ",ReportUtil.f9B));
 			pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			pcell.setColspan(2);
 			pdfPTable.addCell(pcell);
@@ -1287,10 +1304,51 @@ public class CollectionBankStatement extends BaseAction {
 			
 			if(i<allbranch-1){
 				document.newPage();
-			}
-			
-			
+			}	
 		}
+		
+		pcell = new PdfPCell(new Paragraph(" ",ReportUtil.f9B));
+		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		pcell.setColspan(8);
+		pcell.setBorder(1);
+		pdfPTable.addCell(pcell);
+		
+		pcell = new PdfPCell(new Paragraph("Grand Total = ",ReportUtil.f9B));
+		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		pcell.setColspan(2);
+		pdfPTable.addCell(pcell);
+		
+		pcell = new PdfPCell(new Paragraph(taka_format.format(grandTotalGasBill),ReportUtil.f9B));
+		pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+		pcell.setColspan(1);
+		pdfPTable.addCell(pcell);
+		
+		pcell = new PdfPCell(new Paragraph(taka_format.format(grandTotalSurcharge),ReportUtil.f9B));
+		pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+		pcell.setColspan(1);
+		pdfPTable.addCell(pcell);
+		
+		pcell = new PdfPCell(new Paragraph(taka_format.format(grandTotalFees),ReportUtil.f9B));
+		pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+		pcell.setColspan(1);
+		pdfPTable.addCell(pcell);
+		
+		pcell = new PdfPCell(new Paragraph(taka_format.format(grandTotalSecurityDeposit),ReportUtil.f9B));
+		pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+		pcell.setColspan(1);
+		pdfPTable.addCell(pcell);
+		
+		pcell = new PdfPCell(new Paragraph(taka_format.format(grandTotal),ReportUtil.f9B));
+		pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+		pcell.setColspan(1);
+		pdfPTable.addCell(pcell);
+		
+		pcell = new PdfPCell(new Paragraph(" ",ReportUtil.f9B));
+		pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+		pcell.setColspan(1);
+		pdfPTable.addCell(pcell);
+
+		document.add(pdfPTable);
 	
 	}
 	
