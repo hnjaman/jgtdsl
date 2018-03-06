@@ -2717,7 +2717,7 @@ public class CollectionBankStatement extends BaseAction {
 									"         SUM (SECURITY) SECURITY " +
 									"    FROM (  SELECT BANK_NAME, " +
 									"                   BRANCH_NAME, " +
-									"                   SUM (ACTUAL_REVENUE) ACTUAL_REVENUE, " +
+									"                   SUM (DEBIT) - SUM (SURCHARGE) ACTUAL_REVENUE, " +
 									"                   SUM (SURCHARGE) SURCHARGE, " +
 									"                   0 FEES, " +
 									"                   0 SECURITY " +
