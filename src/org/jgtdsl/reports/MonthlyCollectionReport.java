@@ -1616,7 +1616,7 @@ public class MonthlyCollectionReport extends BaseAction {
         collectionMonthCustomerType.setSpacingAfter(5);
         
         
-        pcell = new PdfPCell(new Paragraph("Collection Month: "+Month.values()[Integer.valueOf(bill_month)-1]+"'"+bill_year,ReportUtil.f9B));
+        pcell = new PdfPCell(new Paragraph("Collection Month: "+Month.values()[Integer.valueOf(bill_month)-1]+"'"+bill_year,ReportUtil.f11B));
         pcell.setBorder(0);
         pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
         collectionMonthCustomerType.addCell(pcell);
@@ -1633,47 +1633,47 @@ public class MonthlyCollectionReport extends BaseAction {
 
 		
 		
-		pcell=new PdfPCell(new Paragraph("Sl No",ReportUtil.f9B));
+		pcell=new PdfPCell(new Paragraph("Sl No",ReportUtil.f11B));
 		pcell.setRowspan(2);
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pdfPTable.addCell(pcell);
 		
-		pcell=new PdfPCell(new Paragraph("Customer Category",ReportUtil.f9B));
+		pcell=new PdfPCell(new Paragraph("Customer Category",ReportUtil.f11B));
 		pcell.setRowspan(2);
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pdfPTable.addCell(pcell);
 		
-		pcell=new PdfPCell(new Paragraph("Monthly Gas Bill",ReportUtil.f9B));
+		pcell=new PdfPCell(new Paragraph("Monthly Gas Bill",ReportUtil.f11B));
 		pcell.setRowspan(2);
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pdfPTable.addCell(pcell);
 		
-		pcell=new PdfPCell(new Paragraph("Surcharge",ReportUtil.f9B));
+		pcell=new PdfPCell(new Paragraph("Surcharge",ReportUtil.f11B));
 		pcell.setRowspan(2);
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pdfPTable.addCell(pcell);
 		
-		pcell=new PdfPCell(new Paragraph("Security",ReportUtil.f9B));
+		pcell=new PdfPCell(new Paragraph("Security",ReportUtil.f11B));
 		pcell.setRowspan(2);
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pdfPTable.addCell(pcell);
 		
-		pcell=new PdfPCell(new Paragraph("Fees",ReportUtil.f9B));
+		pcell=new PdfPCell(new Paragraph("Fees",ReportUtil.f11B));
 		pcell.setRowspan(2);
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pdfPTable.addCell(pcell);
 		
-		pcell=new PdfPCell(new Paragraph("Total Amount",ReportUtil.f9B));
+		pcell=new PdfPCell(new Paragraph("Total Amount",ReportUtil.f11B));
 		pcell.setRowspan(2);
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pdfPTable.addCell(pcell);
 	
-		pcell=new PdfPCell(new Paragraph("Description",ReportUtil.f9B));
+		pcell=new PdfPCell(new Paragraph("Description",ReportUtil.f11B));
 		pcell.setRowspan(2);
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pdfPTable.addCell(pcell);
 		
-		pcell=new PdfPCell(new Paragraph("Comment",ReportUtil.f9B));
+		pcell=new PdfPCell(new Paragraph("Comment",ReportUtil.f11B));
 		pcell.setRowspan(2);
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		pdfPTable.addCell(pcell);
@@ -1683,56 +1683,107 @@ public class MonthlyCollectionReport extends BaseAction {
 		int listSize=collectionInfoList.size();
 		
 
+		double totalGasBill=0.0;
+		double totalSurcharge=0.0;
+		double totalFees=0.0;
+		double totalSecurityDeposit=0.0;
+		double total=0.0;
 		
 		for(int i=0;i<listSize;i++)
 		{
-			pcell = new PdfPCell(new Paragraph(String.valueOf(i+1),ReportUtil.f9));
+			pcell = new PdfPCell(new Paragraph(String.valueOf(i+1),ReportUtil.f11));
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setColspan(1);
 			pdfPTable.addCell(pcell);
 			
-			pcell = new PdfPCell(new Paragraph(collectionInfoList.get(i).getCategory_name(),ReportUtil.f9));
+			pcell = new PdfPCell(new Paragraph(collectionInfoList.get(i).getCategory_name(),ReportUtil.f11));
 			pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 			pcell.setColspan(1);
 			pdfPTable.addCell(pcell);
 					
-			pcell = new PdfPCell(new Paragraph(taka_format.format(collectionInfoList.get(i).getGas_bill()),ReportUtil.f9));
+			pcell = new PdfPCell(new Paragraph(taka_format.format(collectionInfoList.get(i).getGas_bill()),ReportUtil.f11));
 			pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			pcell.setColspan(1);
 			pdfPTable.addCell(pcell);
 			
-			pcell = new PdfPCell(new Paragraph(taka_format.format(collectionInfoList.get(i).getColl_surcharge()),ReportUtil.f9));
+			pcell = new PdfPCell(new Paragraph(taka_format.format(collectionInfoList.get(i).getColl_surcharge()),ReportUtil.f11));
 			pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			pcell.setColspan(1);
 			pdfPTable.addCell(pcell);
 			
-			pcell = new PdfPCell(new Paragraph(taka_format.format(collectionInfoList.get(i).getSecurity()),ReportUtil.f9));
+			pcell = new PdfPCell(new Paragraph(taka_format.format(collectionInfoList.get(i).getSecurity()),ReportUtil.f11));
 			pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			pcell.setColspan(1);
 			pdfPTable.addCell(pcell);
 			
-			pcell = new PdfPCell(new Paragraph(taka_format.format(collectionInfoList.get(i).getFees()),ReportUtil.f9));
+			pcell = new PdfPCell(new Paragraph(taka_format.format(collectionInfoList.get(i).getFees()),ReportUtil.f11));
 			pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			pcell.setColspan(1);
 			pdfPTable.addCell(pcell);
 			
-			pcell = new PdfPCell(new Paragraph(taka_format.format(collectionInfoList.get(i).getGas_bill()+collectionInfoList.get(i).getColl_surcharge()+collectionInfoList.get(i).getFees()+collectionInfoList.get(i).getSecurity()),ReportUtil.f9));
+			pcell = new PdfPCell(new Paragraph(taka_format.format(collectionInfoList.get(i).getGas_bill()+collectionInfoList.get(i).getColl_surcharge()+collectionInfoList.get(i).getFees()+collectionInfoList.get(i).getSecurity()),ReportUtil.f11));
 			pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			pcell.setColspan(1);
 			pdfPTable.addCell(pcell);
 			
-			pcell = new PdfPCell(new Paragraph(" ",ReportUtil.f9));
+			pcell = new PdfPCell(new Paragraph(" ",ReportUtil.f11));
 			pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 			pcell.setColspan(1);
 			pdfPTable.addCell(pcell);
 			
-			pcell = new PdfPCell(new Paragraph(" ",ReportUtil.f9));
+			pcell = new PdfPCell(new Paragraph(" ",ReportUtil.f11));
 			pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 			pcell.setColspan(1);
 			pdfPTable.addCell(pcell);
-					
+			
+			
+			 totalGasBill+=collectionInfoList.get(i).getGas_bill();
+			 totalSurcharge+=collectionInfoList.get(i).getColl_surcharge();
+			 totalFees+=collectionInfoList.get(i).getFees();
+			 totalSecurityDeposit+=collectionInfoList.get(i).getSecurity();
+			 total+=collectionInfoList.get(i).getGas_bill()+collectionInfoList.get(i).getColl_surcharge()+collectionInfoList.get(i).getFees()+collectionInfoList.get(i).getSecurity();
 					
 		}
+		
+		pcell = new PdfPCell(new Paragraph("Grand Total",ReportUtil.f11B));
+		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+		pcell.setColspan(2);
+		pdfPTable.addCell(pcell);
+		
+		pcell = new PdfPCell(new Paragraph(taka_format.format(totalGasBill),ReportUtil.f11B));
+		pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+		pcell.setColspan(1);
+		pdfPTable.addCell(pcell);
+		
+		pcell = new PdfPCell(new Paragraph(taka_format.format(totalSurcharge),ReportUtil.f11B));
+		pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+		pcell.setColspan(1);
+		pdfPTable.addCell(pcell);
+		
+		pcell = new PdfPCell(new Paragraph(taka_format.format(totalSecurityDeposit),ReportUtil.f11B));
+		pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+		pcell.setColspan(1);
+		pdfPTable.addCell(pcell);
+		
+		pcell = new PdfPCell(new Paragraph(taka_format.format(totalFees),ReportUtil.f11B));
+		pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+		pcell.setColspan(1);
+		pdfPTable.addCell(pcell);
+		
+		pcell = new PdfPCell(new Paragraph(taka_format.format(total),ReportUtil.f11B));
+		pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+		pcell.setColspan(1);
+		pdfPTable.addCell(pcell);
+		
+		pcell = new PdfPCell(new Paragraph(" ",ReportUtil.f11B));
+		pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
+		pcell.setColspan(1);
+		pdfPTable.addCell(pcell);
+		
+		pcell = new PdfPCell(new Paragraph(" ",ReportUtil.f11B));
+		pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
+		pcell.setColspan(1);
+		pdfPTable.addCell(pcell);
 		
 		document.add(pdfPTable);
 
@@ -1804,7 +1855,7 @@ public class MonthlyCollectionReport extends BaseAction {
 						"         SUM (SECURITY) SECURITY " +
 						"    FROM (  SELECT SUBSTR (BAL.CUSTOMER_ID, 3, 2) CATEGORY, " +
 						"                   CATEGORY_NAME, " +
-						"                   SUM (ACTUAL_REVENUE) ACTUAL_REVENUE, " +
+						"                   SUM (DEBIT) - SUM (SURCHARGE) ACTUAL_REVENUE, " +
 						"                   SUM (SURCHARGE) SURCHARGE, " +
 						"                   0 FEES, " +
 						"                   0 SECURITY " +
@@ -1815,12 +1866,10 @@ public class MonthlyCollectionReport extends BaseAction {
 						"             WHERE     BAL.BRANCH_ID = MBRI.BRANCH_ID " +
 						"                   AND MBI.BANK_ID = MBRI.BANK_ID " +
 						"                   AND SUBSTR (BAL.CUSTOMER_ID, 3, 2) = MCC.CATEGORY_ID " +
-						"                   AND TO_CHAR (TRANS_DATE, 'MM') = ? " +
-						"                   AND TO_CHAR (TRANS_DATE, 'YYYY') = ? " +
+						"                   AND TO_CHAR (TRANS_DATE, 'MM') = LPAD ("+bill_month+", 2, 0) " +
+						"                   AND TO_CHAR (TRANS_DATE, 'YYYY') = "+bill_year+" " +
 						"                   AND TRANS_TYPE = 1 " +
-						"                   AND MBRI.BRANCH_ID IN (SELECT MBRI.BRANCH_ID " +
-						"                                            FROM MST_BRANCH_INFO MBRI " +
-						"                                           WHERE AREA_ID = ?) " +
+						"                   AND MBRI.AREA_ID = '"+area+"'" +
 						"          GROUP BY TRANS_TYPE, SUBSTR (BAL.CUSTOMER_ID, 3, 2), CATEGORY_NAME " +
 						"          UNION ALL " +
 						"            SELECT SUBSTR (BAL.CUSTOMER_ID, 3, 2) CATEGORY, " +
@@ -1836,12 +1885,10 @@ public class MonthlyCollectionReport extends BaseAction {
 						"             WHERE     BAL.BRANCH_ID = MBRI.BRANCH_ID " +
 						"                   AND MBI.BANK_ID = MBRI.BANK_ID " +
 						"                   AND SUBSTR (BAL.CUSTOMER_ID, 3, 2) = MCC.CATEGORY_ID " +
-						"                   AND TO_CHAR (TRANS_DATE, 'MM') = ? " +
-						"                   AND TO_CHAR (TRANS_DATE, 'YYYY') = ? " +
+						"                   AND TO_CHAR (TRANS_DATE, 'MM') = LPAD ("+bill_month+", 2, 0) " +
+						"                   AND TO_CHAR (TRANS_DATE, 'YYYY') = "+bill_year+" " +
 						"                   AND TRANS_TYPE = 7 " +
-						"                   AND MBRI.BRANCH_ID IN (SELECT MBRI.BRANCH_ID " +
-						"                                            FROM MST_BRANCH_INFO MBRI " +
-						"                                           WHERE AREA_ID = ?) " +
+						"                   AND MBRI.AREA_ID = '"+area+"'" +
 						"          GROUP BY TRANS_TYPE, SUBSTR (BAL.CUSTOMER_ID, 3, 2), CATEGORY_NAME " +
 						"          UNION ALL " +
 						"            SELECT SUBSTR (BAL.CUSTOMER_ID, 3, 2) CATEGORY, " +
@@ -1857,26 +1904,25 @@ public class MonthlyCollectionReport extends BaseAction {
 						"             WHERE     BAL.BRANCH_ID = MBRI.BRANCH_ID " +
 						"                   AND MBI.BANK_ID = MBRI.BANK_ID " +
 						"                   AND SUBSTR (BAL.CUSTOMER_ID, 3, 2) = MCC.CATEGORY_ID " +
-						"                   AND TO_CHAR (TRANS_DATE, 'MM') = ? " +
-						"                   AND TO_CHAR (TRANS_DATE, 'YYYY') = ? " +
+						"                   AND TO_CHAR (TRANS_DATE, 'MM') = LPAD ("+bill_month+", 2, 0) " +
+						"                   AND TO_CHAR (TRANS_DATE, 'YYYY') = "+bill_year+" " +
 						"                   AND TRANS_TYPE = 0 " +
-						"                   AND MBRI.BRANCH_ID IN (SELECT MBRI.BRANCH_ID " +
-						"                                            FROM MST_BRANCH_INFO MBRI " +
-						"                                           WHERE AREA_ID = ?) " +
+						"					AND REF_ID not in(select DEPOSIT_ID from MST_DEPOSIT where DEPOSIT_TYPE=1)" +
+						"                   AND MBRI.AREA_ID = '"+area+"'" +
 						"          GROUP BY TRANS_TYPE, SUBSTR (BAL.CUSTOMER_ID, 3, 2), CATEGORY_NAME) " +
 						"GROUP BY CATEGORY, CATEGORY_NAME " ;
 				
 				
 				PreparedStatement ps1=conn.prepareStatement(defaulterSql);
-				 ps1.setString(1, bill_month);
-				 ps1.setString(2, bill_year);
-				 ps1.setString(3, area);
-				 ps1.setString(4, bill_month);
-				 ps1.setString(5, bill_year);
-				 ps1.setString(6, area);
-				 ps1.setString(7, bill_month);
-				 ps1.setString(8, bill_year);
-				 ps1.setString(9, area);
+//				 ps1.setString(1, bill_month);
+//				 ps1.setString(2, bill_year);
+//				 ps1.setString(3, area);
+//				 ps1.setString(4, bill_month);
+//				 ps1.setString(5, bill_year);
+//				 ps1.setString(6, area);
+//				 ps1.setString(7, bill_month);
+//				 ps1.setString(8, bill_year);
+//				 ps1.setString(9, area);
 				
 	        	ResultSet resultSet=ps1.executeQuery();
 	        	
