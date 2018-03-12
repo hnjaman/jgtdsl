@@ -8,6 +8,7 @@ $("#customer_id").autocomplete($.extend(true, {}, acMCustomerOption,{
 		}
 }));
 
+
 function getCustomerInfoforEdit(customer_id)
 {
 
@@ -59,8 +60,11 @@ function setCustomerInfos(data){
 		$("#fax").val(personal.fax);
 		$("#national_id").val(personal.national_id);
 		$("#gender").val(personal.gender);
-		$("#email").val(personal.email);		
-	
+		$("#email").val(personal.email);
+		$("#freedom_fighter").val(personal.freedom_fighter);
+		$("#ministry_id").val(personal.ministry_id);
+		//$("#ministry_name").val(personal.ministry_name);
+		
 		$("#customer_category_name").val(data.customer_category_name);
 		$("#area_name").val(data.area_name);
 		$("#app_sl_no").val(data.app_sl_no);

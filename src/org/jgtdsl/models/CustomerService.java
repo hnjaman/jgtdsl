@@ -422,6 +422,14 @@ public class CustomerService {
 					personalInfo.setProprietor_name(r.getString("PROPRIETOR_NAME"));
 					personalInfo.setOrganization_name(r.getString("ORGANIZATION_NAME"));
 					personalInfo.setTin(r.getString("TIN_NO"));
+					personalInfo.setMinistry_id(r.getString("MINISTRY_ID"));
+					personalInfo.setMinistry_name(r.getString("MINISTRY_NAME"));
+					
+					if(r.getString("FREEDOM_FIGHTER")==null){
+						personalInfo.setFreedom_fighter("N");
+					}else{
+						personalInfo.setFreedom_fighter(r.getString("FREEDOM_FIGHTER"));
+					}
 					
 					customer.setCustomer_id(r.getString("CUSTOMER_ID"));
 					customer.setApp_sl_no(r.getString("APP_SL_NO"));
@@ -448,8 +456,8 @@ public class CustomerService {
 					addressInfo.setAddress_line1(r.getString("ADDRESS_LINE1"));
 					addressInfo.setAddress_line2(r.getString("ADDRESS_LINE2"));					
 						
-					connectionInfo.setMinistry_id(r.getString("MINISTRY_ID"));
-					connectionInfo.setMinistry_name(r.getString("MINISTRY_NAME"));
+					//connectionInfo.setMinistry_id(r.getString("MINISTRY_ID"));
+					//connectionInfo.setMinistry_name(r.getString("MINISTRY_NAME"));
 					if(r.getString("CONNECTION_TYPE")!=null){
 						connectionInfo.setConnection_type(ConnectionType.values()[r.getInt("CONNECTION_TYPE")]);
 						connectionInfo.setConnection_type_str(String.valueOf(ConnectionType.values()[r.getInt("CONNECTION_TYPE")].getId()));
@@ -1035,7 +1043,8 @@ public class CustomerService {
 		TransactionManager transactionManager=new TransactionManager();
 		Connection conn = transactionManager.getConnection();
 		String personalInfoSql=" Update CUSTOMER_PERSONAL_INFO Set FULL_NAME=?, FATHER_NAME=?, MOTHER_NAME=?, " +
-							   " GENDER=?, EMAIL=?, PHONE=?, MOBILE=?, FAX=?, NATIONAL_ID=?, PASSPORT_NO=?, LICENSE_NUMBER=?,VAT_REG_NO=? Where CUSTOMER_ID=?";
+							   " GENDER=?, EMAIL=?, PHONE=?, MOBILE=?, FAX=?, NATIONAL_ID=?, PASSPORT_NO=?, LICENSE_NUMBER=?,VAT_REG_NO=?,FREEDOM_FIGHTER=? Where CUSTOMER_ID=?";
+		String personalInfoSqlforMinistry="update CUSTOMER_CONNECTION set MINISTRY_ID=? Where CUSTOMER_ID=?";
 		String addressInfoSql=" Update CUSTOMER_ADDRESS Set DIVISION=?,DISTRICT=?,UPAZILA=?,ROAD_HOUSE_NO=?,POST_OFFICE=?,POST_CODE=?,ADDRESS_LINE1=?,ADDRESS_LINE2=? Where Customer_Id=?";
 		PreparedStatement stmt = null;
 		
@@ -1056,7 +1065,13 @@ public class CustomerService {
 			stmt.setString(10,personalInfo.getPassport_no());
 			stmt.setString(11,personalInfo.getLicense_number());
 			stmt.setString(12,personalInfo.getVat_reg_no());
-			stmt.setString(13,customer.getCustomer_id());
+			stmt.setString(13,personalInfo.getFreedom_fighter());
+			stmt.setString(14,customer.getCustomer_id());
+			stmt.execute();
+			
+			stmt = conn.prepareStatement(personalInfoSqlforMinistry);
+			stmt.setString(1, personalInfo.getMinistry_id());
+			stmt.setString(2,customer.getCustomer_id());
 			stmt.execute();
 			
 			stmt = conn.prepareStatement(addressInfoSql);

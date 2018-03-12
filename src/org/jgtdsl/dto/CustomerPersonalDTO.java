@@ -24,6 +24,30 @@ public class CustomerPersonalDTO {
 	private String proprietor_name;
 	private String organization_name;
 	
+	private String ministry_id;
+	private String ministry_name;
+	
+	
+
+	public String getMinistry_id() {
+		return ministry_id;
+	}
+
+
+	public void setMinistry_id(String ministry_id) {
+		this.ministry_id = ministry_id;
+	}
+
+
+	public String getMinistry_name() {
+		return ministry_name;
+	}
+
+
+	public void setMinistry_name(String ministry_name) {
+		this.ministry_name = ministry_name;
+	}
+
 
 	public String getCustomer_id() {
 		return customer_id;
