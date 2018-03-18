@@ -2349,7 +2349,9 @@ public class CollectionBankStatement extends BaseAction {
 		  	
 		  	String account_info_sql="SELECT MBI.BANK_NAME, MBRI.BRANCH_NAME, MBRI.BRANCH_ID " +
 								   "  FROM MST_BRANCH_INFO MBRI, mst_bank_info mbi " +
-								   " WHERE MBRI.BANK_ID = MBI.BANK_ID AND mbri.AREA_ID = ? " +
+								   " WHERE MBRI.BANK_ID = MBI.BANK_ID " +
+								   "AND MBRI.area_id = MBI.area_id " +
+								   "AND mbri.AREA_ID = ? " +
 								   "order by MBI.BANK_NAME, MBRI.BRANCH_NAME";
 
 	     

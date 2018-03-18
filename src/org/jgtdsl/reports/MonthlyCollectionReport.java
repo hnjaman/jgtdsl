@@ -16,9 +16,11 @@ import javax.servlet.ServletContext;
 
 import oracle.jdbc.driver.OracleCallableStatement;
 
+import org.apache.struts2.ServletActionContext;
 import org.jgtdsl.actions.BaseAction;
 import org.jgtdsl.dto.CollectionReportDTO;
 import org.jgtdsl.dto.NonMeterReportDTO;
+import org.jgtdsl.dto.UserDTO;
 import org.jgtdsl.enums.Area;
 import org.jgtdsl.enums.DisconnType;
 import org.jgtdsl.enums.Month;
@@ -55,6 +57,8 @@ public class MonthlyCollectionReport extends BaseAction {
     private static String report_for; 
     private static String category_name;
 	static ArrayList<CollectionReportDTO> collectionInfoList=new ArrayList<CollectionReportDTO>();
+	
+	static UserDTO loggedInUser=(UserDTO) ServletActionContext.getRequest().getSession().getAttribute("user");	
 
 	Connection conn = ConnectionManager.getConnection();
 	String sql = "";
@@ -1840,6 +1844,8 @@ public class MonthlyCollectionReport extends BaseAction {
 	{
 	ArrayList<CollectionReportDTO> collectionInfoList=new ArrayList<CollectionReportDTO>();
 	Connection conn = ConnectionManager.getConnection();	
+	//String area=loggedInUser.getArea_id();
+	String westAreaCode = new String("02");		// for power collection
 		try {
 			String wClause="";
 			String w2Clause="";
@@ -1865,11 +1871,13 @@ public class MonthlyCollectionReport extends BaseAction {
 						"                   MST_CUSTOMER_CATEGORY MCC " +
 						"             WHERE     BAL.BRANCH_ID = MBRI.BRANCH_ID " +
 						"                   AND MBI.BANK_ID = MBRI.BANK_ID " +
+						"					AND MBRI.area_id = MBI.area_id" +
 						"                   AND SUBSTR (BAL.CUSTOMER_ID, 3, 2) = MCC.CATEGORY_ID " +
 						"                   AND TO_CHAR (TRANS_DATE, 'MM') = LPAD ("+bill_month+", 2, 0) " +
 						"                   AND TO_CHAR (TRANS_DATE, 'YYYY') = "+bill_year+" " +
 						"                   AND TRANS_TYPE = 1 " +
-						"                   AND MBRI.AREA_ID = '"+area+"'" +
+						"                   AND MBRI.AREA_ID = '"+area+"' " +
+						" 					AND BAL.CUSTOMER_ID not LIKE '0213%'" +
 						"          GROUP BY TRANS_TYPE, SUBSTR (BAL.CUSTOMER_ID, 3, 2), CATEGORY_NAME " +
 						"          UNION ALL " +
 						"            SELECT SUBSTR (BAL.CUSTOMER_ID, 3, 2) CATEGORY, " +
@@ -1884,11 +1892,13 @@ public class MonthlyCollectionReport extends BaseAction {
 						"                   MST_CUSTOMER_CATEGORY MCC " +
 						"             WHERE     BAL.BRANCH_ID = MBRI.BRANCH_ID " +
 						"                   AND MBI.BANK_ID = MBRI.BANK_ID " +
+						"					AND MBRI.area_id = MBI.area_id" +
 						"                   AND SUBSTR (BAL.CUSTOMER_ID, 3, 2) = MCC.CATEGORY_ID " +
 						"                   AND TO_CHAR (TRANS_DATE, 'MM') = LPAD ("+bill_month+", 2, 0) " +
 						"                   AND TO_CHAR (TRANS_DATE, 'YYYY') = "+bill_year+" " +
 						"                   AND TRANS_TYPE = 7 " +
 						"                   AND MBRI.AREA_ID = '"+area+"'" +
+						" 					AND BAL.CUSTOMER_ID not LIKE '0213%'" +
 						"          GROUP BY TRANS_TYPE, SUBSTR (BAL.CUSTOMER_ID, 3, 2), CATEGORY_NAME " +
 						"          UNION ALL " +
 						"            SELECT SUBSTR (BAL.CUSTOMER_ID, 3, 2) CATEGORY, " +
@@ -1903,12 +1913,14 @@ public class MonthlyCollectionReport extends BaseAction {
 						"                   MST_CUSTOMER_CATEGORY MCC " +
 						"             WHERE     BAL.BRANCH_ID = MBRI.BRANCH_ID " +
 						"                   AND MBI.BANK_ID = MBRI.BANK_ID " +
+						"					AND MBRI.area_id = MBI.area_id" +
 						"                   AND SUBSTR (BAL.CUSTOMER_ID, 3, 2) = MCC.CATEGORY_ID " +
 						"                   AND TO_CHAR (TRANS_DATE, 'MM') = LPAD ("+bill_month+", 2, 0) " +
 						"                   AND TO_CHAR (TRANS_DATE, 'YYYY') = "+bill_year+" " +
 						"                   AND TRANS_TYPE = 0 " +
 						"					AND REF_ID not in(select DEPOSIT_ID from MST_DEPOSIT where DEPOSIT_TYPE=1)" +
 						"                   AND MBRI.AREA_ID = '"+area+"'" +
+						" 					AND BAL.CUSTOMER_ID not LIKE '0213%'" +
 						"          GROUP BY TRANS_TYPE, SUBSTR (BAL.CUSTOMER_ID, 3, 2), CATEGORY_NAME) " +
 						"GROUP BY CATEGORY, CATEGORY_NAME " ;
 				
@@ -1978,6 +1990,100 @@ public class MonthlyCollectionReport extends BaseAction {
 	        		collectionDto.setAvg_monthly_sales(resultSet.getDouble("AVG_MONTHLY_SALES"));
 	        		collectionDto.setAvg_due(resultSet.getDouble("AVERAGE_DUE"));
 	        		
+	        		
+	        		collectionInfoList.add(collectionDto);
+	        		
+	        	}
+			}
+			
+			
+			// power customer collection
+			
+			if(area.equals(westAreaCode)){
+				
+				String powerCollectionSql="SELECT CATEGORY, " +
+											"         CATEGORY_NAME, " +
+											"         SUM (ACTUAL_REVENUE) ACTUAL_REVENUE, " +
+											"         SUM (SURCHARGE) SURCHARGE, " +
+											"         SUM (FEES) FEESS, " +
+											"         SUM (SECURITY) SECURITY " +
+											"    FROM (  SELECT SUBSTR (BAL.CUSTOMER_ID, 3, 2) CATEGORY, " +
+											"                   CATEGORY_NAME, " +
+											"                   SUM (DEBIT) - SUM (SURCHARGE) ACTUAL_REVENUE, " +
+											"                   SUM (SURCHARGE) SURCHARGE, " +
+											"                   0 FEES, " +
+											"                   0 SECURITY " +
+											"              FROM bank_account_ledger BAL, " +
+											"                   MST_BANK_INFO MBI, " +
+											"                   MST_BRANCH_INFO MBRI, " +
+											"                   MST_CUSTOMER_CATEGORY MCC " +
+											"             WHERE     BAL.BRANCH_ID = MBRI.BRANCH_ID " +
+											"                   AND MBI.BANK_ID = MBRI.BANK_ID " +
+											"                   AND MBRI.area_id = MBI.area_id " +
+											"                   AND SUBSTR (BAL.CUSTOMER_ID, 3, 2) = MCC.CATEGORY_ID " +
+											"                   AND TO_CHAR (TRANS_DATE, 'MM') = LPAD ("+bill_month+", 2, 0) " +
+											"                   AND TO_CHAR (TRANS_DATE, 'YYYY') = "+bill_year+" " +
+											"                   AND TRANS_TYPE = 1 " +
+											"                   and BAL.CUSTOMER_ID like '0213%' " +
+											"          GROUP BY TRANS_TYPE, SUBSTR (BAL.CUSTOMER_ID, 3, 2), CATEGORY_NAME " +
+											"          UNION ALL " +
+											"            SELECT SUBSTR (BAL.CUSTOMER_ID, 3, 2) CATEGORY, " +
+											"                   CATEGORY_NAME, " +
+											"                   0 ACTUAL_REVENUE, " +
+											"                   0 SURCHARGE, " +
+											"                   SUM (debit) AS FEES, " +
+											"                   0 SECURITY " +
+											"              FROM bank_account_ledger BAL, " +
+											"                   MST_BANK_INFO MBI, " +
+											"                   MST_BRANCH_INFO MBRI, " +
+											"                   MST_CUSTOMER_CATEGORY MCC " +
+											"             WHERE     BAL.BRANCH_ID = MBRI.BRANCH_ID " +
+											"                   AND MBI.BANK_ID = MBRI.BANK_ID " +
+											"                   AND MBRI.area_id = MBI.area_id " +
+											"                   AND SUBSTR (BAL.CUSTOMER_ID, 3, 2) = MCC.CATEGORY_ID " +
+											"                   AND TO_CHAR (TRANS_DATE, 'MM') = LPAD ("+bill_month+", 2, 0) " +
+											"                   AND TO_CHAR (TRANS_DATE, 'YYYY') = "+bill_year+" " +
+											"                   AND TRANS_TYPE = 7 " +
+											"                   and BAL.CUSTOMER_ID like '0213%' " +
+											"          GROUP BY TRANS_TYPE, SUBSTR (BAL.CUSTOMER_ID, 3, 2), CATEGORY_NAME " +
+											"          UNION ALL " +
+											"            SELECT SUBSTR (BAL.CUSTOMER_ID, 3, 2) CATEGORY, " +
+											"                   CATEGORY_NAME, " +
+											"                   0 ACTUAL_REVENUE, " +
+											"                   0 SURCHARGE, " +
+											"                   0 FEES, " +
+											"                   SUM (debit) - SUM (credit) AS SECURITY " +
+											"              FROM bank_account_ledger BAL, " +
+											"                   MST_BANK_INFO MBI, " +
+											"                   MST_BRANCH_INFO MBRI, " +
+											"                   MST_CUSTOMER_CATEGORY MCC " +
+											"             WHERE     BAL.BRANCH_ID = MBRI.BRANCH_ID " +
+											"                   AND MBI.BANK_ID = MBRI.BANK_ID " +
+											"                   AND MBRI.area_id = MBI.area_id " +
+											"                   AND SUBSTR (BAL.CUSTOMER_ID, 3, 2) = MCC.CATEGORY_ID " +
+											"                   AND TO_CHAR (TRANS_DATE, 'MM') = LPAD ("+bill_month+", 2, 0) " +
+											"                   AND TO_CHAR (TRANS_DATE, 'YYYY') = "+bill_year+" " +
+											"                   AND TRANS_TYPE = 0 " +
+											"                   AND REF_ID NOT IN (SELECT DEPOSIT_ID " +
+											"                                        FROM MST_DEPOSIT " +
+											"                                       WHERE DEPOSIT_TYPE = 1) " +
+											"                   and BAL.CUSTOMER_ID like '0213%' " +
+											"          GROUP BY TRANS_TYPE, SUBSTR (BAL.CUSTOMER_ID, 3, 2), CATEGORY_NAME) " +
+											"GROUP BY CATEGORY, CATEGORY_NAME ";
+				
+				
+				PreparedStatement ps1=conn.prepareStatement(powerCollectionSql);
+				
+	        	ResultSet resultSet=ps1.executeQuery();
+	        	
+	        	while(resultSet.next())
+	        	{
+	        		CollectionReportDTO collectionDto=new CollectionReportDTO();
+	        		collectionDto.setCategory_name(resultSet.getString("CATEGORY_NAME"));
+	        		collectionDto.setGas_bill(resultSet.getDouble("ACTUAL_REVENUE"));
+	        		collectionDto.setColl_surcharge(resultSet.getDouble("SURCHARGE"));
+	        		collectionDto.setFees(resultSet.getDouble("FEESS"));
+	        		collectionDto.setSecurity(resultSet.getDouble("SECURITY"));
 	        		
 	        		collectionInfoList.add(collectionDto);
 	        		
