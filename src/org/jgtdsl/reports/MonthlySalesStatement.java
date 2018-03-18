@@ -416,8 +416,8 @@ public class MonthlySalesStatement extends BaseAction {
 		String currnertType="";
 		try {
 		
-			String sql1="select MCC.CATEGORY_ID,decode(SR.IS_METER,1,substr(CATEGORY_NAME,1,length(CATEGORY_NAME)),substr(CATEGORY_NAME,1,length(CATEGORY_NAME))||' (Non-Meter)') CATEGORY_NAME" +
-						",MCC.CATEGORY_TYPE,SR.IS_METER,"+
+			String sql1="select MCC.CATEGORY_ID, CATEGORY_NAME" +
+						",MCC.CATEGORY_TYPE,"+
 						"sum(ACTUAL_EXCEPT_MINIMUM) ACTUAL_EXCEPT_MINIMUM,sum(ACTUAL_WITH_MINIMUM) ACTUAL_WITH_MINIMUM, "+
 						"sum(BILLING_UNIT) BILLING_UNIT, sum(DIFFERENCE) DIFFERENCE,sum(TOTAL_ACTUAL_CONSUMPTION) TOTAL_ACTUAL_CONSUMPTION,RATE ,"+
 						"sum(VALUE_OF_ACTUAL_CONSUMPTION) VALUE_OF_ACTUAL_CONSUMPTION,sum(MINIMUM_CHARGE) MINIMUM_CHARGE,sum(METER_RENT) METER_RENT, "+
@@ -425,8 +425,8 @@ public class MonthlySalesStatement extends BaseAction {
 						"from SALES_REPORT SR,CUSTOMER_CONNECTION conn,MST_CUSTOMER_CATEGORY mcc "+
 						"where SR.customer_id=conn.customer_id and BILLING_MONTH=? and BILLING_YEAR=?"+
 						"and substr(SR.customer_id,3,2)=MCC.CATEGORY_ID and substr(SR.customer_id,1,2)=?"+ 
-						"group by  MCC.CATEGORY_ID,MCC.CATEGORY_NAME,SR.IS_METER,MCC.CATEGORY_TYPE,RATE "+
-						"ORDER BY MCC.CATEGORY_TYPE asc,MCC.CATEGORY_ID desc,SR.IS_METER desc";
+						"group by  MCC.CATEGORY_ID,MCC.CATEGORY_NAME,MCC.CATEGORY_TYPE,RATE "+
+						"ORDER BY MCC.CATEGORY_TYPE asc,MCC.CATEGORY_ID ASC";
     		PreparedStatement ps1=conn.prepareStatement(sql1);
     		ps1.setString(1, bill_month);
     		ps1.setString(2, bill_year);

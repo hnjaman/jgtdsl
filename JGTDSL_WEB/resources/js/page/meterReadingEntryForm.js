@@ -79,6 +79,7 @@ function readingCallBack(data){
 function setReadingInfo(data)
 {
 	//alert(data.prev_reading);
+	$("#unit").val(data.unit);
 	$("#reading_id").val(data.reading_id);
 	$("#meter_rent").val(data.meter_rent);
 	$("#tariff_id").val(data.tariff_id);
@@ -133,7 +134,10 @@ function setReadingInfo(data)
 	$("#rate").val(data.rate);
 	$("#latest_rate").val(data.latest_rate);
 	$("#actual_consumption").val(data.actual_consumption);
+	//$("#unit").val(data.unit);
 	$("#total_consumption").val(data.total_consumption);
+	$("#actual_consumption_t").val(data.actual_consumption);
+	$("#total_consumption_t").val(data.total_consumption);
 	$("#remarks").val(data.remarks);
 		
 	}
@@ -150,20 +154,22 @@ function calculateDifference(){
 function calculateActualConsumption()
 {
  $("#actual_consumption").val(getActualConsumption($("#difference").val(),$("#pressure_factor").val(),$("#temperature_factor").val()));
+ $("#actual_consumption_t").val(getActualConsumptionT($("#difference").val(),$("#pressure_factor").val(),$("#temperature_factor").val()));
 }
 
 function calculateTotalConsumption()
 {
  $("#total_consumption").val(getTotalConsumption($("#actual_consumption").val(),$("#hhv_nhv").val()));
+ $("#total_consumption_t").val(getTotalConsumptionT($("#actual_consumption").val(),$("#hhv_nhv").val()));
 }
 function clearMeterReadingForm()
 {	
-  clearField("reading_id","customer_name","customer_type","address","prev_reading","prev_reading_date","curr_reading","curr_reading_date","hhv_nhv","measurement_type_name","measurement_type_str","rate","difference","min_load","max_load","actual_consumption","total_consumption","meter_rent","remarks","area_id","customer_category","billing_month","billing_year","reading_purpose_str");
+  clearField("reading_id","customer_name","unit","customer_type","address","prev_reading","prev_reading_date","curr_reading","curr_reading_date","hhv_nhv","measurement_type_name","measurement_type_str","rate","difference","min_load","max_load","actual_consumption_t","total_consumption_t","actual_consumption","total_consumption","meter_rent","remarks","area_id","customer_category","billing_month","billing_year","reading_purpose_str");
   $('#meter_id').find('option:gt(0)').remove();  
 } 
 function cleanFieldsBeforeReadingSetting()
 {
-  clearField("reading_id","meter_rent","prev_reading","prev_reading_date","curr_reading","hhv_nhv","measurement_type_name","measurement_type_str","rate","difference","min_load","max_load","actual_consumption","total_consumption","remarks");
+  clearField("reading_id","meter_rent","unit","prev_reading","prev_reading_date","curr_reading","hhv_nhv","measurement_type_name","measurement_type_str","rate","difference","min_load","max_load","actual_consumption_t","total_consumption_t","actual_consumption","total_consumption","remarks");
   $('#meter_id').find('option:gt(0)').remove();
   
 } 
@@ -217,6 +223,50 @@ function getTotalConsumption(actualConsumption,hhv_nhv){
 		
 }
 
+function getActualConsumptionT(difference,pressureFactor,temperatureFactor)
+{
+
+	 var diff=parseFloat(difference);
+	 var pFactor=pressureFactor;
+	 var tFactor=temperatureFactor;
+     //var actual_consumption=diff*pFactor*tFactor;
+	 var actual_consumption=diff*pFactor;
+	 if($("#unit").val().toUpperCase()==="FT"){
+		 actual_consumption= actual_consumption/35.3147; 
+		}
+     return actual_consumption;
+}
+function getTotalConsumptionT(actualConsumption,hhv_nhv){
+
+	if(parseFloat(hhv_nhv)==0)
+		return actualConsumption;
+	else{
+		var hhv_nhv_adjustment_qnt=parseFloat(actualConsumption)*(parseFloat(hhv_nhv)-1);
+		hhv_nhv_adjustment_qnt=parseFloat(hhv_nhv_adjustment_qnt);
+		var total_consumption=parseFloat(actualConsumption)+hhv_nhv_adjustment_qnt;
+		total_consumption=parseFloat(total_consumption);
+		if($("#unit").val().toUpperCase()==="FT"){
+			total_consumption= total_consumption/35.3147; 
+		}
+		return total_consumption;
+	}
+		
+}
+
+function getTotalConsumptionView(actualConsumption,hhv_nhv){
+
+	if(parseFloat(hhv_nhv)==0)
+		return actualConsumption;
+	else{
+		var hhv_nhv_adjustment_qnt=parseFloat(actualConsumption)*(parseFloat(hhv_nhv)-1);
+		hhv_nhv_adjustment_qnt=parseFloat(hhv_nhv_adjustment_qnt);
+		var total_consumption=parseFloat(actualConsumption)+hhv_nhv_adjustment_qnt;
+		total_consumption=parseFloat(total_consumption);
+		return total_consumption;
+	}
+		
+}
+
 function fetchGasPrice(date)
 {
  $.ajax({
@@ -246,9 +296,9 @@ function fetchGasPrice(date)
 //Available Modes
 //disable_mode,data_entry_mode,data_submit_mode
 function changeReadingFormMode(mode){
-	var always_disable_fields=["meter_rent","prev_reading_date","prev_reading","curr_reading_date","difference","rate","measurement_type_name","total_consumption","min_load","max_load"];
+	var always_disable_fields=["meter_rent","prev_reading_date","prev_reading","curr_reading_date","difference","rate","measurement_type_name","total_consumption","total_consumption_t","min_load","max_load"];
 	var always_editable_fields=["remarks"];
-	var conditional_fields=["meter_id","billing_month","billing_year","reading_purpose_str","curr_reading","actual_consumption"];
+	var conditional_fields=["meter_id","billing_month","billing_year","reading_purpose_str","curr_reading","actual_consumption","actual_consumption_t"];
 	
 	always_disable_fields=always_disable_fields.slice();
 	always_editable_fields=always_editable_fields.slice();
@@ -294,7 +344,9 @@ function controlFieldsByReadingPurpose()
 		//General Billing
 		if($("#measurement_type_str").val() == 1 || $("#customer_category").val()==13 ){
 			enableField("actual_consumption","remarks");
+			$('#actual_consumption').show();
 			$('#actual_consumption').focus();
+			$('#actual_consumption_t').hide();
 		}
 		else{
 			enableField("curr_reading");			
@@ -306,7 +358,9 @@ function controlFieldsByReadingPurpose()
 		//Average Billing
 		enableField("actual_consumption");
 		$("#curr_reading").val($("#prev_reading").val());
-		$('#actual_consumption').focus();		
+		$('#actual_consumption').show();
+		$('#actual_consumption').focus();	
+		$('#actual_consumption_t').hide();
 	}
 	else if(reading_purpose==6){
 		//Bill on Maximum Load
@@ -314,6 +368,8 @@ function controlFieldsByReadingPurpose()
 		$("#curr_reading").val($("#prev_reading").val());
 		$("#actual_consumption").val($("#max_load").val());
 		$("#total_consumption").val($("#max_load").val());
+		$("#actual_consumption_t").val($("#min_load").val());
+		$("#total_consumption_t").val($("#min_load").val());
 		$('#remarks').focus();
 	}
 	else if(reading_purpose==7){//PROPORTIONAL_BILL(5,"Proportional Bill")
@@ -321,7 +377,9 @@ function controlFieldsByReadingPurpose()
 	else if(reading_purpose==8){
 		//ADJUSTMENT_BILL(6,"Adjustment Bill")
 		enableField("actual_consumption");
-			$('#actual_consumption').focus();
+		$('#actual_consumption').show();
+		$('#actual_consumption').focus();
+		$('#actual_consumption_t').hide();
 		
 	}else if(reading_purpose==9){
 		//Bill on Minimum Load
@@ -329,13 +387,18 @@ function controlFieldsByReadingPurpose()
 		$("#curr_reading").val($("#prev_reading").val());
 		$("#actual_consumption").val($("#min_load").val());
 		$("#total_consumption").val($("#min_load").val());
+		$("#actual_consumption_t").val($("#min_load").val());
+		$("#total_consumption_t").val($("#min_load").val());
 		$("#difference").val("0");
 		$('#remarks').focus();
 	}else if(reading_purpose==10){
 		//Bill on Actual Load
 		if($("#measurement_type_str").val() == 1 || $("#customer_category").val()==13){
 			enableField("actual_consumption","remarks");
+			$('#actual_consumption').show();
 			$('#actual_consumption').focus();
+			$('#actual_consumption_t').hide();
+			
 		}
 		else{
 			enableField("curr_reading");			

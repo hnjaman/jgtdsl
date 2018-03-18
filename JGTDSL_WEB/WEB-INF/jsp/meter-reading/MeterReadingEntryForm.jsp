@@ -3,7 +3,7 @@
 <div class="row-fluid">
 	<div class="span6">
 		<label class="mr_lable">Customer ID <m class='man'/></label>
-		<input type="text" onblur="checkInput(this.id)"  name="reading.customer_id" id="customer_id" class="mr_1row_text"  style="font-weight: bold;color: #3b5894; z-index: 2; background: transparent;margin-top: -4px; width: 59%;" value="<s:property value='customer_id' />" tabindex="1"/>
+		<input type="text" onblur="checkInput(this.id)"  name="reading.customer_id" id="customer_id" class="mr_1row_text"  style="font-weight: bold;color: #0000ff; z-index: 2; background: transparent;margin-top: -4px; width: 59%;" value="<s:property value='customer_id' />" tabindex="1"/>
 		<!-- onblur="checkInput(this.id)"  -->
 		<input type="text" name="" id="customer_id_x" disabled="disabled" class="mr_1row_text"  style="color: #CCC; position: absolute; background: transparent; z-index: 1;border: none;margin-top: -5px;"/>
 		
@@ -101,7 +101,7 @@
 <div class="row-fluid">      
    <div class="span6">
        <label class="mr_lable">Prev. Reading</label>
-       <input type="text" name="reading.prev_reading" id="prev_reading" class="mr_text" disabled="disabled" style="width: 59%;"/>									       
+       <input type="text" name="reading.prev_reading" id="prev_reading" class="mr_text" disabled="disabled" style="width: 59%; font-weight: bold;color: #3b5894;  background: transparent;"/>									       
    </div>	 
    <div class="span6">
        <label class="mr_lable">P. Reading Date</label>
@@ -156,13 +156,21 @@
 </div>
 
 
-<div class="row-fluid"> 
+<div class="row-fluid" style="display: ;"> 
     							   
    <div class="span6">
-       <label class="mr_lable">Act./Total Cons.</label>
-       <input type="text" name="reading.actual_consumption" id="actual_consumption"  class="mr_text1" onchange="calculateTotalConsumption()" style="width: 29%;"/>       									      
-       <input type="text" name="reading.total_consumption" id="total_consumption"  class="mr_text2"  style="width: 25%;"/>
+   		<label class="mr_lable">Act./Total Cons.</label>
+       <input type="text"  id="actual_consumption_t"   class="mr_text1" onchange="calculateTotalConsumption()" style="width: 29%;font-weight: bold;color: #3b5894; background: transparent;"/>       									      
+       <input type="text" style="display:none; width:29%;font-weight: bold; background: transparent;"  name="reading.actual_consumption" id="actual_consumption"  >
+       <input type="text"  id="total_consumption_t"   class="mr_text2"  style="width: 25%; font-weight: bold;color: #3b5894; background: transparent;"/>
+		<input type="text" style="display:none"  name="reading.total_consumption" id="total_consumption"  >   
    </div>
+   
+   <div class="span6">
+       <label class="mr_lable">Unit</label>
+       <input type="text" name="unit" id="unit"  class="mr_text1" disabled="disabled"  style="width: 29%;font-weight: bold;color: #3b5894;"/>       									      
+   </div>
+   
 </div>
 
 <div class="row-fluid">    

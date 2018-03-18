@@ -188,8 +188,14 @@ $('#customer_ledger_grid').jqGrid('navGrid','#customer_ledger_grid_pager')
     onClickButton: function(){
     	decreaseSize("customer_ledger_grid");
     }
+}).navButtonAdd('#customer_ledger_grid_pager',{
+    caption:"<b><font color='purple'>Print</font></b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;", 
+    buttonicon:"ui-icon-print", 
+    id: "print_ledger",
+    onClickButton: function(){
+    	window.location='printLedger.action?customer_id='+$("#customer_id").val();
+    }
 });
-
 
 
 //processCustomerLedgerBalance

@@ -3,6 +3,8 @@ package org.jgtdsl.models;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import oracle.jdbc.driver.OracleCallableStatement;
@@ -10,6 +12,7 @@ import oracle.jdbc.driver.OracleCallableStatement;
 import org.apache.struts2.ServletActionContext;
 import org.jgtdsl.dto.BurnerQntChangeDTO;
 import org.jgtdsl.dto.CustomerApplianceDTO;
+import org.jgtdsl.dto.CustomerLedgerDTO;
 import org.jgtdsl.dto.MeterRentChangeDTO;
 import org.jgtdsl.dto.MinistryDTO;
 import org.jgtdsl.dto.ResponseDTO;
@@ -300,7 +303,83 @@ public class BurnerQntChangeService {
 	 		return response;
 	 	
 	}
-	
+	///connection ledger
+	public ArrayList<BurnerQntChangeDTO> getBurnerQntChangeListGrid(String customer_id){
+		BurnerQntChangeDTO bChangeDTO=null;
+		ArrayList<BurnerQntChangeDTO> burnerChangeList=new ArrayList<BurnerQntChangeDTO>();
+		
+		Connection conn = ConnectionManager.getConnection();
+		String sql="";
+		
+				  sql=	  "SELECT BQC.PID, " +
+						  "       BQC.CUSTOMER_ID, " +
+						  "       CPI.FULL_NAME, " +
+						  "       BQC.APPLIANCE_TYPE_CODE, " +
+						  "       AI.APPLIANCE_NAME, " +
+						  "       BQC.OLD_APPLIANCE_QNT, " +
+						  "       BQC.NEW_APPLIANCE_QNT, " +
+						  "       BQC.NEW_PERMANENT_DISCON_QNT, " +
+						  "       BQC.NEW_TEMPORARY_DISCONN_QNT, " +
+						  "       BQC.NEW_INCREASED_QNT, " +
+						  "       BQC.NEW_RECONN_QNT_4M_TEMPORARY + BQC.NEW_RECONN_QNT_4M_TEMP_HALF " +
+						  "       NEW_RECONN_QNT_4M_TEMPORARY, " +
+						  "       BQC.NEW_RECONN_QNT_4M_PERMANENT, " +
+						  "       BQC.DISCONN_CAUSE, " +
+						  "       BQC.TOTAL_TDISCONNECTED_QNT, " +
+						  "       BQC.TOTAL_PDISCONNECTED_QNT, " +
+						  "       EFFECTIVE_DATE, " +
+						  "       TO_CHAR (EFFECTIVE_DATE, 'dd-MM-YYYY') EFFECTIVE_DATE_VIEW, " +
+						  "       REMARKS, " +
+						  "       MST_AREA.AREA_ID, " +
+						  "       MST_AREA.AREA_NAME " +
+						  "  FROM BURNER_QNT_CHANGE BQC, " +
+						  "       CUSTOMER_PERSONAL_INFO CPI, " +
+						  "       MST_AREA, " +
+						  "       CUSTOMER, " +
+						  "       APPLIANCE_INFO AI " +
+						  " WHERE     BQC.CUSTOMER_ID = CPI.CUSTOMER_ID " +
+						  "       AND CUSTOMER.CUSTOMER_ID = CPI.CUSTOMER_ID " +
+						  "       AND CUSTOMER.AREA = MST_AREA.AREA_ID " +
+						  "       AND BQC.APPLIANCE_TYPE_CODE = AI.APPLIANCE_ID AND  AI.AREA_ID=MST_AREA.Area_Id " +
+						  "And BQC.CUSTOMER_ID = '"+customer_id+"'";
+
+		   Statement stmt= null;
+		try {
+			stmt = conn.createStatement();
+			   ResultSet r = null;
+			   r= stmt.executeQuery(sql);
+				while (r.next())
+				{
+					bChangeDTO=new BurnerQntChangeDTO();
+					
+					bChangeDTO.setPid(r.getString("PID"));
+					bChangeDTO.setCustomer_id(r.getString("CUSTOMER_ID"));
+					bChangeDTO.setCustomer_name(r.getString("FULL_NAME"));
+					bChangeDTO.setAppliance_id(r.getString("APPLIANCE_TYPE_CODE"));
+					bChangeDTO.setAppliance_name(r.getString("APPLIANCE_NAME"));
+					bChangeDTO.setOld_double_burner_qnt(r.getString("OLD_APPLIANCE_QNT"));
+					bChangeDTO.setNew_permanent_disconnected_burner_qnt(r.getString("NEW_PERMANENT_DISCON_QNT"));
+					bChangeDTO.setNew_temporary_disconnected_burner_qnt(r.getString("NEW_TEMPORARY_DISCONN_QNT"));
+					bChangeDTO.setNew_incrased_burner_qnt(r.getString("NEW_INCREASED_QNT"));
+					bChangeDTO.setNew_reconnected_burner_qnt(r.getString("NEW_RECONN_QNT_4M_TEMPORARY"));
+					bChangeDTO.setNew_reconnected_burner_qnt_permanent(r.getString("NEW_RECONN_QNT_4M_PERMANENT"));
+					bChangeDTO.setNew_double_burner_qnt(r.getString("NEW_APPLIANCE_QNT"));
+					bChangeDTO.setOld_pdisconnected_burner_qnt(r.getString("TOTAL_PDISCONNECTED_QNT"));
+					bChangeDTO.setOld_tdisconnected_burner_qnt(r.getString("TOTAL_TDISCONNECTED_QNT"));
+					bChangeDTO.setEffective_date(r.getString("EFFECTIVE_DATE_VIEW"));
+					bChangeDTO.setRemarks(r.getString("REMARKS"));
+
+					burnerChangeList.add(bChangeDTO);
+				}
+			} 
+			catch (Exception e){e.printStackTrace();}
+	 		finally{try{stmt.close();ConnectionManager.closeConnection(conn);} catch (Exception e)
+				{e.printStackTrace();}stmt = null;conn = null;}
+		
+		
+		return burnerChangeList;
+	}
+	//connection ledger ends
 	public ArrayList<BurnerQntChangeDTO> getBurnerQntChangeList(int index, int offset,String whereClause,String sortFieldName,String sortOrder,int total)
 	{
 		BurnerQntChangeDTO bChangeDTO=null;

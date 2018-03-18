@@ -418,7 +418,7 @@ public class MeterService {
 
 		sql = "SELECT BQC.PID, "
 				+ "       BQC.APPLIANCE_TYPE_CODE, "
-				+ "       AI.APPLIANCE_NAME, "
+				+ "       AI.APPLIANCE_NAME, AI.APPLIANCE_RATE, "
 				+ "       BQC.CUSTOMER_ID, "
 				+ "       BQC.OLD_APPLIANCE_QNT, "
 				+ "       BQC.OLD_APPLIANCE_QNT_BILLCALL, "
@@ -447,6 +447,7 @@ public class MeterService {
 						.trim());
 				appliance.setApplianc_name(r.getString("APPLIANCE_NAME"));
 				appliance.setApplianc_qnt(r.getString("NEW_APPLIANCE_QNT"));
+				appliance.setApplianc_rate(r.getString("APPLIANCE_RATE"));
 				appliance.setApplianc_qnt_billcal(r
 						.getString("NEW_APPLIANCE_QNT_BILLCAL"));
 				appliance.setApplianc_perm_diss(r

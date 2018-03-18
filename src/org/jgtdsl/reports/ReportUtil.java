@@ -13,6 +13,7 @@ public class ReportUtil {
 	
 	public static Font f12B = FontFactory.getFont("Times-Roman", 12, Font.BOLD,BaseColor.BLACK);
 	public static Font f11B = FontFactory.getFont("Times-Roman", 11, Font.BOLD,BaseColor.BLACK);
+	public static Font f11 = FontFactory.getFont("Times-Roman", 11, Font.NORMAL,BaseColor.BLACK);
 	public static Font f10B = FontFactory.getFont("Times-Roman", 10, Font.BOLD,BaseColor.BLACK);
 	public static Font f9 = FontFactory.getFont("Times-Roman", 9, Font.NORMAL,BaseColor.BLACK);
 	public static Font f9B = FontFactory.getFont("Times-Roman", 9, Font.BOLD,BaseColor.BLACK);

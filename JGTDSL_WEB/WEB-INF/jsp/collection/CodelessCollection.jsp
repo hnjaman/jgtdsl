@@ -277,6 +277,13 @@ var actionUrl=sBase+"getSecurityAndOtherDepositList.action?customer_id="+'020100
 $("#depositListTbl").html(jsImg.SETTING).load(actionUrl);      
 </script>
  -->
+<script type="text/javascript">
+ $(document).ready(function () {
+ 		//document.getElementById("customer_code").value="<s:property value="area_id" />";
+ 		
+ 		 $("#customer_id").val($("#area_id").val()+"01");
+    });
+</script>
 
 
 

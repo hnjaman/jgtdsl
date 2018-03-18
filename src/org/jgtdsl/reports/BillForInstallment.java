@@ -117,37 +117,37 @@ public class BillForInstallment extends BaseAction implements ServletContextAwar
 			over.beginText();
 			
 			over.setFontAndSize(bfBold, 11);
-			over.showTextAligned(PdfContentByte.ALIGN_CENTER,bill.getCustomer_category_name()+ " Due Gas Bill Installment",300, 750,0);
-						
+			over.showTextAligned(PdfContentByte.ALIGN_CENTER,bill.getCustomer_category_name()+ " Due Gas Bill Installment",300, 680,0);
+			int y=771;			
 			over.setFontAndSize(bf, fSize);
-			over.setTextMatrix(335, 771);
+			over.setTextMatrix(335, 701);
 			over.showText(bill.getArea_name());			
-			over.setTextMatrix(508, 745);
+			over.setTextMatrix(508, 672);
 			over.showText(bill.getInstallmentId());			
-			over.setTextMatrix(508, 722);
+			over.setTextMatrix(508, 722-75);
 			//over.showText(from_date);
 			over.showText(bill.getIssue_date());	
 			
-			over.setTextMatrix(508, 702);
+			over.setTextMatrix(508, 702-75);
 			over.showText(bill.getDueDate());
-			over.setTextMatrix(508, 680);
+			over.setTextMatrix(508, 680-75);
 			over.showText(bill.getDueDate());
-			over.setTextMatrix(508, 662);
-			over.showText(bill.getLast_disconn_reconn_date()==null?"":bill.getLast_disconn_reconn_date());
-			over.setTextMatrix(508, 620);
+			over.setTextMatrix(508, 662-83);//662
+			over.showText(bill.getLast_disconn_reconn_date()==null?"N/A":bill.getLast_disconn_reconn_date());
+			over.setTextMatrix(508, 620-89);
 			over.showText(bill.getMonthly_contractual_load()+"");
 			
-			over.setTextMatrix(126, 744);
+			over.setTextMatrix(126, 674);
 			over.showText(bill.getBill_month_name()+", "+bill.getBill_year());
-			over.setTextMatrix(126, 725);
+			over.setTextMatrix(126, 650);
 			over.showText(bill.getCustomer_id());
-			over.setTextMatrix(126, 600);
+			over.setTextMatrix(126, 510);//600
 			over.showText(bill.getPhone()==null?"":bill.getPhone());	
 			
-			over.setTextMatrix(250, 555);
+			over.setTextMatrix(250, 457);
 			over.showText(bill.getInstallmentId());
 			
-			over.setTextMatrix(480, 555);
+			over.setTextMatrix(480, 457);
 			over.showText(bill.getInstallmentSerial());
 			
 			ArrayList<InstallmentSegmentDTO> segmentList=bill.getSegmentList();
@@ -155,41 +155,41 @@ public class BillForInstallment extends BaseAction implements ServletContextAwar
 			{
 				
 				over.setFontAndSize(bf, 8);
-				over.setTextMatrix(50,510-15*i); over.showText(segmentList.get(i).getBillMonthName()+", "+segmentList.get(i).getBillYear());
+				over.setTextMatrix(50,390-15*i); over.showText(segmentList.get(i).getBillMonthName()+", "+segmentList.get(i).getBillYear());
 				
 				over.setFontAndSize(bf, fSize);
-				over.setTextMatrix(190,510-15*i); over.showText((taka_format.format(segmentList.get(i).getPrincipal())+""));
-				over.setTextMatrix(300,510-15*i); over.showText((taka_format.format(segmentList.get(i).getMeterRent())+""));
-				over.setTextMatrix(420,510-15*i); over.showText((taka_format.format(segmentList.get(i).getSurcharge())+""));
-				over.setTextMatrix(520,510-15*i); over.showText((taka_format.format(segmentList.get(i).getTotal())+""));
+				over.setTextMatrix(190,390-15*i); over.showText((taka_format.format(segmentList.get(i).getPrincipal())+""));
+				over.setTextMatrix(300,390-15*i); over.showText((taka_format.format(segmentList.get(i).getMeterRent())+""));
+				over.setTextMatrix(420,390-15*i); over.showText((taka_format.format(segmentList.get(i).getSurcharge())+""));
+				over.setTextMatrix(520,390-15*i); over.showText((taka_format.format(segmentList.get(i).getTotal())+""));
 
 			}
 				
 			
 			over.setFontAndSize(bfBold, fSize);
-			over.setTextMatrix(520, 392);
+			over.setTextMatrix(520, 292);//392
 			over.showText((taka_format.format(bill.getPayable_amount())+""));
 			
 			over.setFontAndSize(bfBold, fSize);
-			over.setTextMatrix(90, 360);
+			over.setTextMatrix(90, 240);//360
 			over.showText(bill.getAmount_in_word());
 			
 			
 			ColumnText ct = new ColumnText(over);						
 			ct.setSimpleColumn(new Phrase(new Chunk(bill.getAddress(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10, Font.NORMAL))),
-			                     126, 669, 300, 36, 12, Element.ALIGN_LEFT | Element.ALIGN_TOP);
+			                     126, 592, 300, 36, 12, Element.ALIGN_LEFT | Element.ALIGN_TOP);
 								//top-leftX,top-leftY,?,?,lineHeight			
 			ct.go(); 
 			
 			ct = new ColumnText(over);						
 			ct.setSimpleColumn(new Phrase(new Chunk(bill.getCustomer_name(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10, Font.NORMAL))),
-			                     126, 716, 400, 36, 12, Element.ALIGN_LEFT | Element.ALIGN_TOP);
+			                     126, 639, 400, 36, 12, Element.ALIGN_LEFT | Element.ALIGN_TOP);
 								//top-leftX,top-leftY,?,?,lineHeight			
 			ct.go(); 
 			
 			ct = new ColumnText(over);						
 			ct.setSimpleColumn(new Phrase(new Chunk(bill.getProprietor_name()==null?"":bill.getProprietor_name(), FontFactory.getFont(FontFactory.TIMES_ROMAN, 10, Font.NORMAL))),
-			                     126, 695, 350, 36, 12, Element.ALIGN_LEFT | Element.ALIGN_TOP);
+			                     126, 616, 350, 36, 12, Element.ALIGN_LEFT | Element.ALIGN_TOP);
 								//top-leftX,top-leftY,?,?,lineHeight			
 			ct.go(); 
 			

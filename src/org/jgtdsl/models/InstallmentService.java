@@ -140,27 +140,28 @@ public class InstallmentService {
 			
 			//System.out.println("Procedure Save_Installment_Billings Begins");
 			stmt = (OracleCallableStatement) conn.prepareCall(
-					 	  "{ call Save_Installment_Billings(?,?,?,?,?,?,?,?,?,?,?) }");
+					 	  "{ call Save_Installment_Billings(?,?,?,?,?,?,?,?,?,?) }");
 			
 	 
 			//stmt.setString(1, agreement.getAgreementId());
 			stmt.setString(1, "1");
 			stmt.setString(2, customer_id);
 			stmt.setString(3, agreement.getStartFrom());
-			//stmt.setString(4, agreement.getAgreementDate());
-			stmt.setString(4, "11-11-2016");
+			stmt.setString(4, agreement.getAgreementDate());
+			//stmt.setString(4, "11-11-2016");
 			stmt.setString(5, agreement.getNotes());
 			stmt.setArray(6, inputBillId);			
 			stmt.setArray(7, inputInstallment);
-			stmt.setString(8, "Ifti");
-			stmt.setString(9, "11-11-2016");
+			stmt.setString(8, "IICT");
 			
-			stmt.registerOutParameter(10, java.sql.Types.INTEGER);
-			stmt.registerOutParameter(11, java.sql.Types.VARCHAR);
+			//stmt.setString(9, agreement.get);
+			
+			stmt.registerOutParameter(9, java.sql.Types.INTEGER);
+			stmt.registerOutParameter(10, java.sql.Types.VARCHAR);
 		
 			stmt.executeUpdate();
-			response_code = stmt.getInt(10);
-			response_msg = (stmt.getString(11)).trim();
+			response_code = stmt.getInt(9);
+			response_msg = (stmt.getString(10)).trim();
 
 			response.setMessasge(response_msg);
 			response.setResponse(response_code==1?true:false);

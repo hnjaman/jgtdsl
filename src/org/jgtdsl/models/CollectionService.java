@@ -471,8 +471,9 @@ public class CollectionService {
 					if(customer.getConnectionInfo().getIsMetered_name().equalsIgnoreCase("Metered")){
 						collection.setBilled_amount(r.getDouble("BILLED_AMOUNT"));					
 						collection.setVat_rebate_amount(r.getDouble("VAT_REBATE_AMOUNT"));
-						//collection.setSurcharge_amount(r.getDouble("SURCHARGE_AMOUNT"));
-						collection.setSurcharge_amount(r.getDouble("ACTUAL_SURCHARGE_CAL"));
+						//for fixing sum in form
+						collection.setSurcharge_amount(r.getDouble("SURCHARGE_AMOUNT"));
+						//collection.setSurcharge_amount(r.getDouble("ACTUAL_SURCHARGE_CAL"));
 						collection.setAdjustment_amount(r.getDouble("ADJUSTMENT_AMOUNT"));
 						//collection.setPayable_amount(r.getDouble("PAYABLE_AMOUNT"));
 						collection.setPayable_amount(r.getDouble("ACTUAL_PAYABLE_AMOUNT_CAL"));
@@ -788,6 +789,78 @@ public class CollectionService {
 	 		return response;
 
 	}
+	
+	
+	
+	
+	
+	//check due bill amount
+	public ResponseDTO checkAdvancedCollection(CollectionDTO collection){
+		
+		ResponseDTO response = new ResponseDTO();
+		int response_code=0;
+	 	String response_msg="0#0";
+	 	
+		Connection conn = ConnectionManager.getConnection();
+	 	OracleCallableStatement stmt=null;
+	 	
+	 	try
+		  {	 	   stmt = (OracleCallableStatement) conn.prepareCall(
+					 	  "{ ? = call GET_NON_BILL_AMOUNT	(?,?,?,?,?,?) }");
+		    		
+		  			stmt.registerOutParameter(1, java.sql.Types.VARCHAR);
+		    	
+					stmt.setString(2, collection.getCustomer_id());
+		    		stmt.setString(3, collection.getFrom_month());
+		    		stmt.setString(4, collection.getFrom_year());
+		    		stmt.setString(5, collection.getTo_month());
+		    		stmt.setString(6, collection.getTo_year());
+		    		stmt.setString(7, collection.getCollection_date());
+
+					
+					
+					stmt.executeUpdate();
+
+					response_msg = (stmt.getString(1)).trim();
+					
+					//split and check if any bill is due
+//					String [] arrDebit = response_msg.split("#");
+//					double bill_amount = Double.parseDouble(arrDebit[0]);
+//					double surcharge = Double.parseDouble(arrDebit[1]);
+//					double total = bill_amount + surcharge;
+//					if(total > 0.0)
+//					response_code = 1 ;
+					//end of checking
+					
+					response_code = 1 ;
+					response.setMessasge(response_msg);
+					response.setResponse(response_code==1?true:false);
+	 			
+	 		
+	 		
+	    		    	
+		  } 
+		catch (Exception e){e.printStackTrace();response.setResponse(false);response.setMessasge(e.getMessage());return response;}
+ 		finally{try{stmt.close();ConnectionManager.closeConnection(conn);} catch (Exception e)
+			{e.printStackTrace();}stmt = null;conn = null;}
+	 	
+		 return response;
+	}
+	//end
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public ResponseDTO saveAdvancedCollection(CollectionDTO collection){
 		

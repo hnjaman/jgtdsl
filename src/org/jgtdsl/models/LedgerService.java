@@ -107,7 +107,7 @@ public class LedgerService {
 					+ "                 NULL CMS_RENT,  "
 					+ "                 ACTUAL_SURCHARGE SURCHARGE_AMOUNT,  "
 					+ "                 ACTUAL_PAYABLE_AMOUNT PAYABLE_AMOUNT,  "
-					+ "                 COLLECTED_SURCHARGE, COLLECTED_BILLED_AMOUNT COLLECTED_AMOUNT,  "
+					+ "                 COLLECTED_SURCHARGE, COLLECTED_PAYABLE_AMOUNT COLLECTED_AMOUNT,  "
 					+ "                 TO_CHAR (DUE_DATE, 'dd-mm-rrrr') DUE_DATE  "
 					+ "            FROM bill_non_metered bnm, MST_MONTH mm  "
 					+ "           WHERE BNM.BILL_MONTH = MM.M_ID AND bnm.CUSTOMER_ID = ? "
@@ -182,10 +182,16 @@ public class LedgerService {
 						+ Double.valueOf(ledger.get(i).getDebit_amount() == null ? "0"
 								: ledger.get(i).getDebit_amount())
 						- Double.valueOf(ledger.get(i).getCredit_amount() == null ? "0"
-								: ledger.get(i).getCredit_amount())
-						- Double.valueOf(ledger.get(i).getCredit_surcharge() == null ? "0"
-								: ledger.get(i).getCredit_surcharge());
+								: ledger.get(i).getCredit_amount());
+
 				// System.out.print("\n ===>> New Balance : "+balance);
+				/*
+				 					    + Double.valueOf(ledger.get(i).getSurcharge() == null ? "0"
+								: ledger.get(i).getSurcharge())
+												        - Double.valueOf(ledger.get(i).getCredit_surcharge() == null ? "0"
+								: ledger.get(i).getCredit_surcharge());
+
+				 */
 				ledger.get(i).setBalance_amount(balance);
 			}
 

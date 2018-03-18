@@ -163,7 +163,7 @@
 							<div class="row-fluid" id="advanced_div" >
 								<div class="span12">
 									<label style="width: 20%">Bill Amount</label>								
-									<input type="text" name="collection.advanced_amount" id="advanced_amount" tabindex="3" style="text-align: right;font-weight: bold;color: blue;width: 55% background-color: #FFFFF;"/>
+									<input type="text" name="collection.advanced_amount" id="advanced_amount" tabindex="3" style="text-align: right;font-weight: bold;color: black;width: 55% background-color: #FFFFF;"/>
 								</div>
 																			
 							</div>
@@ -171,7 +171,7 @@
 						<div class="row-fluid" id="surcharge_div" >
 								<div class="span12">	
 									<label style="width: 20%">Surcharge Amount</label>	
-									<input type="text" name="collection.surcharge_amount" id="surcharge_amount" tabindex="2" style="text-align: right;font-weight: bold;color: blue;width: 51% background-color: #FFFFF;"/>
+									<input type="text" name="collection.surcharge_amount" id="surcharge_amount" tabindex="2" style="text-align: right;font-weight: bold;color: black;width: 51% background-color: #FFFFF;"/>
 								</div>												
 							</div>
 						</div>		
@@ -276,6 +276,9 @@
 
 
  $(document).ready(function () {
+ 		//document.getElementById("customer_code").value="<s:property value="area_id" />";
+ 		
+ 		 $("#customer_code").val($("#area_id").val()+"01");
         document.getElementById("customer_code").focus();
     });
     

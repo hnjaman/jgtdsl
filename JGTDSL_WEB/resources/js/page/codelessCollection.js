@@ -127,16 +127,16 @@ $("#collection_grid").jqGrid($.extend(true, {}, scrollPagerGridOptions, {
 		var strtm =rowData.to_month;
 		var tm = strtm.split("-");
 		$("#from_month").val($.trim(fm[0]));
-		$("#from_month").prop('readonly', true);
+		//$("#from_month").prop('readonly', true);
 		
 		$("#from_year").val($.trim(fm[1]));
-		$("#from_year").prop('readonly', true);
+		//$("#from_year").prop('readonly', true);
 		
 		$("#to_month").val($.trim(tm[0]));
-		$("#to_month").prop('readonly', true);
+		//$("#to_month").prop('readonly', true);
 		
 		$("#to_year").val($.trim(tm[1]));
-		$("#to_year").prop('readonly', true);
+		//$("#to_year").prop('readonly', true);
 		
 		$("#advanced_amount").val(rowData.advanced_amount);
 		$("#advanced_amount").prop('disabled', true);
@@ -269,6 +269,7 @@ $('#address').keyup(function(e){
 		$('#from_month').focus();
 		var fields = ["customer_name","customer_id","address","customerType","advanced_amount","from_month","to_month","surcharge_amount"];
     	clearField.apply(this,fields);
+    	$("#customer_id").val($("#area_id").val()+"01");
 	}
 });
 

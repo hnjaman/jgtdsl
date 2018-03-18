@@ -29,14 +29,14 @@ $('#customer_code').keyup(function(e){
     if(e.keyCode == 13)
     {
     	    	
-    	var fields = ["customer_name","customerType","advanced_amount","from_month","to_month"];
+    	var fields = ["customer_name","customerType","advanced_amount","from_month","to_month","applienceAndDue"];
     	clearField.apply(this,fields);
     	
         var customer_id=$("#customer_code").val();
         
         if(customer_id.substring(2,4)==='01' || customer_id.substring(2,4)==='09' ){
         	//due months for collection
-        	$('#dueListbyStringcoll').val("testing");
+        	//$('#dueListbyStringcoll').val("testing");
            //  $.post("getDuesListByString.action", {'customer_id': customer_id},popdivcoll);
 
         	$.ajax({
@@ -51,8 +51,9 @@ $('#customer_code').keyup(function(e){
              
              
         	
-        	ajaxLoad("applienceAndDue","getApplianceInfo.action?customer_id="+customer_id);
-        	$( "#appTable" ).removeClass( "table table-bordered" );
+        	ajaxLoad("applienceAndDue","getApplianceInfoPlain.action?customer_id="+customer_id);
+        	//$("#applienceAndDue").empty();
+        	//$( "#appTable" ).removeClass( "table table-bordered" );
              
         	//end
 	
@@ -71,6 +72,19 @@ $('#customer_code').keyup(function(e){
     		$('#advanced_amount').removeAttr('disabled');
         } 
         $('#from_month').focus();
+        //clear color and text in bill amount and surcharge
+        if($("#advanced_amount").attr("placeholder")){
+        	$('#advanced_amount').removeAttr('placeholder');
+        }
+		if($("#surcharge_amount").attr("placeholder")){
+			$('#surcharge_amount').removeAttr('placeholder');
+		}
+		$("#advanced_amount").css('background-color', '#FFFFF');
+		$("#surcharge_amount").css('background-color', '#FFFFF');
+        //end 
+        
+        
+        
     }else{
     	alert("Please enter non-metered customer only");
     }
@@ -271,6 +285,7 @@ $('#to_year').keyup(function(e){
     		$('#advanced_amount').removeAttr('disabled');
         }
     	$('#advanced_amount').focus();
+    	checkDueAmount();
     }
 });
 
@@ -298,10 +313,22 @@ $('#surcharge_amount').keyup(function(e){
 //		$('#customer_name').clear();
 //		$('#area_id').clear();
 //		$('#customerType').clear();
+		$("#customer_code").val($("#area_id").val()+"01");
 		$('#customer_code').focus();
 		
 		var fields = ["customer_name","customer_id","customerType","advanced_amount","from_month","to_month","surcharge_amount"];
     	clearField.apply(this,fields);
+    	
+    	//clear color and text in bill amount and surcharge
+        if($("#advanced_amount").attr("placeholder")){
+        	$('#advanced_amount').removeAttr('placeholder');
+        }
+		if($("#surcharge_amount").attr("placeholder")){
+			$('#surcharge_amount').removeAttr('placeholder');
+		}
+		$("#advanced_amount").css('background-color', '#FFFFF');
+		$("#surcharge_amount").css('background-color', '#FFFFF');
+        //end 
     	
     	$("#dueListbyStringcoll").val(" ");
     	
@@ -341,6 +368,57 @@ function saveAdvancedCollection(){
 		    }
 		    	$("#msg_div").html(response.message);		       
 		    	enableButton("btn_save");	    
+		    }		    
+		  });		
+		}
+}
+
+//for checking bill amount to pay
+function checkDueAmount(){
+	var isValid=true;
+	isValid=validateField("customer_id","collection_date","from_month","from_year","to_month","to_year");
+	
+	if(isValid==true)	 {
+		var form = document.getElementById('advancedCollectionForm');
+		var formData = new FormData(form);
+		  $.ajax({
+		    url: 'checkDueAmount.action',
+		    type: 'POST',
+		    data: formData,
+		    async: false,
+		    cache: false,
+		    contentType: false,
+		    processData: false,
+		    success: function (response) {
+		    if(response.status=="OK")
+		    {   var res = response.message.split("#");
+		    	var billed_amount = parseInt(res[0]);
+		    	var surcharge = parseInt(res[1]);
+		        var total= billed_amount + surcharge;
+		        if(total > 0){
+		        	$("#advanced_amount").attr("placeholder", res[0]);
+	        		$("#surcharge_amount").attr("placeholder", res[1]);
+		        	if(billed_amount > 0){
+				    	$("#advanced_amount").css('background-color', '#5cd65c');
+		        	}
+		        	if(surcharge > 0){
+				    	$("#surcharge_amount").css('background-color', '#5cd65c');
+		        	}
+			    	
+		        }
+		       else{
+		        	$("#advanced_amount").attr("placeholder", res[0]);
+	        		$("#surcharge_amount").attr("placeholder", res[1]);
+	        		$("#advanced_amount").css('background-color', '#ff3333');
+	        		$("#surcharge_amount").css('background-color', '#ff3333');
+	        		alert("Bills are paid/not created for these month-years.\n            Please check the due-list below.\n                      Proceed with caution.");
+		        }
+		    	
+		    	
+		    }
+		    
+		   
+	        //enf of function
 		    }		    
 		  });		
 		}

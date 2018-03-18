@@ -307,7 +307,7 @@ public class BankBranchService {
 					branch.setBank_id(r.getString("BANK_ID"));
 					branch.setBranch_id(r.getString("BRANCH_ID"));
 					//branch.setBank_name(r.getString("BANK_NAME"));
-					branch.setBranch_name(r.getString("BRANCH_NAME"));
+					branch.setBranch_name(r.getString("BRANCH_NAME")+" - "+r.getString("AREA_ID"));
 					branch.setAddress(r.getString("ADDRESS"));
 					branch.setCperson(r.getString("CPERSON"));
 					branch.setPhone(r.getString("PHONE"));

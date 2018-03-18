@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 public class MBillDTO {
 
 	private String bill_id;
+	private String billed_amount;
 	private String invoice_no;
 	private int bill_month;
 	private String bill_month_name;
@@ -49,6 +50,12 @@ public class MBillDTO {
 	
 	private ArrayList<MeterReadingDTO> readingList;
 	
+	public String getBilled_amount() {
+		return billed_amount;
+	}
+	public void setBilled_amount(String billed_amount) {
+		this.billed_amount = billed_amount;
+	}
 	public String getBill_id() {
 		return bill_id;
 	}

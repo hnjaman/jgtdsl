@@ -322,19 +322,29 @@ public class DefaulterCustomerList extends BaseAction {
 							}
 
 						}
-						if (customer_type.equals("metered")) {
-							ptable = new PdfPTable(8);
-							ptable.setWidthPercentage(100);
-							ptable.setWidths(new float[] { 8, 15, 50, 15, 15,
-									60, 20, 20 });
-							ptable.setSpacingBefore(10);
-						} else {
-							ptable = new PdfPTable(6);
-							ptable.setWidthPercentage(100);
-							ptable.setWidths(new float[] { 8, 15, 50, 60, 20,
-									20 });
-							ptable.setSpacingBefore(10);
-						}
+						
+						
+						ptable = new PdfPTable(8);
+						ptable.setWidthPercentage(100);
+						ptable.setWidths(new float[] { 8, 15, 50, 15, 15,60, 20, 20 });
+						ptable.setSpacingBefore(10);
+						
+//						if (customer_type.equals("metered")) {
+//							ptable = new PdfPTable(8);
+//							ptable.setWidthPercentage(100);
+//							ptable.setWidths(new float[] { 8, 15, 50, 15, 15,
+//									60, 20, 20 });
+//							ptable.setSpacingBefore(10);
+//						} else {
+//							ptable = new PdfPTable(6);
+//							ptable.setWidthPercentage(100);
+//							ptable.setWidths(new float[] { 8, 15, 50, 60, 20,
+//									20 });
+//							ptable.setSpacingBefore(10);
+//						}
+						
+						
+						
 
 						pcell = new PdfPCell(new Paragraph(currentMoholla,
 								ReportUtil.f11B));
@@ -385,6 +395,14 @@ public class DefaulterCustomerList extends BaseAction {
 							pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 							pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 							ptable.addCell(pcell);
+						}else{
+							pcell = new PdfPCell(new Paragraph(
+									"Burner", ReportUtil.f9B));
+							pcell.setMinimumHeight(18f);
+							pcell.setColspan(2);
+							pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+							pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+							ptable.addCell(pcell);
 						}
 
 						pcell = new PdfPCell(new Paragraph("Dues Months",
@@ -428,6 +446,20 @@ public class DefaulterCustomerList extends BaseAction {
 							ptable.addCell(pcell);
 
 							pcell = new PdfPCell(new Paragraph("Min",
+									ReportUtil.f9B));
+							pcell.setMinimumHeight(18f);
+							pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+							pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+							ptable.addCell(pcell);
+						}else{
+							pcell = new PdfPCell(new Paragraph("Single",
+									ReportUtil.f9B));
+							pcell.setMinimumHeight(18f);
+							pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+							pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+							ptable.addCell(pcell);
+
+							pcell = new PdfPCell(new Paragraph("Double",
 									ReportUtil.f9B));
 							pcell.setMinimumHeight(18f);
 							pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -505,20 +537,31 @@ public class DefaulterCustomerList extends BaseAction {
 							}
 
 						}
-						if (customer_type.equals("metered")) {
-							ptable = new PdfPTable(8);
-							ptable.setWidthPercentage(100);
-							ptable.setWidths(new float[] { 8, 15, 50, 15, 15,
-									60, 20, 20 });
-							ptable.setSpacingBefore(10);
-						} else {
-							ptable = new PdfPTable(6);
-							ptable.setWidthPercentage(100);
-							ptable.setWidths(new float[] { 8, 15, 50, 60, 20,
-									20 });
-							ptable.setSpacingBefore(10);
-						}
+						
+						
+						
+						ptable = new PdfPTable(8);
+						ptable.setWidthPercentage(100);
+						ptable.setWidths(new float[] { 8, 15, 50, 15, 15,60, 20, 20 });
+						ptable.setSpacingBefore(10);
+						
+						
+						
+//						if (customer_type.equals("metered")) {
+//							ptable = new PdfPTable(8);
+//							ptable.setWidthPercentage(100);
+//							ptable.setWidths(new float[] { 8, 15, 50, 15, 15,
+//									60, 20, 20 });
+//							ptable.setSpacingBefore(10);
+//						} else {
+//							ptable = new PdfPTable(6);
+//							ptable.setWidthPercentage(100);
+//							ptable.setWidths(new float[] { 8, 15, 50, 60, 20,
+//									20 });
+//							ptable.setSpacingBefore(10);
+//						}
 
+						
 						pcell = new PdfPCell(new Paragraph(
 								currentCustomerCategoryName, ReportUtil.f11B));
 						pcell.setMinimumHeight(18f);
@@ -563,6 +606,14 @@ public class DefaulterCustomerList extends BaseAction {
 						if (customer_type.equals("metered")) {
 							pcell = new PdfPCell(new Paragraph(
 									"LOAD (M3/Month)", ReportUtil.f9B));
+							pcell.setMinimumHeight(18f);
+							pcell.setColspan(2);
+							pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+							pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+							ptable.addCell(pcell);
+						}else{
+							pcell = new PdfPCell(new Paragraph(
+									"Burner", ReportUtil.f9B));
 							pcell.setMinimumHeight(18f);
 							pcell.setColspan(2);
 							pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -616,6 +667,20 @@ public class DefaulterCustomerList extends BaseAction {
 							pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 							pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 							ptable.addCell(pcell);
+						}else{
+							pcell = new PdfPCell(new Paragraph("Single",
+									ReportUtil.f9B));
+							pcell.setMinimumHeight(18f);
+							pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+							pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+							ptable.addCell(pcell);
+
+							pcell = new PdfPCell(new Paragraph("Double",
+									ReportUtil.f9B));
+							pcell.setMinimumHeight(18f);
+							pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+							pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+							ptable.addCell(pcell);
 						}
 					}
 				}
@@ -659,7 +724,20 @@ public class DefaulterCustomerList extends BaseAction {
 					pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 					pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 					ptable.addCell(pcell);
+				}else{
+					pcell = new PdfPCell(new Paragraph(String.valueOf(defaulterDto.getSingle_burner()),ReportUtil.f8));
+					pcell.setMinimumHeight(16f);
+					pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					ptable.addCell(pcell);
+
+					pcell = new PdfPCell(new Paragraph(String.valueOf(defaulterDto.getDouble_burner()),ReportUtil.f8));
+					pcell.setMinimumHeight(16f);
+					pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+					ptable.addCell(pcell);
 				}
+				
 				pcell = new PdfPCell(new Paragraph(defaulterDto.getDue_month(),
 						ReportUtil.f8));
 				pcell.setMinimumHeight(16f);
@@ -971,19 +1049,22 @@ public class DefaulterCustomerList extends BaseAction {
 							+ "            FROM CUSTOMER C, MST_ZONE MZ "
 							+ "           WHERE C.AREA = MZ.AREA_ID AND C.ZONE = MZ.ZONE_ID) TMP4 ";
 				}
-				defaulterListSql += " WHERE tmp1.CUSTOMER_ID = tmp2.CUSTOMER_ID "
+				defaulterListSql += " WHERE tmp1.TOTAL_AMOUNT > 0 AND tmp1.CUSTOMER_ID = tmp2.CUSTOMER_ID "
 						+ " AND tmp1.CUSTOMER_ID = TMP3.CUSTOMER_ID";
 				if (moholla_wise.equals("1")) {
 					defaulterListSql += "         AND tmp1.CUSTOMER_ID = TMP4.CUSTOMER_ID "
-							+ "ORDER BY TMP4.ZONE, tmp1.STATUS, tmp1.CUSTOMER_ID ASC ";
+							+ "ORDER BY TMP4.ZONE, tmp1.CUSTOMER_ID ASC ";
 				} else {
-					defaulterListSql += " ORDER BY tmp1.CATEGORY_ID , tmp1.STATUS, tmp1.TOTAL_MONTH DESC";
+					defaulterListSql += " ORDER BY tmp1.CATEGORY_ID , tmp1.CUSTOMER_ID ASC ";
 				}
 
 			} else {
-				defaulterListSql = "SELECT tmp1.CUSTOMER_ID, "
-						+ "				 tmp1.CATEGORY_ID," + "				 tmp2.CATEGORY_NAME,"
-						+ "				 tmp1.STATUS," + "				 TMP2.FULL_NAME,"
+				defaulterListSql = "SELECT tmp1.CUSTOMER_ID,"
+			            + "			     TMP1.BURNER,"
+						+ "				 tmp1.CATEGORY_ID," 
+			            + "				 tmp2.CATEGORY_NAME,"
+						+ "				 tmp1.STATUS," 
+			            + "				 TMP2.FULL_NAME,"
 						+ "				 tmp2.ADDRESS,";
 				if (moholla_wise.equals("1")) {
 					defaulterListSql += "      TMP4.ZONE, "
@@ -995,7 +1076,8 @@ public class DefaulterCustomerList extends BaseAction {
 						+ "				 tmp1.DUEMONTH,"
 						+ "				 tmp1.TOTAL_AMOUNT,"
 						+ "				 tmp1.TOTAL_MONTH"
-						+ "  FROM (  SELECT bi.CUSTOMER_ID, "
+						+ "  FROM (  SELECT bi.CUSTOMER_ID,"
+						+ "                 getBurner (bi.CUSTOMER_ID) BURNER,"
 						+ "                 CUSTOMER_CATEGORY CATEGORY_ID, "
 						+ "                 bi.AREA_ID, "
 						+ "                 cc.STATUS, "
@@ -1040,13 +1122,13 @@ public class DefaulterCustomerList extends BaseAction {
 							+ "            FROM CUSTOMER C, MST_ZONE MZ "
 							+ "           WHERE C.AREA = MZ.AREA_ID AND C.ZONE = MZ.ZONE_ID) TMP4 ";
 				}
-				defaulterListSql += " WHERE tmp1.CUSTOMER_ID = tmp2.CUSTOMER_ID "
+				defaulterListSql += " WHERE tmp1.TOTAL_AMOUNT > 0 AND tmp1.CUSTOMER_ID = tmp2.CUSTOMER_ID "
 						+ " AND tmp1.CUSTOMER_ID = TMP3.CUSTOMER_ID";
 				if (moholla_wise.equals("1")) {
 					defaulterListSql += "         AND tmp1.CUSTOMER_ID = TMP4.CUSTOMER_ID "
-							+ "ORDER BY TMP4.ZONE, tmp1.STATUS, tmp1.CUSTOMER_ID ASC ";
+							+ "ORDER BY TMP4.ZONE, tmp1.CUSTOMER_ID ASC ";
 				} else {
-					defaulterListSql += " ORDER BY tmp1.CATEGORY_ID , tmp1.STATUS, tmp1.TOTAL_MONTH DESC";
+					defaulterListSql += " ORDER BY tmp1.CATEGORY_ID, tmp1.CUSTOMER_ID ASC ";
 				}
 
 			}
@@ -1057,10 +1139,10 @@ public class DefaulterCustomerList extends BaseAction {
 
 			while (resultSet.next()) {
 				DefaulterDto defaulterDto = new DefaulterDto();
+				
 				defaulterDto.setCustomer_id(resultSet.getString("CUSTOMER_ID"));
 				defaulterDto.setCategory_id(resultSet.getString("CATEGORY_ID"));
-				defaulterDto.setCategory_name(resultSet
-						.getString("CATEGORY_NAME"));
+				defaulterDto.setCategory_name(resultSet.getString("CATEGORY_NAME"));
 				defaulterDto.setStatus(resultSet.getString("STATUS"));
 				defaulterDto.setFull_name(resultSet.getString("FULL_NAME"));
 				defaulterDto.setAddress(resultSet.getString("ADDRESS"));
@@ -1072,6 +1154,13 @@ public class DefaulterCustomerList extends BaseAction {
 				if (customer_type.equals("metered")) {
 					defaulterDto.setMaxLoad(resultSet.getDouble("MAX_LOAD"));
 					defaulterDto.setMinLoad(resultSet.getDouble("MIN_LOAD"));
+				}else{
+					//added for burner 
+					String burner = resultSet.getString("BURNER");
+					String[] brnrArray = burner.split("#");
+					defaulterDto.setSingle_burner(Integer.parseInt(brnrArray[0]));
+					defaulterDto.setDouble_burner(Integer.parseInt(brnrArray[1]));
+					//end 
 				}
 
 				if (moholla_wise.equals("1")) {

@@ -152,7 +152,7 @@ public class BillMeteredCustomer extends BaseAction implements ServletContextAwa
 			
 			
 			over.setFontAndSize(bf, fSize);
-			over.setTextMatrix(295, 572);//388
+			over.setTextMatrix(315, 572);//388
 			over.showText(bill.getArea_name());	
 			
 			over.setTextMatrix(82, 536);
@@ -296,10 +296,7 @@ public class BillMeteredCustomer extends BaseAction implements ServletContextAwa
 //			over.showTextAligned(PdfContentByte.ALIGN_RIGHT,(bill.getPbMarginDTO().getBill_id()),410, 538,0);
 			
 			
-			double totalBill=bill.getPbMarginDTO().getGas_bill()+bill.getPbMarginDTO().getMin_load_bill()+bill.getGovtMarginDTO().getTotal_amount()+bill.getPbMarginDTO().getMeter_rent();
-			over.setFontAndSize(bf, 9);
-			//total bill
-			over.showTextAligned(PdfContentByte.ALIGN_RIGHT,taka_format.format(totalBill),442, 273,0);//270
+			
 			
 			
 			
@@ -326,6 +323,25 @@ public class BillMeteredCustomer extends BaseAction implements ServletContextAwa
 			ArrayList<MeterReadingDTO> readingList=bill.getReadingList();
 			//temporary solution
 			gas_bill += readingList.get(0).getIndividual_gas_bill();
+			
+			
+			double vgas=bill.getPayable_amount()-gas_bill-bill.getGovtMarginDTO().getTotal_amount()-bill.getPbMarginDTO().getMin_load_bill()-bill.getPbMarginDTO().getMeter_rent()
+					-bill.getPbMarginDTO().getSurcharge_amount()-bill.getPbMarginDTO().getAdjustment()-bill.getPbMarginDTO().getHhv_nhv_bill()-bill.getPbMarginDTO().getOthers();
+			
+			gas_bill=gas_bill+vgas;
+			
+		
+			
+			double totalBill=gas_bill+bill.getPbMarginDTO().getMin_load_bill()+bill.getGovtMarginDTO().getTotal_amount()+bill.getPbMarginDTO().getMeter_rent();
+			over.setFontAndSize(bf, 9);
+			//total bill
+			over.showTextAligned(PdfContentByte.ALIGN_RIGHT,taka_format.format(totalBill),442, 273,0);//270
+			
+			
+			
+			
+			
+			
 			
 			for(int i=0;i<readingList.size();i++)
 			{
@@ -677,6 +693,8 @@ public class BillMeteredCustomer extends BaseAction implements ServletContextAwa
 	static Font font1 = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD);
 	static Font font3 = new Font(Font.FontFamily.HELVETICA, 8, Font.BOLD);
 	static Font font2 = new Font(Font.FontFamily.HELVETICA, 8, Font.NORMAL);
+	static Font font9 = new Font(Font.FontFamily.HELVETICA, 9, Font.NORMAL);
+	static Font font9B = new Font(Font.FontFamily.HELVETICA, 9, Font.BOLD);
 	static DecimalFormat taka_format = new DecimalFormat("#,##,##,##,##,##0.00");
 	static DecimalFormat consumption_format = new DecimalFormat("##########0.000");	
 	
@@ -686,13 +704,13 @@ public class BillMeteredCustomer extends BaseAction implements ServletContextAwa
 		
 		String fileName = "Preview_Bill_Info.pdf";
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		Document document = new Document(PageSize.LEGAL.rotate());
-		//document.setMargins(5,5,60,72);
+		Document document = new Document(PageSize.A4.rotate());
+		document.setMargins(0,0,20,50);
 		
 		try {	
 			
 			BillingService bs=new BillingService();
-			ArrayList<MBillDTO> billList=bs.getBill(this.bill_id,this.customer_category,this.area_id,this.customer_id,this.bill_month,this.bill_year,this.download_type);
+			ArrayList<MBillDTO> billList=bs.getBillprev(this.customer_category,this.area_id,this.bill_month,this.bill_year,this.download_type, this.report_for);
 			
 			ReportFormat Event = new ReportFormat(getServletContext());
 			PdfWriter writer = PdfWriter.getInstance(document, baos);
@@ -703,17 +721,17 @@ public class BillMeteredCustomer extends BaseAction implements ServletContextAwa
 			
 			PdfPTable headerTable = new PdfPTable(3);
 		    Rectangle page = document.getPageSize();
-		    headerTable.setTotalWidth(page.getWidth());
+		    /*headerTable.setTotalWidth(page.getWidth());
 			float a=((page.getWidth()*15)/100)/2;
 			float b=((page.getWidth()*30)/100)/2;
 				
 			headerTable.setWidths(new float[] {
 				a,b,a
-			});
-			
+			});*/
+			headerTable.setWidthPercentage(97);
 			Paragraph pd2 =new Paragraph();
-			Chunk cd1 = new Chunk("Bill Month: ", ReportUtil.f11B);
-			Chunk cd2= new Chunk(String.valueOf(Month.values()[Integer.valueOf(bill_month)-1].getLabel())+", "+ getBill_year(),ReportUtil.f11B);
+			Chunk cd1 = new Chunk("Bill Month: ", ReportUtil.f11);
+			Chunk cd2= new Chunk(String.valueOf(Month.values()[Integer.valueOf(bill_month)-1].getLabel())+", "+ getBill_year(),ReportUtil.f12B);
 			pd2.add(cd1);
 			pd2.add(cd2);
 			pcell= new PdfPCell(pd2);
@@ -730,12 +748,12 @@ public class BillMeteredCustomer extends BaseAction implements ServletContextAwa
             	//img.scalePercent(200f);
 				img.scaleAbsolute(28f, 31f);
 				//img.setAbsolutePosition(145f, 780f);		
-            	img.setAbsolutePosition(350f, 545f);		// rotate
+            	img.setAbsolutePosition(270f, 542f);		// rotate
             
 	        document.add(img);		
 			
-			PdfPTable mTable=new PdfPTable(1);
-			mTable.setWidths(new float[]{b});
+			PdfPTable mTable=new PdfPTable(1);			
+			//mTable.setWidths(new float[]{b});
 			pcell=new PdfPCell(new Paragraph("JALALABAD GAS T & D SYSTEM LIMITED"));
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setBorder(Rectangle.NO_BORDER);	
@@ -777,15 +795,9 @@ public class BillMeteredCustomer extends BaseAction implements ServletContextAwa
 				mTable.addCell(pcell);				
 			}
 			
-			/*Paragraph pd2 =new Paragraph();
-			Chunk cd1 = new Chunk("Bill Month: ", font2);
-			Chunk cd2= new Chunk(String.valueOf(Month.values()[Integer.valueOf(bill_month)-1].getLabel())+", "+ getBill_year(),font3);
-			pd.add(cd1);
-			pd.add(cd2);
-			pcell= new PdfPCell(pd2);
-			pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
-			pcell.setBorder(Rectangle.NO_BORDER);
-			headerTable.addCell(pcell);*/
+			
+			
+			
 			
 			pcell=new PdfPCell(new Paragraph(" ", ReportUtil.f8B));
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -799,6 +811,7 @@ public class BillMeteredCustomer extends BaseAction implements ServletContextAwa
 			pcell = new PdfPCell(new Paragraph(""));
 			pcell.setBorder(Rectangle.NO_BORDER);
 			headerTable.addCell(pcell);
+			
 			document.add(headerTable);				
 			
 						
@@ -809,8 +822,8 @@ public class BillMeteredCustomer extends BaseAction implements ServletContextAwa
 			headerTable.addCell(pcell);
 			
 			PdfPTable datatable = new PdfPTable(15);
-			datatable.setWidthPercentage(100);
-			datatable.setWidths(new float[] {40,50,40,40,30,40,40,40,40,40,40,40,40,30,40});
+			datatable.setWidthPercentage(97);
+			datatable.setWidths(new float[] {44,50,40,40,26,40,40,40,40,40,40,40,40,30,40});
 			
 			int ListSize = billList.size();
 			String prev_category="";
@@ -829,7 +842,7 @@ public class BillMeteredCustomer extends BaseAction implements ServletContextAwa
 					    //cat_name=bill.getCustomer_category_name();
 						for(MeterReadingDTO x:readingList){
 							
-							pcell=new PdfPCell(new Paragraph("Bill Rate: "+x.getRate(),font1));
+							pcell=new PdfPCell(new Paragraph("Bill Rate: "+taka_format.format(x.getRate()),font9B));
 							pcell.setColspan(2);
 							pcell.setPaddingTop(5);
 							//pcell.setRowspan(3);
@@ -840,7 +853,7 @@ public class BillMeteredCustomer extends BaseAction implements ServletContextAwa
 						}
 						
 						
-						pcell=new PdfPCell(new Paragraph("Customer Type: "+bill.getCustomer_category_name(),font1));
+						pcell=new PdfPCell(new Paragraph("Customer Type: "+bill.getCustomer_category_name(),font9B));
 						pcell.setColspan(7);
 						//pcell.setRowspan(3);
 						pcell.setPadding(10);
@@ -849,7 +862,7 @@ public class BillMeteredCustomer extends BaseAction implements ServletContextAwa
 						datatable.addCell(pcell);
 						
 						
-						pcell=new PdfPCell(new Paragraph("Issue Date: "+bill.getIssue_date(),font1));
+						pcell=new PdfPCell(new Paragraph("Issue Date: "+bill.getIssue_date(),font9B));
 						pcell.setColspan(6);
 						//pcell.setRowspan(3);
 						pcell.setPadding(10);
@@ -857,7 +870,7 @@ public class BillMeteredCustomer extends BaseAction implements ServletContextAwa
 						pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 						datatable.addCell(pcell);
 						
-						pcell=new PdfPCell(new Paragraph("Last Date of payment: "+bill.getLast_pay_date_wo_sc(),font1));
+						pcell=new PdfPCell(new Paragraph("Last Date of payment: "+bill.getLast_pay_date_wo_sc(),font9B));
 						pcell.setColspan(15);
 						//pcell.setRowspan(3);
 						pcell.setPaddingBottom(5);
@@ -866,84 +879,99 @@ public class BillMeteredCustomer extends BaseAction implements ServletContextAwa
 						datatable.addCell(pcell);	
 						
 						/////////////dataTable Head//////////////////
-						pcell=new PdfPCell(new Paragraph(" ",font3));
+						pcell=new PdfPCell(new Paragraph(" ",font9B));
 						pcell.setColspan(15);
 						pcell.setBorder(0);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						datatable.addCell(pcell);
 						
-						pcell=new PdfPCell(new Paragraph("Customer Code",font3));
+						pcell=new PdfPCell(new Paragraph("Customer Code",font9B));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						datatable.addCell(pcell);
 						
-						pcell=new PdfPCell(new Paragraph("Customer Name",font3));
+						pcell=new PdfPCell(new Paragraph("Customer Name",font9B));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						datatable.addCell(pcell);
 						
-						pcell=new PdfPCell(new Paragraph("Previous Reading",font3));
+						pcell=new PdfPCell(new Paragraph("Previous Reading",font9B));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						datatable.addCell(pcell);
 						
-						pcell=new PdfPCell(new Paragraph("Present Reading",font3));
+						pcell=new PdfPCell(new Paragraph("Present Reading",font9B));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						datatable.addCell(pcell);
 						
-						pcell=new PdfPCell(new Paragraph("Pressure Factor",font3));
+						pcell=new PdfPCell(new Paragraph("Pr. Fact.",font9B));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						datatable.addCell(pcell);
 						
-						pcell=new PdfPCell(new Paragraph("Consumption",font3));
+						pcell=new PdfPCell(new Paragraph("Consumption",font9B));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						datatable.addCell(pcell);
 						
-						pcell=new PdfPCell(new Paragraph("Min. Load",font3));
+						pcell=new PdfPCell(new Paragraph("Min. Load",font9B));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						datatable.addCell(pcell);
 						
-						pcell=new PdfPCell(new Paragraph("Gas Bill",font3));
+						pcell=new PdfPCell(new Paragraph("Gas Bill",font9B));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						datatable.addCell(pcell);
 						
-						pcell=new PdfPCell(new Paragraph("Min. Bill",font3));
+						pcell=new PdfPCell(new Paragraph("Min. Bill",font9B));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						datatable.addCell(pcell);
 						
-						pcell=new PdfPCell(new Paragraph("Avg. Bill against D/O",font3));
+						pcell=new PdfPCell(new Paragraph("Avg. Bill against D/O",font9B));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						datatable.addCell(pcell);
 						
-						pcell=new PdfPCell(new Paragraph("Total Bill",font3));
+						pcell=new PdfPCell(new Paragraph("Total Bill",font9B));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						datatable.addCell(pcell);
 						
-						pcell=new PdfPCell(new Paragraph("Meter+CMS Rent",font3));
+						pcell=new PdfPCell(new Paragraph("Meter+CMS Rent",font9B));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						datatable.addCell(pcell);
 						
-						pcell=new PdfPCell(new Paragraph("Surcharge",font3));
+						pcell=new PdfPCell(new Paragraph("Surcharge",font9B));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						datatable.addCell(pcell);
 						
-						pcell=new PdfPCell(new Paragraph("Adjust",font3));
+						pcell=new PdfPCell(new Paragraph("Adjust",font9B));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						datatable.addCell(pcell);
 						
-						pcell=new PdfPCell(new Paragraph("Total Bill to Pay",font3));
+						pcell=new PdfPCell(new Paragraph("Total Bill to Pay",font9B));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						datatable.addCell(pcell);																
 						
@@ -956,49 +984,58 @@ public class BillMeteredCustomer extends BaseAction implements ServletContextAwa
 					cur_category= bill.getCustomer_id().substring(2,4);
 					for(int i=0;i<readingList.size();i++){
 						
-						pcell=new PdfPCell(new Paragraph(bill.getCustomer_id(),font2));
+						pcell=new PdfPCell(new Paragraph(bill.getCustomer_id(),font9));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 						datatable.addCell(pcell);
 						
-						pcell=new PdfPCell(new Paragraph(bill.getCustomer_name(),font2));
+						pcell=new PdfPCell(new Paragraph(bill.getCustomer_name(),font9));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 						datatable.addCell(pcell);			
 																
-						pcell=new PdfPCell(new Paragraph(taka_format.format(readingList.get(i).getPrev_reading()),font2));
+						pcell=new PdfPCell(new Paragraph(taka_format.format(readingList.get(i).getPrev_reading()),font9));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 						datatable.addCell(pcell);
 						
-						pcell=new PdfPCell(new Paragraph(taka_format.format(readingList.get(i).getCurr_reading()),font2));
+						pcell=new PdfPCell(new Paragraph(taka_format.format(readingList.get(i).getCurr_reading()),font9));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 						datatable.addCell(pcell);
 						
-						pcell=new PdfPCell(new Paragraph(taka_format.format(readingList.get(i).getPressure_factor()),font2));
+						pcell=new PdfPCell(new Paragraph(taka_format.format(readingList.get(i).getPressure_factor()),font9));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 						datatable.addCell(pcell);			
 						
 					
-						pcell=new PdfPCell(new Paragraph(consumption_format.format(bill.getBilled_consumption()),font2));
+						pcell=new PdfPCell(new Paragraph(consumption_format.format(bill.getBilled_consumption()),font9));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 						datatable.addCell(pcell);					
 						
-						pcell=new PdfPCell(new Paragraph(taka_format.format(bill.getMinimum_load()),font2));
+						pcell=new PdfPCell(new Paragraph(taka_format.format(bill.getMinimum_load()),font9));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 						datatable.addCell(pcell);
 						
-						pcell=new PdfPCell(new Paragraph(taka_format.format(bill.getPbMarginDTO().getGas_bill()),font2));
+						pcell=new PdfPCell(new Paragraph(taka_format.format(bill.getPbMarginDTO().getGas_bill()),font9));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 						datatable.addCell(pcell);
 						
-						pcell=new PdfPCell(new Paragraph(taka_format.format(bill.getPbMarginDTO().getMin_load_bill()),font2));
+						pcell=new PdfPCell(new Paragraph(taka_format.format(bill.getPbMarginDTO().getMin_load_bill()),font9));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 						datatable.addCell(pcell);
 					
@@ -1008,37 +1045,54 @@ public class BillMeteredCustomer extends BaseAction implements ServletContextAwa
 							average_bill += readingList.get(i).getIndividual_gas_bill();
 						}						
 						
-						pcell=new PdfPCell(new Paragraph(taka_format.format(average_bill),font2));
+						pcell=new PdfPCell(new Paragraph(taka_format.format(average_bill),font9));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 						datatable.addCell(pcell);
 					
 					
 					
-						pcell=new PdfPCell(new Paragraph(taka_format.format(bill.getPbMarginDTO().getTotal_amount()),font2));
+						pcell=new PdfPCell(new Paragraph(taka_format.format(bill.getPbMarginDTO().getTotal_amount()),font9));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 						datatable.addCell(pcell);
 						
-						pcell=new PdfPCell(new Paragraph(taka_format.format(bill.getPbMarginDTO().getMeter_rent()),font2));
+						pcell=new PdfPCell(new Paragraph(taka_format.format(bill.getPbMarginDTO().getMeter_rent()),font9));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 						datatable.addCell(pcell);
 						
-						pcell=new PdfPCell(new Paragraph(taka_format.format(bill.getPbMarginDTO().getSurcharge_amount()),font2));
+						pcell=new PdfPCell(new Paragraph(taka_format.format(bill.getPbMarginDTO().getSurcharge_amount()),font9));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 						datatable.addCell(pcell);
 						
-						pcell=new PdfPCell(new Paragraph(taka_format.format(bill.getPbMarginDTO().getAdjustment()),font2));
+						pcell=new PdfPCell(new Paragraph(taka_format.format(bill.getPbMarginDTO().getAdjustment()),font9));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-						datatable.addCell(pcell);
+						datatable.addCell(pcell);						
 						
-						double totalBill=bill.getPbMarginDTO().getGas_bill()+bill.getPbMarginDTO().getMin_load_bill()+bill.getGovtMarginDTO().getTotal_amount()+bill.getPbMarginDTO().getMeter_rent();
+						double gas_bill=0;
+		
+						gas_bill += readingList.get(0).getIndividual_gas_bill();
 						
-						pcell=new PdfPCell(new Paragraph(taka_format.format(totalBill),font2));
+						
+						double vgas=bill.getPayable_amount()-gas_bill-bill.getGovtMarginDTO().getTotal_amount()-bill.getPbMarginDTO().getMin_load_bill()-bill.getPbMarginDTO().getMeter_rent()
+								-bill.getPbMarginDTO().getSurcharge_amount()-bill.getPbMarginDTO().getAdjustment()-bill.getPbMarginDTO().getHhv_nhv_bill()-bill.getPbMarginDTO().getOthers();
+						
+						gas_bill=gas_bill+vgas;		
+					
+						
+						double totalBill=gas_bill+bill.getPbMarginDTO().getMin_load_bill()+bill.getGovtMarginDTO().getTotal_amount()+bill.getPbMarginDTO().getMeter_rent();
+						
+						pcell=new PdfPCell(new Paragraph(taka_format.format(totalBill),font9));
 						pcell.setRowspan(1);
+						pcell.setPadding(5);
 						pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 						datatable.addCell(pcell);											
 					}

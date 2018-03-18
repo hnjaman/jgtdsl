@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.SessionAware;
 import org.jgtdsl.dto.AddressDTO;
+import org.jgtdsl.dto.BurnerQntChangeDTO;
 import org.jgtdsl.dto.ConnectionLedgerDTO;
 import org.jgtdsl.dto.CustomerApplianceDTO;
 import org.jgtdsl.dto.CustomerConnectionDTO;
@@ -19,6 +20,7 @@ import org.jgtdsl.dto.DepositTypeDTO;
 import org.jgtdsl.dto.ResponseDTO;
 import org.jgtdsl.dto.UserDTO;
 import org.jgtdsl.models.BillingService;
+import org.jgtdsl.models.BurnerQntChangeService;
 import org.jgtdsl.models.ConnectionService;
 import org.jgtdsl.models.CustomerService;
 import org.jgtdsl.models.DepositService;
@@ -199,6 +201,16 @@ public class Customer extends BaseAction implements SessionAware{
 		ArrayList<CustomerLedgerDTO> customerList=customerLedger.getCustomerLedger(customer_id);		
 		Gson gson = new Gson();
 		String json = gson.toJson(customerList);
+		setJsonResponse(json);
+        return null;
+	}
+	
+	public String getConnectionLedgerGrid(){
+		
+		BurnerQntChangeService BQCS= new BurnerQntChangeService();
+		ArrayList<BurnerQntChangeDTO> connledger= BQCS.getBurnerQntChangeListGrid(customer_id);	
+		Gson gson = new Gson();
+		String json = gson.toJson(connledger);
 		setJsonResponse(json);
         return null;
 	}

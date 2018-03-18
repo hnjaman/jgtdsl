@@ -12,7 +12,7 @@ $("#bill_grid").jqGrid($.extend(true, {}, scrollPagerGridOptions, {
             repeatitems: false,
             id: "bill_id"
 	},
-   colNames: ['Customer Id', 'Customer Name','Act. Payable Amount','Coll. Payable Amount','Unpaid','Status','Approve','Events'],
+   colNames: ['Customer Id', 'Customer Name','Act. Payable Amount','Coll. Payable Amount','Unpaid','Status','Approve','Events', 'Download'],
    colModel: [{
 	                name: 'customer_id',
 	                index: 'customer_id',
@@ -62,7 +62,7 @@ $("#bill_grid").jqGrid($.extend(true, {}, scrollPagerGridOptions, {
             	},
             	{ 
             		name: 'approve', 
-            		width: 30, 
+            		width: 20, 
             		align:'center',
             		formatter:function(cellvalue, options, rowObject){
             		      if(rowObject.status=='Waiting for Approval')
@@ -79,13 +79,24 @@ $("#bill_grid").jqGrid($.extend(true, {}, scrollPagerGridOptions, {
                 }, 
             	{ 
             		name: 'View', 
-            		width: 12, 
+            		width: 20, 
             		align:'center',
             		formatter:function(){
             			return "<span class='ui-icon ui-icon-zoomout' style='margin-left:3px;'></span>"
                     },
                     cellattr: function (rowId, tv, rowObject, cm, rdata) {
                     	return ' onClick="fetchBillingEvents('+rowId+')"';
+                    }
+                },
+                { 
+            		name: 'Download', 
+            		width: 20, 
+            		align:'center',
+            		formatter:function(){
+                          return "<span class='ui-icon ui-icon-circle-arrow-s' style='margin-left:3px;'></span>"
+                    },
+                    cellattr: function (rowId, tv, rowObject, cm, rdata) {
+                            return ' onClick="window.location=\'downloadNonMeteredBill.action?download_type=S&bill_id='+rowObject.bill_id+'\'"';
                     }
                 }
         ],

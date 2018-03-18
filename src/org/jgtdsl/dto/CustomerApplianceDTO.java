@@ -9,6 +9,7 @@ public class CustomerApplianceDTO {
 	private String customer_id;
 	private String applianc_id;
 	private String applianc_name;
+	private String applianc_rate;
 	private String applianc_qnt;
 	private String applianc_qnt_billcal;
 	private String applianc_perm_diss;
@@ -23,6 +24,16 @@ public class CustomerApplianceDTO {
 	
 
 	
+	public String getApplianc_rate() {
+		return applianc_rate;
+	}
+
+
+	public void setApplianc_rate(String applianc_rate) {
+		this.applianc_rate = applianc_rate;
+	}
+
+
 	public String getDisconn_type() {
 		return disconn_type;
 	}

@@ -39,7 +39,7 @@
 	                <div>
 						<table id="connection_ledger_grid"></table>
 						<div id="connection_ledger_grid_pager" ></div>
-	                </div>	                
+	                </div>                
 	            </div>
         	</div>
 		</div>
@@ -104,8 +104,10 @@ $("#connection_ledger_grid").jqGrid($.extend(true, {}, scrollPagerGridOptions, {
 column1="Single";column2="Double";
 name1="single_burner";index1="single_burner";
 name2="double_burner";index2="double_burner";
+
 $("#connection_ledger_grid").jqGrid($.extend(true, {}, scrollPagerGridOptions, {
-	url: jsEnum.GRID_RECORED_FETCHER+'?service='+jsEnum.BURNER_QNT_CHANGE_SERVICE+'&method='+jsEnum.BURNER_QNT_CHANGE_LIST+'&extraFilter=area',
+	//url: jsEnum.GRID_RECORED_FETCHER+'?service='+jsEnum.BURNER_QNT_CHANGE_SERVICE+'&method='+jsEnum.BURNER_QNT_CHANGE_LIST,//+'&extraFilter=area',
+   	url:"getConnectionLedgerGrid.action?customer_id="+$("#customer_id").val(),
    	jsonReader: {
             repeatitems: false,
             id: "pid"
@@ -183,8 +185,9 @@ $("#connection_ledger_grid").jqGrid($.extend(true, {}, scrollPagerGridOptions, {
     datatype: 'json',
 
 }));
+/*
 setInterval(reloadBurnerQntChangeHistory($("#customer_id").val()),10000);
-
+/*
 
 function reloadBurnerQntChangeHistory(customer_id){
     var ruleArray=[["BQC.CUSTOMER_ID"],["eq"],[customer_id]];
@@ -204,7 +207,7 @@ jQuery("#connection_ledger_grid").jqGrid('navGrid','#connection_ledger_grid_page
 			   modifyGridPostData("meterRent_change_history_this_grid",ruleArray,oldRules,newRules);	
 		   }
 		
-		});
+		});*/
 
 </s:if>
 </s:if>

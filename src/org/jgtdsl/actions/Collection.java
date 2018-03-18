@@ -153,6 +153,17 @@ public class Collection extends BaseAction{
 		setJsonResponse(response);
         return null;		
 	}
+	
+	//for check bill amount	
+	public String checkDueAmount(){
+		CollectionService collectionService=new CollectionService();
+		ResponseDTO response=collectionService.checkAdvancedCollection(collection);
+		setJsonResponse(response);
+		return null;
+	}
+	//
+	
+
 	public String saveAdvancedCollection(){
 		CollectionService collectionService=new CollectionService();
 		ResponseDTO response=collectionService.saveAdvancedCollection(collection);

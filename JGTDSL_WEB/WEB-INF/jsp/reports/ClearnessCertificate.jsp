@@ -20,7 +20,7 @@ padding-bottom: 4px !important;
 font-size: 12px;
 }
 </style>
-<div class="meter-reading" style="width: 50%;height: 50%;">
+<div class="meter-reading" style="width: 80%;height: 50%;">
 	<div class="row-fluid">
 		<div class="span12" id="rightSpan">
 			<div class="w-box">
@@ -28,22 +28,7 @@ font-size: 12px;
     				<h4 id="rightSpan_caption">Clearness Certificate Of Customer</h4>
 				</div>
 				<div class="w-box-content" style="padding: 10px;" id="content_div">
-				    <div class="row-fluid">
-							<div class="span12">
-								<div class="alert alert-info">
-									<table width="100%" align="center">
-										<tr>
-											<td width="100%" align="right" style="font-size: 12px;font-weight: bold;">
-											<input type="radio" value="ccDownload" id="ccDownload" name="type" onclick="checkType(this.id)" checked/>Download&nbsp;&nbsp;&nbsp;
-											<input type="radio" value="ccApprove" id="ccApprove" name="type" onclick="checkType(this.id)" />Approve&nbsp;&nbsp;&nbsp;
-											
-											</td>											
-										</tr>
-									</table>
-                                </div>
-                                
-							</div>
-					</div>	
+				    	
 					<div id="download_div">
      				<form id="billProcessForm" name="billProcessForm" action="clearnessCertificateInfo.action" style="margin-bottom: 1px;">
 						
@@ -61,16 +46,7 @@ font-size: 12px;
 								
 							</div>
 							
-							<div class="row-fluid" id="print_download">							
-							<div class="span6">									    
-								<label style="width: 40%">Type</label>
-								<select id="print_type" style="width: 56%;"   name="print_type" onchange="fetchDisconnectType()">
-									<option value="" >Select Type</option>									
-										<option value="01"  selected="selected">Download</option>
-										<option value="02" >Print</option>		
-								</select>  								      
-							</div>
-						</div>
+							
 							
 						<div class="row-fluid">
 							<div class="span12">
@@ -78,8 +54,8 @@ font-size: 12px;
 									<table width="50%" align="center">
 										<tr>
 											<td width="100%" align="right" style="font-size: 12px;font-weight: bold;">
-												<input type="radio" value="individual_wise" id="individual_wise" name="download_type" checked onclick="checkType(this.id)"/>Individual&nbsp;&nbsp;&nbsp;
-												<input type="radio" value="category_wise" id="category_wise" name="download_type" onclick="checkType(this.id)" />Category&nbsp;&nbsp;&nbsp;
+												<input type="radio" value="individual_wise" id="individual_wise" name="download_type" checked onclick="checkType(this.id)"/>&nbsp;&nbsp;&nbsp;Individual&nbsp;&nbsp;&nbsp;
+												<input type="radio" value="category_wise" id="category_wise" name="download_type" onclick="checkType(this.id)" />&nbsp;&nbsp;&nbsp;Category&nbsp;&nbsp;&nbsp;
 											</td>											
 										</tr>
 									</table>
@@ -91,7 +67,7 @@ font-size: 12px;
 						<div class="row-fluid" id="individual_code_div" >
 							<div class="span12" style="margin-top: 4px;">
 								<label style="width: 40%">Customer ID <m class='man'/></label>
-								<input type="text" name="customer_id" id="customer_id" style="font-weight: bold;color: #3b5894;position: absolute; z-index: 2; background: transparent;width: 10%;margin-top: -4px;" value="<s:property value='customer_id' />" tabindex="1"/>
+								<input type="text" name="customer_id" id="customer_id" style="font-weight: bold;color: #3b5894; z-index: 2; background: transparent;width: 20%;margin-top: -4px;" value="<s:property value='customer_id' />" tabindex="1"/>
 								
 								
 						  	</div>
@@ -131,34 +107,35 @@ font-size: 12px;
 						</div>
 						
 						<div class="row-fluid" id="month_year_div">							
-							<div class="span6" id="month_div">									    
+							<div class="row-fluid" id="month_div">									    
 								<label style="width: 40%">Calendar Month<m class='man'/></label>
-								<select name="collection_month" id="collection_month" style="width: 56%;margin-left: 0px;">
+								<select name="collection_month" id="collection_month" style="width: 40%;">
 							       	<option value="">Select Month</option>           
 							        <s:iterator  value="%{#application.MONTHS}">   
 							   			<option value="<s:property value='id'/>"><s:property value="label"/></option>
 									</s:iterator>
 						       </select>								      
 							</div>
-							<div class="span6" id="year_div">
+							<div class="row-fluid" id="year_div">
 								<label style="width: 40%">Calendar Year<m class='man'/></label>
-								<select name="calender_year" id="calender_year" onchange="isReconiliatedOrNot()" style="width: 56%;">
+								<select name="calender_year" id="calender_year" onchange="isReconiliatedOrNot()" style="width: 40%;">
 							       	<option value="">Year</option>
 							       	<s:iterator  value="%{#application.YEARS}" id="year">
 							            <option value="<s:property/>"><s:property/></option>
 									</s:iterator>
 						       </select>     
-							</div>							
+							</div>
+							<br/>							
 							<div class="row-fluid" id="officer_nsme" >
 								<div class="span12" style="margin-top: 4px;">
 									<label style="width: 40%">Officer's Name <m class='man'/></label>
-									<input type="text" name="officer_name" id="officer_name" style="font-weight: bold;color: #3b5894;position: absolute; z-index: 2; background: transparent;width: 10%;margin-top: -4px;" value="" tabindex="1"/>								
+									<input type="text" name="officer_name" id="officer_name" style="font-weight: bold;color: #3b5894; z-index: 2; background: transparent;width: 30%;margin-top: -4px;" value="" tabindex="1"/>								
 						  		</div>
 							</div>
 							<div class="row-fluid" id="designation" >
 								<div class="span12" style="margin-top: 4px;">
 									<label style="width: 40%">Officer's Designation <m class='man'/></label>
-									<input type="text" name="officer_desig" id="officer_desig" style="font-weight: bold;color: #3b5894;position: absolute; z-index: 2; background: transparent;width: 10%;margin-top: -4px;" value="" tabindex="1"/>								
+									<input type="text" name="officer_desig" id="officer_desig" style="font-weight: bold;color: #3b5894; z-index: 2; background: transparent;width: 30%;margin-top: -4px;" value="" tabindex="1"/>								
 						  		</div>
 							</div>
 							 

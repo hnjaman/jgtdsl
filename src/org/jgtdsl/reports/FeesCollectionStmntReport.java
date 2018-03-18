@@ -188,13 +188,14 @@ public class FeesCollectionStmntReport extends BaseAction {
 					+" and substr(CUSTOMER_ID,1,2)= '"+getArea()+"' "
 					+" and to_char(DEPOSIT_DATE,'mm')= "+getBill_month()
 					+" and to_char(DEPOSIT_DATE,'yyyy')= "+ getBill_year()
+					+" and MD.DEPOSIT_PURPOSE <> '01'  "
 					+" group by TYPE_NAME_ENG"
 					+" order by TYPE_NAME_ENG";
 
 					Connection conn = ConnectionManager.getConnection();
 					Statement st=conn.createStatement();
 									
-					ResultSet rs=st.executeQuery(sql);			
+					ResultSet rs=st.executeQuery(sql);	
 					
 					while(rs.next()){
 						TransactionDTO fessDTO=new TransactionDTO();
