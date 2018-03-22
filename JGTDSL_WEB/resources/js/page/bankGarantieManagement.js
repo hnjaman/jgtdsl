@@ -3,13 +3,14 @@ jQuery("#customer_grid")
         url: jsEnum.GRID_RECORED_FETCHER+'?service='+jsEnum.DEPOSIT_SERVICE+'&method='+jsEnum.SD_EXP_LIST,
         jsonReader: {
             repeatitems: false,
-            id: "customer_id"
+            //id: "customer_id",
+            depositId: "deposit_id"
         },
         colNames: ['Deposit Id', 'Customer Id', 'Customer Name','Bank','Branch','Account','Valid Till','Total Deposit','Expire In (Days)'],
         colModel: [{
 	                name: 'deposit_id',
 	                index: 'deposit_id',
-	                hidden:true
+	                hidden:false
             	},
             	{
 	                name: 'customer_id',
@@ -64,20 +65,27 @@ jQuery("#customer_grid")
         height: $("#customer_grid_div").height()-70,
     	width: $("#customer_grid_div").width()-10,
        	pager: '#customer_grid_pager',
-       	sortname: 'customer_id',
+       //	sortname: 'customer_id',
         sortorder: "asc",
     	caption: "Customer List Going To Be Expired",
-        onSelectRow: function(id){ 
-        	var rowData = $("#customer_grid").getRowData(id);
+        onSelectRow: function(depositId){ 
+        	//alert(depositId);
+        	var rowData = $("#customer_grid").getRowData(depositId);
         	var deposit_id=rowData.deposit_id;
         	var old_date=rowData.valid_to;
+        	var customerId=rowData.customer_id;
+        	
+
+        	//alert(deposit_id+" "+customerId);
+        	
+        	
         	
         	$("#deposit_id").val(deposit_id);
     		$("#old_expire_date").val(old_date);
-    		$("#customer_id").val(id);
+    		$("#customer_id").val(customerId);
     		enableButton("btn_save");
-    		getCustomerInfo("comm",id);	
-    		setActiveTabToMeterRentChangeHistory(id,deposit_id)
+    		getCustomerInfo("comm",customerId);	
+    		setActiveTabToMeterRentChangeHistory(customerId,deposit_id)
     		
        }
     }).navGrid('#customer_grid_pager',{edit: false, add: false, del: false, search: true, refresh:true,view:false},{},{},{},{},{});
@@ -93,6 +101,7 @@ jQuery("#customer_grid").jqGrid (
         		window.location="securityDepositExpireReport.action";
          }
          });
+
 $("#meterRent_change_history_this_grid").jqGrid($.extend(true, {}, scrollPagerGridOptions, {
 	url: jsEnum.GRID_RECORED_FETCHER+'?service='+jsEnum.DEPOSIT_SERVICE+'&method=getBGExpireChangHistory'+'&extraFilter=area',
    	jsonReader: {
@@ -111,38 +120,42 @@ $("#meterRent_change_history_this_grid").jqGrid($.extend(true, {}, scrollPagerGr
 			{
 		       name: 'deposit_id',
 		       index: 'deposit_id',
-		       width:200,
+		       width:150,
 		       sorttype: 'string',
 		       search: true
 			},
 			{
 			       name: 'customer_id',
 			       index: 'customer_id',
-			       width:200,
+			       width:150,
 			       sorttype: 'string',
+			       align:'center',
 			       search: true
 			},
 			{
 		       name: 'old_expire_date',
 		       index: 'old_expire_date',
 		       sorttype: "string",
+		       align:'center',
 		       search: true,
 			},
 			{
 		       name: 'new_expire_date',
 		       index: 'new_expire_date',
 		       sorttype: "string",
+		       align:'center',
 		       search: true,
 			},
 			{
 		       name: 'entry_date',
 		       index: 'entry_date',
 		       sorttype: "string",
+		       align:'center',
 		       search: true,
 			},
 			{
-		       name: 'remarks',
-		       index: 'remarks',
+		       name: 'remarks_on_bg',
+		       index: 'remarks_on_bg',
 		       sorttype: "string",
 		       search: true,
 			},
@@ -150,6 +163,7 @@ $("#meterRent_change_history_this_grid").jqGrid($.extend(true, {}, scrollPagerGr
 			       name: 'inserted_by',
 			       index: 'inserted_by',
 			       sorttype: "string",
+			       align:'center',
 			       search: true,
 			}
         ],
@@ -159,7 +173,7 @@ $("#meterRent_change_history_this_grid").jqGrid($.extend(true, {}, scrollPagerGr
    	pager: '#meterRent_change_history_this_grid_pager',
    	sortname: 'customer_id',
     sortorder: "asc",
-	caption: "Customer's Meter Rent Chagne History",
+	caption: "Customer's BG Chagne History",
 	onSelectRow: function(id){ 
 		
 		var rowData = $("#meterRent_change_history_this_grid").getRowData(id);
@@ -170,7 +184,7 @@ $("#meterRent_change_history_this_grid").jqGrid($.extend(true, {}, scrollPagerGr
 		$("#old_expire_date").val(rowData.old_expire_date);
 		$("#new_expire_date").val(rowData.new_expire_date);
 		$("#entry_date").val(rowData.entry_date);
-		$("#remarks").val(rowData.remarks);
+		$("#remarks_on_bg").val(rowData.remarks_on_bg);
 		enableButton("btn_delete");
 		disableField("btn_save");
 		bankGarantieExpireExtentionForm(enableField);
@@ -271,6 +285,7 @@ function reloadMeterRentChangeHistory(customer_id,deposit_id){
 
 
 function reloadBankGarantieExpireInfoForCustomer(customer_id){
+	//alert("reloadBankGarantieExpireInfoForCustomer");
     var ruleArray=[["deposit.customer_id"],["eq"],[customer_id]];
 	var postdata=getPostFilter("customer_grid",ruleArray);
     $("#customer_grid").jqGrid('setGridParam',{search: true,postData: postdata,page:1,datatype:'json'});    	
