@@ -31,13 +31,13 @@
 						<div class="row-fluid">							
 						  	<div class="span12">									    
 								<label style="width: 14.5%">Remarks</label>
-								<textarea rows="1" style="width: 80%" name="bgChange.remarks_on_bg" id="remarks" /> 							      
+								<textarea rows="1" style="width: 80%" name="bgChange.remarks_on_bg" id="remarks_on_bg" /> 							      
 							</div>						  	
 						</div>
 						
 						<input type="hidden" name="bgChange.pId" id="pid"/>
 						<input type="hidden" name="bgChange.customer_id" id="customer_id"/>
-						<input type="hidden" name="rentChange.meter_id" id="meter_id"/>
+						
 						
 						<p/>
 						<div class="formSep" style="padding-top: 2px;padding-bottom: 2px;">
