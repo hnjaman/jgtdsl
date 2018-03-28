@@ -115,8 +115,8 @@ public class Deposit extends BaseAction{
 	
 	public String deleteBankGarantieExpireChangeInfo(){
 		DepositService mDepositService=new DepositService();
-		bgChange.setInserted_by(((UserDTO)session.get("user")).getUserId());
-		ResponseDTO response=mDepositService.deleteBankGarantieExpireChangeInfo(pId);
+		//bgChange.setInserted_by(((UserDTO)session.get("user")).getUserId());
+		ResponseDTO response=mDepositService.deleteBankGarantieExpireChangeInfo(deposit_id);
 		
 		setJsonResponse(response);
 		return null;

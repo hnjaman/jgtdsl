@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -71,7 +72,12 @@ public class DefaulterCCertificate extends ActionSupport implements
 	private String officer_name;
 	private String officer_desig;
 	private ServletContext servlet;
-	String yearsb;	
+	String yearsb;
+	ArrayList<ClearnessDTO> CustomerList = new ArrayList<ClearnessDTO>();
+	CustomerDTO customer = new CustomerDTO();
+	ClearnessDTO customerInfo;
+	MeterService ms = new MeterService();
+	ArrayList<CustomerApplianceDTO> applianceList= new ArrayList<CustomerApplianceDTO>();
 	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyy");
 	Date date = new Date();
 
@@ -116,310 +122,334 @@ public class DefaulterCCertificate extends ActionSupport implements
 			out = new ByteArrayOutputStream();
 			// left,right,top,bottom
 			fileName = "ClearnessCertificate.pdf";
-			ClearnessDTO customerInfo = getCustomerInfo(customer_id, area,
-					calender_year, collection_month);
-			
-			yearsb= calender_year.substring(2,4);
-			PdfContentByte over = null;
-			PdfStamper stamp = null;
+			if (download_type.equalsIgnoreCase("individual_wise")) {
 
-			if (customerInfo.getDueAmount() == 0
-					|| customerInfo.getDueMonth().equals("")
-					|| customerInfo.getCustomerID().equals(null)) {
-				reader = new PdfReader(new FileInputStream(realPathC));
-				certificate = new ByteArrayOutputStream();
-				stamp = new PdfStamper(reader, certificate);
-				over = stamp.getOverContent(1);
+				/*customerInfo = getCustomerInfo(customer_id, area,
+						calender_year, collection_month);
+				customer = getCustomerInfo(customer_id);*/
+				ClearnessDTO cDto = new ClearnessDTO();
+				cDto.setCustomerID(customer_id);
+				CustomerList.add(cDto);
 
-				over.beginText();
-				// Date
+			} else if (download_type.equalsIgnoreCase("category_wise")) {
+				CustomerList = getCustomerList(from_customer_id, to_customer_id,customer_category, area);
+			}
+
+			for (int i = 0; i < CustomerList.size(); i++) {
 				
-				over.setFontAndSize(bfb, 8);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-						dateFormat.format(date), 487, 660, 0);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-						dateFormat.format(date), 487, 354, 0);
-				// appliance
-				MeterService ms = new MeterService();
-				ArrayList<CustomerApplianceDTO> applianceList = ms
-						.getCustomerApplianceList(customer_id);
-				if (applianceList.size() == 0) {
-					over.setFontAndSize(bfb, 8);
-					over.showTextAligned(PdfContentByte.ALIGN_LEFT, "N/A", 265,
-							545, 0);
-					over.showTextAligned(PdfContentByte.ALIGN_LEFT, "N/A", 305,
-							545, 0);
-					over.showTextAligned(PdfContentByte.ALIGN_LEFT, "N/A", 345,
-							545, 0);
+				
+				/////////////
 
-					over.showTextAligned(PdfContentByte.ALIGN_LEFT, "N/A", 265,
-							242, 0);
-					over.showTextAligned(PdfContentByte.ALIGN_LEFT, "N/A", 305,
-							242, 0);
-					over.showTextAligned(PdfContentByte.ALIGN_LEFT, "N/A", 345,
-							242, 0);
+				if (download_type.equals("individual_wise")) {
+					customerInfo = getCustomerInfo(customer_id, area, calender_year, collection_month);
+					customer = getCustomerInfo(customer_id);
+					applianceList = ms.getCustomerApplianceList(customer_id);
+				} else {
+
+					customerInfo = getCustomerInfo(CustomerList.get(i).getCustomerID(), area, calender_year, collection_month);
+					
+					customer = getCustomerInfo(CustomerList.get(i).getCustomerID());					
+					applianceList = ms.getCustomerApplianceList(CustomerList.get(i).getCustomerID());
 				}
+				////////////////		
+				
+				yearsb = calender_year.substring(2, 4);
+				PdfContentByte over = null;
+				PdfStamper stamp = null;
 
-				for (CustomerApplianceDTO x : applianceList) {
+				if (customerInfo.getDueAmount() == 0
+						|| customerInfo.getDueMonth().equals("")
+						|| customerInfo.getCustomerID().equals(null)) {
+					reader = new PdfReader(new FileInputStream(realPathC));
+					certificate = new ByteArrayOutputStream();
+					stamp = new PdfStamper(reader, certificate);
+					over = stamp.getOverContent(1);
+
+					over.beginText();
+					// Date
+
 					over.setFontAndSize(bfb, 8);
-					if (x.getApplianc_id().equalsIgnoreCase("01")) {
-						over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-								"0" + x.getApplianc_qnt(), 265, 545, 0);
-						over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-								"0" + x.getApplianc_qnt(), 265, 242, 0);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							dateFormat.format(date), 487, 660, 0);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							dateFormat.format(date), 487, 354, 0);
+					// appliance
+					
+					if (applianceList.size() == 0) {
+						over.setFontAndSize(bfb, 8);
+						over.showTextAligned(PdfContentByte.ALIGN_LEFT, "N/A",
+								265, 545, 0);
+						over.showTextAligned(PdfContentByte.ALIGN_LEFT, "N/A",
+								305, 545, 0);
+						over.showTextAligned(PdfContentByte.ALIGN_LEFT, "N/A",
+								345, 545, 0);
 
-					} else if (x.getApplianc_id().equalsIgnoreCase("02")) {
-						over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-								"0" + x.getApplianc_qnt(), 305, 545, 0);
-						over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-								"0" + x.getApplianc_qnt(), 305, 242, 0);
-
-					} else {
-						over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-								"0" + x.getApplianc_qnt(), 345, 545, 0);
-						over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-								"0" + x.getApplianc_qnt(), 345, 242, 0);
+						over.showTextAligned(PdfContentByte.ALIGN_LEFT, "N/A",
+								265, 242, 0);
+						over.showTextAligned(PdfContentByte.ALIGN_LEFT, "N/A",
+								305, 242, 0);
+						over.showTextAligned(PdfContentByte.ALIGN_LEFT, "N/A",
+								345, 242, 0);
 					}
-				}
 
-				// month
-				String month_name = (Month.values()[Integer
-						.parseInt(collection_month) - 1].getLabel());
-				
-				over.setFontAndSize(bfb, 8);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT, month_name+" "+yearsb,
-						245, 645, 0);
-				over.setFontAndSize(bfb, 8);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT, month_name+" "+yearsb,
-						245, 338, 0);
-				// customer id
-				over.setFontAndSize(bfb, 9);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT, customer_id,
-						100, 540, 0);
-				over.setFontAndSize(bfb, 9);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT, customer_id,
-						100, 232, 0);
+					for (CustomerApplianceDTO x : applianceList) {
+						over.setFontAndSize(bfb, 8);
+						if (x.getApplianc_id().equalsIgnoreCase("01")) {
+							over.showTextAligned(PdfContentByte.ALIGN_LEFT, "0"
+									+ x.getApplianc_qnt(), 265, 545, 0);
+							over.showTextAligned(PdfContentByte.ALIGN_LEFT, "0"
+									+ x.getApplianc_qnt(), 265, 242, 0);
 
-				// name address
-				CustomerDTO customer = getCustomerInfo(customer_id);
+						} else if (x.getApplianc_id().equalsIgnoreCase("02")) {
+							over.showTextAligned(PdfContentByte.ALIGN_LEFT, "0"
+									+ x.getApplianc_qnt(), 305, 545, 0);
+							over.showTextAligned(PdfContentByte.ALIGN_LEFT, "0"
+									+ x.getApplianc_qnt(), 305, 242, 0);
 
-				over.setFontAndSize(bfb, 6);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-						customer.getCustomer_name(), 115, 453, 0);
-				over.setFontAndSize(bfb, 6);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-						customer.getCustomer_name(), 115, 147, 0);
-
-				over.setFontAndSize(bf, 6);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-						customer.getAddress(), 115, 444, 0);
-				over.setFontAndSize(bf, 6);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-						customer.getAddress(), 115, 138, 0);
-
-				// Signature
-				over.setFontAndSize(bf, 7);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT, officer_name
-						+ ", " + officer_desig, 457, 462, 0);
-				over.setFontAndSize(bf, 7);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT, officer_name
-						+ ", " + officer_desig, 457, 156, 0);
-
-				// /////////////////////////////////for
-				// defaulter//////////////////////////////////////////////////////////////////
-
-			} else {
-				reader = new PdfReader(new FileInputStream(realPathD));
-				certificate = new ByteArrayOutputStream();
-				stamp = new PdfStamper(reader, certificate);
-				over = stamp.getOverContent(1);
-
-				over.beginText();
-				// date
-				DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyy");
-				Date date = new Date();
-				over.setFontAndSize(bfb, 8);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-						dateFormat.format(date), 487, 660, 0);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-						dateFormat.format(date), 487, 357, 0);
-				// customer Id
-				over.setFontAndSize(bfb, 8);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT, customer_id,
-						190, 645, 0);
-				over.setFontAndSize(bfb, 8);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT, customer_id,
-						190, 342, 0);
-				// month
-				String month_name = (Month.values()[Integer
-						.parseInt(collection_month) - 1].getLabel());
-				over.setFontAndSize(bfb, 8);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT, month_name+" "+yearsb,
-						270, 645, 0);
-				over.setFontAndSize(bfb, 8);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT, month_name+" "+yearsb,
-						270, 342, 0);
-				// due month
-				over.setFontAndSize(bf, 5);
-
-				String hsi = customerInfo.getDueMonth();
-				if (customerInfo.getDueMonth() != null)
-					hsi = customerInfo.getDueMonth().replaceAll("&#x26;", "&");
-				int size = 65;
-				if (hsi != null && hsi.length() > size) {
-					String[] s1;
-					s1 = spitSrting(hsi, size);
-
-					if (s1[1].length() <= size) {
-						over.setTextMatrix(75, 565);
-						over.showText(s1[0]);
-						over.setTextMatrix(75, 262);
-						over.showText(s1[0]);
-					} else {
-						s1 = spitSrting(s1[1], size);
-						over.setTextMatrix(75, 565);
-						over.showText(s1[0]);
-						over.setTextMatrix(75, 262);
-						over.showText(s1[0]);
-
-						if (s1[1].length() <= size) {
-							over.setTextMatrix(75, 555);
-							over.showText(s1[1]);
-							over.setTextMatrix(75, 252);
-							over.showText(s1[1]);
 						} else {
-							s1 = spitSrting(s1[1], size);
-							over.setTextMatrix(75, 555);
-							over.showText(s1[0]);
-							over.setTextMatrix(75, 252);
-							over.showText(s1[0]);
-							over.setTextMatrix(75, 545);
-							if (s1[1].length() > size)
-								over.showText(s1[1].substring(size));
-							else
-								over.showText(s1[1]);
-							over.setTextMatrix(75, 242);
-							if (s1[1].length() > size)
-								over.showText(s1[1].substring(size));
-							else
-								over.showText(s1[1]);
+							over.showTextAligned(PdfContentByte.ALIGN_LEFT, "0"
+									+ x.getApplianc_qnt(), 345, 545, 0);
+							over.showTextAligned(PdfContentByte.ALIGN_LEFT, "0"
+									+ x.getApplianc_qnt(), 345, 242, 0);
 						}
 					}
+
+					// month
+					String month_name = (Month.values()[Integer
+							.parseInt(collection_month) - 1].getLabel());
+
+					over.setFontAndSize(bfb, 8);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT, month_name
+							+ " " + yearsb, 245, 645, 0);
+					over.setFontAndSize(bfb, 8);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT, month_name
+							+ " " + yearsb, 245, 338, 0);
+					// customer id
+					over.setFontAndSize(bfb, 9);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							customer.getCustomer_id(), 100, 540, 0);
+					over.setFontAndSize(bfb, 9);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							customer.getCustomer_id(), 100, 232, 0);
+
+					// name address
+
+					over.setFontAndSize(bfb, 6);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							customer.getCustomer_name(), 115, 453, 0);
+					over.setFontAndSize(bfb, 6);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							customer.getCustomer_name(), 115, 147, 0);
+
+					over.setFontAndSize(bf, 6);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							customer.getAddress(), 115, 444, 0);
+					over.setFontAndSize(bf, 6);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							customer.getAddress(), 115, 138, 0);
+
+					// Signature
+					over.setFontAndSize(bf, 7);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							officer_name + ", " + officer_desig, 457, 462, 0);
+					over.setFontAndSize(bf, 7);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							officer_name + ", " + officer_desig, 457, 156, 0);
+
+					// /////////////////////////////////for
+					// defaulter//////////////////////////////////////////////////////////////////
+
 				} else {
-					over.setTextMatrix(75, 565);
-					over.showText(hsi);
-					over.setTextMatrix(75, 262);
-					over.showText(hsi);
-				}
-				// appliance
-				MeterService ms = new MeterService();
-				ArrayList<CustomerApplianceDTO> applianceList = ms
-						.getCustomerApplianceList(customer_id);
-				if (applianceList.size() == 0) {
+					reader = new PdfReader(new FileInputStream(realPathD));
+					certificate = new ByteArrayOutputStream();
+					stamp = new PdfStamper(reader, certificate);
+					over = stamp.getOverContent(1);
+
+					over.beginText();
+					// date
+					DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyy");
+					Date date = new Date();
 					over.setFontAndSize(bfb, 8);
-					over.showTextAligned(PdfContentByte.ALIGN_LEFT, "N/A", 260,
-							555, 0);
-					over.showTextAligned(PdfContentByte.ALIGN_LEFT, "N/A", 300,
-							555, 0);
-					over.showTextAligned(PdfContentByte.ALIGN_LEFT, "N/A", 340,
-							555, 0);
-
-					over.showTextAligned(PdfContentByte.ALIGN_LEFT, "N/A", 260,
-							252, 0);
-					over.showTextAligned(PdfContentByte.ALIGN_LEFT, "N/A", 300,
-							252, 0);
-					over.showTextAligned(PdfContentByte.ALIGN_LEFT, "N/A", 340,
-							252, 0);
-				}
-
-				for (CustomerApplianceDTO x : applianceList) {
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							dateFormat.format(date), 487, 660, 0);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							dateFormat.format(date), 487, 357, 0);
+					// customer Id
 					over.setFontAndSize(bfb, 8);
-					if (x.getApplianc_id().equalsIgnoreCase("01")) {
-						over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-								"0" + x.getApplianc_qnt(), 260, 555, 0);
-						over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-								"0" + x.getApplianc_qnt(), 260, 252, 0);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							customerInfo.getCustomerID(), 190, 645, 0);
+					over.setFontAndSize(bfb, 8);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							customerInfo.getCustomerID(), 190, 342, 0);
+					// month
+					String month_name = (Month.values()[Integer
+							.parseInt(collection_month) - 1].getLabel());
+					over.setFontAndSize(bfb, 8);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT, month_name
+							+ " " + yearsb, 270, 645, 0);
+					over.setFontAndSize(bfb, 8);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT, month_name
+							+ " " + yearsb, 270, 342, 0);
+					// due month
+					over.setFontAndSize(bf, 5);
 
-					} else if (x.getApplianc_id().equalsIgnoreCase("02")) {
-						over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-								"0" + x.getApplianc_qnt(), 300, 555, 0);
-						over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-								"0" + x.getApplianc_qnt(), 300, 252, 0);
+					String hsi = customerInfo.getDueMonth();
+					if (customerInfo.getDueMonth() != null)
+						hsi = customerInfo.getDueMonth().replaceAll("&#x26;",
+								"&");
+					int size = 65;
+					if (hsi != null && hsi.length() > size) {
+						String[] s1;
+						s1 = spitSrting(hsi, size);
 
+						if (s1[1].length() <= size) {
+							over.setTextMatrix(75, 565);
+							over.showText(s1[0]);
+							over.setTextMatrix(75, 262);
+							over.showText(s1[0]);
+						} else {
+							s1 = spitSrting(s1[1], size);
+							over.setTextMatrix(75, 565);
+							over.showText(s1[0]);
+							over.setTextMatrix(75, 262);
+							over.showText(s1[0]);
+
+							if (s1[1].length() <= size) {
+								over.setTextMatrix(75, 555);
+								over.showText(s1[1]);
+								over.setTextMatrix(75, 252);
+								over.showText(s1[1]);
+							} else {
+								s1 = spitSrting(s1[1], size);
+								over.setTextMatrix(75, 555);
+								over.showText(s1[0]);
+								over.setTextMatrix(75, 252);
+								over.showText(s1[0]);
+								over.setTextMatrix(75, 545);
+								if (s1[1].length() > size)
+									over.showText(s1[1].substring(size));
+								else
+									over.showText(s1[1]);
+								over.setTextMatrix(75, 242);
+								if (s1[1].length() > size)
+									over.showText(s1[1].substring(size));
+								else
+									over.showText(s1[1]);
+							}
+						}
 					} else {
-						over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-								"0" + x.getApplianc_qnt(), 340, 555, 0);
-						over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-								"0" + x.getApplianc_qnt(), 340, 252, 0);
+						over.setTextMatrix(75, 565);
+						over.showText(hsi);
+						over.setTextMatrix(75, 262);
+						over.showText(hsi);
 					}
+					// appliance
+					if (applianceList.size() == 0) {
+						over.setFontAndSize(bfb, 8);
+						over.showTextAligned(PdfContentByte.ALIGN_LEFT, "N/A",
+								260, 555, 0);
+						over.showTextAligned(PdfContentByte.ALIGN_LEFT, "N/A",
+								300, 555, 0);
+						over.showTextAligned(PdfContentByte.ALIGN_LEFT, "N/A",
+								340, 555, 0);
+
+						over.showTextAligned(PdfContentByte.ALIGN_LEFT, "N/A",
+								260, 252, 0);
+						over.showTextAligned(PdfContentByte.ALIGN_LEFT, "N/A",
+								300, 252, 0);
+						over.showTextAligned(PdfContentByte.ALIGN_LEFT, "N/A",
+								340, 252, 0);
+					}
+
+					for (CustomerApplianceDTO x : applianceList) {
+						over.setFontAndSize(bfb, 8);
+						if (x.getApplianc_id().equalsIgnoreCase("01")) {
+							over.showTextAligned(PdfContentByte.ALIGN_LEFT, "0"
+									+ x.getApplianc_qnt(), 260, 555, 0);
+							over.showTextAligned(PdfContentByte.ALIGN_LEFT, "0"
+									+ x.getApplianc_qnt(), 260, 252, 0);
+
+						} else if (x.getApplianc_id().equalsIgnoreCase("02")) {
+							over.showTextAligned(PdfContentByte.ALIGN_LEFT, "0"
+									+ x.getApplianc_qnt(), 300, 555, 0);
+							over.showTextAligned(PdfContentByte.ALIGN_LEFT, "0"
+									+ x.getApplianc_qnt(), 300, 252, 0);
+
+						} else {
+							over.showTextAligned(PdfContentByte.ALIGN_LEFT, "0"
+									+ x.getApplianc_qnt(), 340, 555, 0);
+							over.showTextAligned(PdfContentByte.ALIGN_LEFT, "0"
+									+ x.getApplianc_qnt(), 340, 252, 0);
+						}
+					}
+					// due amount
+					over.setFontAndSize(bfb, 8);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							String.valueOf(customerInfo.getDueAmount()), 400,
+							555, 0);
+					over.setFontAndSize(bfb, 8);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							String.valueOf(customerInfo.getDueAmount()), 400,
+							252, 0);
+					// area name
+					over.setFontAndSize(bfb, 6);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT, Area
+							.values()[Integer.parseInt(area) - 1].getLabel(),
+							100, 498, 0);
+					over.setFontAndSize(bfb, 6);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT, Area
+							.values()[Integer.parseInt(area) - 1].getLabel(),
+							100, 195, 0);
+
+					// name address
+					over.setFontAndSize(bfb, 6);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							customerInfo.getCustomerName(), 115, 458, 0);
+					over.setFontAndSize(bfb, 6);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							customerInfo.getCustomerName(), 115, 155, 0);
+
+					over.setFontAndSize(bf, 6);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							customerInfo.getCustomerAddress(), 115, 448, 0);
+					over.setFontAndSize(bf, 6);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							customerInfo.getCustomerAddress(), 115, 145, 0);
+
+					// in words
+					over.setFontAndSize(bfb, 8);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							customerInfo.getAmountInWords(), 95, 523, 0);
+
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							customerInfo.getAmountInWords(), 95, 221, 0);
+					// signature
+					over.setFontAndSize(bf, 7);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							officer_name + ", " + officer_desig, 457, 468, 0);
+					over.setFontAndSize(bf, 7);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							officer_name + ", " + officer_desig, 457, 165, 0);
 				}
-				// due amount
-				over.setFontAndSize(bfb, 8);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-						String.valueOf(customerInfo.getDueAmount()), 400, 555,
-						0);
-				over.setFontAndSize(bfb, 8);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-						String.valueOf(customerInfo.getDueAmount()), 400, 252,
-						0);
-				// area name
-				over.setFontAndSize(bfb, 6);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-						Area.values()[Integer.parseInt(area) - 1].getLabel(),
-						100, 498, 0);
-				over.setFontAndSize(bfb, 6);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-						Area.values()[Integer.parseInt(area) - 1].getLabel(),
-						100, 195, 0);
-
-				// name address
-				over.setFontAndSize(bfb, 6);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-						customerInfo.getCustomerName(), 115, 458, 0);
-				over.setFontAndSize(bfb, 6);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-						customerInfo.getCustomerName(), 115, 155, 0);
-
+				// / website and email
 				over.setFontAndSize(bf, 6);
 				over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-						customerInfo.getCustomerAddress(), 115, 448, 0);
+						"www.jalalabadgas.org.bd", 50, 750, 0);
 				over.setFontAndSize(bf, 6);
 				over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-						customerInfo.getCustomerAddress(), 115, 145, 0);
-				
-				// in words
-				over.setFontAndSize(bfb, 8);
+						"www.jalalabadgas.org.bd", 50, 50, 0);
+
 				over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-						customerInfo.getAmountInWords(), 95, 523, 0);
-				
+						"Email: md@jalalabadgas.org.bd", 480, 750, 0);
+				over.setFontAndSize(bf, 6);
 				over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-						customerInfo.getAmountInWords(), 95, 221, 0);
-				// signature
-				over.setFontAndSize(bf, 7);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT, officer_name
-						+ ", " + officer_desig, 457, 468, 0);
-				over.setFontAndSize(bf, 7);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT, officer_name
-						+ ", " + officer_desig, 457, 165, 0);
+						"Email: md@jalalabadgas.org.bd", 480, 50, 0);
+
+				over.endText();
+				stamp.close();
+				readers.add(new PdfReader(certificate.toByteArray()));
+				insertClarificationHistory(customerInfo.getCustomerID(), dateFormat.format(date), officer_name, (int) customerInfo.getDueAmount());
 			}
-			// / website and email
-			over.setFontAndSize(bf, 6);
-			over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-					"www.jalalabadgas.org.bd", 50, 750, 0);
-			over.setFontAndSize(bf, 6);
-			over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-					"www.jalalabadgas.org.bd", 50, 50, 0);
-
-			over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-					"Email: md@jalalabadgas.org.bd", 480, 750, 0);
-			over.setFontAndSize(bf, 6);
-			over.showTextAligned(PdfContentByte.ALIGN_LEFT,
-					"Email: md@jalalabadgas.org.bd", 480, 50, 0);
-
-			over.endText();
-			stamp.close();
-			readers.add(new PdfReader(certificate.toByteArray()));
-
 			if (readers.size() > 0) {
 				PdfWriter writer = PdfWriter.getInstance(document, out);
 
@@ -440,12 +470,13 @@ public class DefaulterCCertificate extends ActionSupport implements
 				rptUtil.downloadPdf(out, response, fileName);
 				document = null;
 				
-				insertClarificationHistory(customer_id,dateFormat.format(date) , officer_name, (int)customerInfo.getDueAmount());
+				
 			}
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
 
@@ -495,8 +526,8 @@ public class DefaulterCCertificate extends ActionSupport implements
 					+ "           WHERE     BI.CUSTOMER_ID = CC.CUSTOMER_ID "
 					+ "                 AND CC.STATUS = 1 "
 					+ "                 AND bi.STATUS = 1 "
-					+ "                 AND bi.area_id = ? "
-					+ "                 AND BI.CUSTOMER_ID = ? "
+					+ "                 AND bi.area_id = '"+this.area+"' "
+					+ " AND BI.CUSTOMER_ID = '"+customer_id+"' "
 
 					// "                 And bi.CUSTOMER_CATEGORY= " +
 					+ "                 AND BILL_YEAR || LPAD (BILL_MONTH, 2, 0) <= '"
@@ -504,7 +535,7 @@ public class DefaulterCCertificate extends ActionSupport implements
 					+ month
 					+ "' "
 					+ "        GROUP BY BI.CUSTOMER_ID, CUSTOMER_CATEGORY, bi.AREA_ID "
-					+ "          HAVING COUNT (*) > 1) tmp1, "
+					+ "          HAVING COUNT (*) >= 1) tmp1, "
 					+ "       (SELECT AA.CUSTOMER_ID, "
 					+ "               BB.FULL_NAME, "
 					+ "               BB.MOBILE, "
@@ -514,11 +545,9 @@ public class DefaulterCCertificate extends ActionSupport implements
 					+ "         WHERE AA.CUSTOMER_ID = BB.CUSTOMER_ID) tmp2 "
 					+ " WHERE tmp1.CUSTOMER_ID = tmp2.CUSTOMER_ID ";
 
-			PreparedStatement ps1 = conn.prepareStatement(customer_info_sql);
-			ps1.setString(1, area_id);
-			ps1.setString(2, customer_id);
+			Statement st = conn.createStatement();//Statement(customer_info_sql);
 
-			ResultSet resultSet = ps1.executeQuery();
+			ResultSet resultSet = st.executeQuery(customer_info_sql);
 
 			while (resultSet.next()) {
 
@@ -752,6 +781,63 @@ public class DefaulterCCertificate extends ActionSupport implements
 
 	}
 
+	// /get multiple customer list
+	private ArrayList<ClearnessDTO> getCustomerList(String from_cus_id,
+			String to_cus_id, String cust_cat_id, String area) {
+
+		ArrayList<ClearnessDTO> custList = new ArrayList<ClearnessDTO>();
+		if(collection_month.length()<2){
+			collection_month="0"+collection_month;
+		}
+		String type=null;
+		if(from_cus_id.isEmpty()){
+			type=area+this.customer_category;
+		}else{
+			type = from_cus_id.substring(0, 4);
+		}		
+		String bill_table;
+		if (type.equalsIgnoreCase(area + "01")
+				|| type.equalsIgnoreCase(area + "09")) {
+			bill_table = "BILL_NON_METERED";
+		} else {
+			bill_table = "BILL_METERED";
+		}
+		String whereClause= null;
+		if(from_cus_id.isEmpty()&&to_cus_id.isEmpty()){
+			whereClause= "      AND BI.CUSTOMER_CATEGORY='"+this.customer_category+"'  ";
+		}else{
+			whereClause= "         AND BI.CUSTOMER_ID BETWEEN '"+from_cus_id+"' AND '"+to_cus_id+"' " ;
+		}
+		try {
+			String transaction_sql =
+					"  SELECT bi.CUSTOMER_ID, COUNT (*) cnt " +
+					"    FROM "+bill_table+" bi, CUSTOMER_CONNECTION cc " +
+					"   WHERE     BI.CUSTOMER_ID = CC.CUSTOMER_ID " +
+					"         AND CC.STATUS = 1 " +
+					"         AND bi.STATUS = 1 " +
+					"         AND bi.area_id = '01' " +
+					whereClause+
+					"                 AND BILL_YEAR || LPAD (BILL_MONTH, 2, 0) <= '"+ calender_year+collection_month+
+					"'  GROUP BY BI.CUSTOMER_ID, CUSTOMER_CATEGORY, bi.AREA_ID " +
+					"  HAVING COUNT (*) >= 1 " ;
+
+			PreparedStatement ps1 = conn.prepareStatement(transaction_sql);
+			ResultSet resultSet = ps1.executeQuery();
+			while (resultSet.next()) {
+				ClearnessDTO ClearnessDTO = new ClearnessDTO();
+				ClearnessDTO.setCustomerID(resultSet.getString("CUSTOMER_ID"));
+				custList.add(ClearnessDTO);
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		return custList;
+
+	}
+
+	// insert into database
 	public void insertClarificationHistory(String cust_id, String issue_date,
 			String insert_by, int dues_status) {
 		ResponseDTO response = new ResponseDTO();

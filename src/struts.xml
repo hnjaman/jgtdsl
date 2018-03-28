@@ -124,8 +124,8 @@
 								 saveReconcilationInfo,deleteReconcilation,
 								 saveAdditonalShurcharge,
 								 getApplianceInfoPlain,getApplianceInfoById,saveNewApplianceInfo,dissconnectRaizer,getRaizerDisconnectionListInfo,reconnectRaizer,
-								 smsHome,smsDefalter,fetchDefaulter,smsAction,deleteCollection,fetchCollection4Delete,ExecuteDeleteCollection,getProcessedTotalSMSCount,getTotalCustomerToSendSMS
-								 ;
+								 smsHome,smsDefalter,fetchDefaulter,smsAction,deleteCollection,fetchCollection4Delete,ExecuteDeleteCollection,getProcessedTotalSMSCount,getTotalCustomerToSendSMS,
+								 deleteBankGarantieExpireChangeInfo;
 								 
 								 
 								 								 
@@ -213,7 +213,7 @@
 								 
 								 bankDepositWithdrawHome,saveBankTransaction,transactionAuthorization,authorizeTransaction,deleteBankTransaction,getTotalDebitCredit,
 								 journalVoucher,saveCustomerAccountCorrection,saveBankAccountCorrection,
-								 getTariffForDomesticCustomer,
+								 getTariffForDomesticCustomer,bankGarantieManagementHome,deleteBankGarantieExpireChangeInfo,saveGankGarantieExpireExtentionInfo,
 								 
 								 
 								 saveReconcilationInfo,deleteReconcilation,
@@ -303,7 +303,7 @@
 								 bankDepositWithdrawHome,saveBankTransaction,transactionAuthorization,authorizeTransaction,deleteBankTransaction,getTotalDebitCredit,
 								 journalVoucher,saveCustomerAccountCorrection,saveBankAccountCorrection,
 								 getTariffForDomesticCustomer,
-								 saveReconcilationInfo,deleteReconcilation,
+								 saveReconcilationInfo,deleteReconcilation,bankGarantieManagementHome,deleteBankGarantieExpireChangeInfo,saveGankGarantieExpireExtentionInfo,
 								 saveAdditonalShurcharge,deleteCollection,fetchCollection4Delete,ExecuteDeleteCollection;
 								 				 	   
 				         admin: dashBoard,userDashBoard,setUserArea;

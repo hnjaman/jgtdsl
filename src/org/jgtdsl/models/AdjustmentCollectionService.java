@@ -154,7 +154,7 @@ import org.jgtdsl.utils.connection.TransactionManager;
 			//String sql_update_metered=UPDATE SALES_ADJUSTMENT SET
 			
 			
-			String sql_update_metered="Update BILL_METERED Set Status=2,Collected_amount=nvl(collected_amount,0)+? Where Bill_Id=?";
+			String sql_update_metered="Update BILL_METERED Set Status=2,Collected_amount=nvl(collected_amount,0)+?,BRANCH_ID=?  Where Bill_Id=?";
 			
 			String sql_update_non_metered ="UPDATE SALES_ADJUSTMENT SET STATUS=2,COLLECTED_AMOUNT =nvl(COLLECTED_AMOUNT,0)+?,COLLECTED_SURCHARGE=nvl(COLLECTED_SURCHARGE,0)+?,TOTAL_COLLECTED_AMOUNT =nvl(TOTAL_COLLECTED_AMOUNT,0)+? WHERE Bill_Id = ?";
 					
@@ -282,8 +282,9 @@ import org.jgtdsl.utils.connection.TransactionManager;
 					/*~~~~~~ Update Collection Information [Start] ~~~~~~~~*/				
 					if(isMeteredStatus.equalsIgnoreCase("1")){
 						stmt = conn.prepareStatement(sql_update_metered);
-						stmt.setDouble(1,collection.getCollected_amount());					
-						stmt.setString(2,collection.getBill_id());
+						stmt.setDouble(1,collection.getCollected_amount());	
+						stmt.setString(2,collection.getBranch_id());
+						stmt.setString(3,collection.getBill_id());
 						stmt.executeUpdate();
 					}
 					else{

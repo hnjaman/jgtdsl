@@ -283,7 +283,8 @@ $("#deposit_ledger_grid").jqGrid($.extend(true, {}, scrollPagerGridOptions, {
 	                width:40
             	}
         ],   	
-	height: $("#wizard").height(),
+	//height: $("#wizard").height(),
+    height:500,    
 	width: $("#sw-basic-step-5").width(),
    	pager: '#deposit_ledger_grid_pager',
 	caption: "Deposit Ledger",	
@@ -302,22 +303,32 @@ $("#deposit_ledger_grid").jqGrid($.extend(true, {}, scrollPagerGridOptions, {
 }));
 jQuery("#deposit_ledger_grid_pager").setGridParam({rowNum:10}).trigger("reloadGrid");
 function calculateDepositLedgerSum(){
-	var total_security_amount = jQuery("#deposit_ledger_grid").jqGrid('getCol', 'security_amount', false, 'sum');
+	var total_security_amount =jQuery("#deposit_ledger_grid").jqGrid('getCol', 'security_amount', false, 'sum');
 	var total_debit_amount = jQuery("#deposit_ledger_grid").jqGrid('getCol', 'debit_amount', false, 'sum');
-	var total_credit_amount = jQuery("#deposit_ledger_grid").jqGrid('getCol', 'credit_amount', false, 'sum');
+	var total_credit_amount =jQuery("#deposit_ledger_grid").jqGrid('getCol', 'credit_amount', false, 'sum');
 	var total_balance_amount=jQuery("#deposit_ledger_grid").jqGrid('getCol', 'balance_amount', false, 'sum');
 	
 	//console.log($("#deposit_ledger_grid").find(">tbody>tr.jqgrow").filter(":last"));
 	//var abc=$("#deposit_ledger_grid").find(">tbody>tr.jqgrow").filter(":last");
+	var deposit_type=jQuery("#deposit_ledger_grid").jqGrid('getCol', 'deposit_type');
+	var debit_amount=jQuery("#deposit_ledger_grid").jqGrid('getCol', 'debit_amount');
 	
 	var rows = jQuery("#deposit_ledger_grid").getDataIDs();
 	var legnth=rows.length-1;
 	row=jQuery("#deposit_ledger_grid").getRowData(rows[legnth]);
 	
-	
-	
-	
-	jQuery("#deposit_ledger_grid").jqGrid('footerData','set', {description: 'Total: '+$("#deposit_ledger_grid").getGridParam("reccount"),security_amount:total_security_amount,debit_amount:total_debit_amount,credit_amount:total_credit_amount,balance_amount:row.balance_amount});
+	var total_cash_bank=0;
+	var total_bank_gr=0;
+	for(var i=0; i<rows.length;i++){
+		if(deposit_type[i]=="CASH BANK"){
+			total_cash_bank+= parseInt(debit_amount[i]);			
+		}
+		if(deposit_type[i]=="BANK GUARANTEE"){
+			total_bank_gr+= parseInt(debit_amount[i]);			
+		}
+	}
+	//jQuery("#deposit_ledger_grid").jqGrid('footerData','set', {description: 'Total: '+$("#deposit_ledger_grid").getGridParam("reccount"),security_amount:total_security_amount,debit_amount:total_debit_amount,credit_amount:total_credit_amount,balance_amount:row.balance_amount});
+	jQuery("#deposit_ledger_grid").jqGrid('footerData','set', {description: 'Total: '+$("#deposit_ledger_grid").getGridParam("reccount"),deposit_date:"TOTAL: "+total_debit_amount,debit_amount:"Bank Gurqantee: "+total_bank_gr,deposit_type:"Cash Bank: "+total_cash_bank,balance_amount:row.balance_amount});
 }
 
 setTimeout(function(){ scrollToRow("#customer_ledger_grid"); }, 1500);

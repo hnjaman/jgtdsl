@@ -72,16 +72,7 @@ font-size: 12px;
 								
 						  	</div>
 						</div>
-						<div class="row-fluid" id="customer_type_div" style="display: none">							
-							<div class="span12">									    
-								<label style="width: 40%">Type</label>
-								<select id="customer_Type" style="width: 56%;"   name="customer_type" ">
-									<option value="" >Select Category</option>									
-										<option value="1"  selected="selected">Meter</option>
-										<option value="0" >Non-Meter</option>		
-								</select>  								      
-							</div>	 
-						</div>
+					
 						<div class="row-fluid" id="category_div" style="display: none">
 								<label style="width: 40%">Category<m class='man'/></label>
 								<select id="customer_category" style="width: 56%;" disabled="disabled"  name="customer_category">

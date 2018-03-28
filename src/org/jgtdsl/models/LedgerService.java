@@ -29,29 +29,26 @@ public class LedgerService {
 		if (customer.getConnectionInfo().getIsMetered_name()
 				.equalsIgnoreCase("Metered")) {
 
-			sql = "SELECT * "
-					+ "    FROM (SELECT bm.BILL_ID, "
-					+ "                 bm.CUSTOMER_ID, "
-					+ "                 bcm.BANK_ID, "
-					+ "                 getBankBranch(BRANCH_ID) BANK_NAME, "
-					+ "                 TO_CHAR (bm.COLLECTION_DATE) COLLECTION_DATE, "
-					+ "                 MON || ', ' || BILL_YEAR DESCRIPTION, "
-					+ "                 BILLED_CONSUMPTION, "
-					+ "                 BILLED_AMOUNT, "
-					+ "                 bm.METER_RENT, "
-					+ "                 CMS_RENT, "
-					+ "                 SURCHARGE_AMOUNT, "
-					+ "                 bm.PAYABLE_AMOUNT, "
-					+ "                 COLLECTED_SURCHARGE, "
-					+ "                 (COLLECTION_AMOUNT + NVL (TAX_AMOUNT, 0)) COLLECTED_AMOUNT, "
-					+ "                 TO_CHAR (LAST_PAY_DATE_WO_SC, 'dd-mm-rrrr') DUE_DATE "
-					+ "            FROM bill_metered bm, "
-					+ "                 bill_collection_metered bcm, "
-					+ "                 MST_MONTH mm "
-					+ "           WHERE     bm.BILL_ID = bcm.BILL_ID(+) "
-					+ "                 AND BM.BILL_MONTH = MM.M_ID "
-					+ "                 AND bm.CUSTOMER_ID = ?) "
-					+ "     ORDER BY BILL_ID";
+			sql = "SELECT *  " +
+					"    FROM (SELECT bm.BILL_ID,  " +
+					"                 bm.CUSTOMER_ID,  " +				
+					"                 getBankBranch(BRANCH_ID) BANK_NAME,  " +
+					"                 TO_CHAR (bm.COLLECTION_DATE) COLLECTION_DATE,  " +
+					"                 MON || ', ' || BILL_YEAR DESCRIPTION,  " +
+					"                 BILLED_CONSUMPTION,  " +
+					"                 BILLED_AMOUNT,  " +
+					"                 bm.METER_RENT,  " +
+					"                 CMS_RENT,  " +
+					"                 SURCHARGE_AMOUNT,  " +
+					"                 bm.PAYABLE_AMOUNT,  " +
+					"                 COLLECTED_SURCHARGE,  " +
+					"                 COLLECTED_AMOUNT,  " +
+					"                 TO_CHAR (LAST_PAY_DATE_WO_SC, 'dd-mm-rrrr') DUE_DATE  " +
+					"            FROM bill_metered bm, " +
+					"                 MST_MONTH mm  " +
+					"           WHERE   BM.BILL_MONTH = MM.M_ID  " +
+					"                 AND bm.CUSTOMER_ID = ?)  " +
+					"     ORDER BY BILL_ID " ;
 
 			// "SELECT BILL_ID,TO_CHAR(COLLECTION_DATE) COLLECTION_DATE,MON||', '||BILL_YEAR DESCRIPTION,BILLED_CONSUMPTION,BILLED_AMOUNT,METER_RENT,CMS_RENT,SURCHARGE_AMOUNT,PAYABLE_AMOUNT,COLLECTED_SURCHARGE,"+
 			// "COLLECTED_AMOUNT,to_char(LAST_PAY_DATE_WO_SC,'dd-mm-rrrr') DUE_DATE FROM BILL_METERED BM,MST_MONTH mm where BM.BILL_MONTH=MM.M_ID AND CUSTOMER_ID=? order by BILL_ID";
@@ -186,11 +183,10 @@ public class LedgerService {
 
 				// System.out.print("\n ===>> New Balance : "+balance);
 				/*
-				 					    + Double.valueOf(ledger.get(i).getSurcharge() == null ? "0"
-								: ledger.get(i).getSurcharge())
-												        - Double.valueOf(ledger.get(i).getCredit_surcharge() == null ? "0"
-								: ledger.get(i).getCredit_surcharge());
-
+				 * + Double.valueOf(ledger.get(i).getSurcharge() == null ? "0" :
+				 * ledger.get(i).getSurcharge()) -
+				 * Double.valueOf(ledger.get(i).getCredit_surcharge() == null ?
+				 * "0" : ledger.get(i).getCredit_surcharge());
 				 */
 				ledger.get(i).setBalance_amount(balance);
 			}
@@ -216,7 +212,7 @@ public class LedgerService {
 		ArrayList<DepositLedgerDTO> ledger = new ArrayList<DepositLedgerDTO>();
 		Connection conn = ConnectionManager.getConnection();
 		String sql = "select DEPOSIT_ID,to_char(DEPOSIT_DATE,'dd-mm-rrrr') DEPOSIT_DATE,TOTAL_DEPOSIT,decode(DEPOSIT_PURPOSE,2,'Less',1,'Add') particular, "
-				+ "to_char(VALID_TO,'dd-mm-rrrr') VALID_TO,decode(DEPOSIT_TYPE,0,'CASH_BANK',1,'BANH GUARANTEE') deposit_type from mst_deposit "
+				+ "to_char(VALID_TO,'dd-mm-rrrr') VALID_TO,decode(DEPOSIT_TYPE,0,'CASH BANK',1,'BANK GUARANTEE') deposit_type from mst_deposit "
 				+ "where customer_id=? "
 				+ "and DEPOSIT_PURPOSE in (1,2) "
 				+ "order by DEPOSIT_DATE";

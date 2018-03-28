@@ -527,7 +527,7 @@ public class CollectionService {
 									  " COLLECTED_BILL_AMOUNT,COLLECTED_SURCHARGE_AMOUNT,TOTAL_COLLECTED_AMOUNT,REMARKS,COLLECED_BY,INSERTED_ON,SURCHARGE_PER_COLL) " +
 									  " Values(?,?,?,?,?,?,to_date(?,'dd-MM_YYYY'),?,?,?,?,?,sysdate,? )";
 		
-		String sql_update_metered="Update BILL_METERED Set Status=2,Collected_amount=nvl(collected_amount,0)+?,COLLECTION_DATE=to_date(?,'dd-MM_YYYY') Where Bill_Id=?";
+		String sql_update_metered="Update BILL_METERED Set Status=2,Collected_amount=nvl(collected_amount,0)+?,COLLECTION_DATE=to_date(?,'dd-MM_YYYY'),BRANCH_ID=?  Where Bill_Id=?";
 		
 		String sql_update_non_metered ="UPDATE BILL_NON_METERED "+
 					   "SET COLLECTED_BILLED_AMOUNT =nvl(COLLECTED_BILLED_AMOUNT,0)+?,ACTUAL_SURCHARGE=?,COLLECTED_SURCHARGE=nvl(COLLECTED_SURCHARGE,0)+?, ACTUAL_PAYABLE_AMOUNT=?,COLLECTED_PAYABLE_AMOUNT =nvl(COLLECTED_PAYABLE_AMOUNT,0)+?, "+
@@ -653,7 +653,8 @@ public class CollectionService {
 					stmt = conn.prepareStatement(sql_update_metered);
 					stmt.setDouble(1,collection.getCollected_amount());
 					stmt.setString(2, collection.getCollection_date());
-					stmt.setString(3,collection.getBill_id());
+					stmt.setString(3,collection.getBranch_id());
+					stmt.setString(4,collection.getBill_id());
 					stmt.executeUpdate();
 				}
 				else{

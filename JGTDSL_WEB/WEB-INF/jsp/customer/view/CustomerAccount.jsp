@@ -93,8 +93,8 @@ $("#connection_ledger_grid").jqGrid($.extend(true, {}, scrollPagerGridOptions, {
 	                width:50
             	}
         ],   	
-	height: 410,
-	width: 900,
+	height: 500,
+	//width: 900,
    	pager: '#connection_ledger_grid_pager',
 	caption: "Connection Ledger",	
     datatype: 'json'
@@ -176,8 +176,9 @@ $("#connection_ledger_grid").jqGrid($.extend(true, {}, scrollPagerGridOptions, {
 				search : true
 			}],
 	// datatype: 'json',
-	height: $("#wizard").height(),
-	width: $("#sw-basic-step-5").width(),
+	//height: $("#wizard").height(),
+	//width: $("#sw-basic-step-5").width(),
+	height:500,
    	pager: '#connection_ledger_grid_pager',
 	caption: "Connection Ledger",
 	sortname: 'effective_date,pid',

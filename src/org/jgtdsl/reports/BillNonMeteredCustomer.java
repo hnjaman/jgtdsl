@@ -115,8 +115,8 @@ public class BillNonMeteredCustomer extends BaseAction implements
 	public String downloadBill() throws Exception {
 
 		Font font1 = new Font(Font.FontFamily.HELVETICA, 10, Font.BOLD);
-		Font font2 = new Font(Font.FontFamily.HELVETICA, 8, Font.NORMAL);
-		Font font3 = new Font(Font.FontFamily.HELVETICA, 6, Font.NORMAL);	
+		Font font2 = new Font(Font.FontFamily.HELVETICA, 10, Font.NORMAL);
+		Font font3 = new Font(Font.FontFamily.HELVETICA, 8, Font.NORMAL);	
 
 		UserDTO loggedInUser = (UserDTO) session.get("user");
 		if ((area_id == null || area_id.equalsIgnoreCase(""))
@@ -164,7 +164,7 @@ public class BillNonMeteredCustomer extends BaseAction implements
 			mTable.addCell(pcell);
 
 			pcell = new PdfPCell(new Paragraph("(A COMPANY OF PETROBANGLA)",
-					ReportUtil.f8B));
+					ReportUtil.f10B));
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setBorder(Rectangle.NO_BORDER);
 			mTable.addCell(pcell);
@@ -177,7 +177,7 @@ public class BillNonMeteredCustomer extends BaseAction implements
 
 			Chunk chunk1 = new Chunk("Regional Distribution: ", font2);
 			Chunk chunk2 = new Chunk(String.valueOf(Area.values()[Integer
-					.valueOf(getArea_id()) - 1]), ReportUtil.f8B);
+					.valueOf(getArea_id()) - 1]), ReportUtil.f10B);
 			Paragraph p = new Paragraph();
 			p.add(chunk1);
 			p.add(chunk2);
@@ -197,113 +197,113 @@ public class BillNonMeteredCustomer extends BaseAction implements
 
 			PdfPTable cusTable = new PdfPTable(4);
 			cusTable.setWidthPercentage(90);
-			cusTable.setWidths(new int[] { 30, 100, 30, 30 });
+			cusTable.setWidths(new int[] { 40, 80, 40, 30 });
 			
 			
 
 			for (MBillDTO x : billList) {
 
-				pcell = new PdfPCell(new Paragraph(" ", ReportUtil.f8B));
+				pcell = new PdfPCell(new Paragraph(" ", ReportUtil.f10B));
 				pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				pcell.setColspan(2);
-				pcell.setPadding(10);
+				pcell.setPadding(20);
 				pcell.setBorder(Rectangle.NO_BORDER);
 				subhTable.addCell(pcell);
 
 				pcell = new PdfPCell(new Paragraph("Date: "
 						+ x.getBill_month_name() + ", " + x.getBill_year(),
-						ReportUtil.f8B));
+						ReportUtil.f10B));
 				pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				pcell.setBorder(Rectangle.NO_BORDER);
 				subhTable.addCell(pcell);
 
 				pcell = new PdfPCell(new Paragraph(
-						x.getCustomer_category_name(), ReportUtil.f8B));
+						x.getCustomer_category_name(), ReportUtil.f10B));
 				pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				pcell.setBorder(Rectangle.NO_BORDER);
 				subhTable.addCell(pcell);
 
 				// //////////////////////////////////
 
-				pcell = new PdfPCell(new Paragraph(" ", ReportUtil.f8));
+				pcell = new PdfPCell(new Paragraph(" ", ReportUtil.f10));
 				pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				pcell.setBorder(Rectangle.NO_BORDER);
 				pcell.setColspan(4);
-				pcell.setPadding(15);
+				pcell.setPadding(20);
 				cusTable.addCell(pcell);
 
-				pcell = new PdfPCell(new Paragraph("ID", ReportUtil.f8));
+				pcell = new PdfPCell(new Paragraph("ID", ReportUtil.f10));
 				pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				pcell.setPadding(5);
 				pcell.setBorder(Rectangle.NO_BORDER);
 				cusTable.addCell(pcell);
 
 				pcell = new PdfPCell(new Paragraph(x.getCustomer_id(),
-						ReportUtil.f8B));
+						ReportUtil.f10B));
 				pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				pcell.setBorder(Rectangle.NO_BORDER);
 				pcell.setPadding(5);
 				cusTable.addCell(pcell);
 
-				pcell = new PdfPCell(new Paragraph("Issue Date", ReportUtil.f8));
+				pcell = new PdfPCell(new Paragraph("Issue Date", ReportUtil.f10));
 				pcell.setHorizontalAlignment(Element.ALIGN_LEFT);			
 				pcell.setBorder(Rectangle.BOX);
 				cusTable.addCell(pcell);
 
 				pcell = new PdfPCell(new Paragraph(x.getIssue_date(),
-						ReportUtil.f8B));
+						ReportUtil.f10B));
 				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				pcell.setBorder(Rectangle.BOX);				
 				cusTable.addCell(pcell);
 
-				pcell = new PdfPCell(new Paragraph("NAME", ReportUtil.f8));
+				pcell = new PdfPCell(new Paragraph("NAME", ReportUtil.f10));
 				pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				pcell.setBorder(Rectangle.NO_BORDER);
 				pcell.setPadding(5);
 				cusTable.addCell(pcell);
 
 				pcell = new PdfPCell(new Paragraph(x.getCustomer_name(),
-						ReportUtil.f8B));
+						ReportUtil.f10B));
 				pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				pcell.setBorder(Rectangle.NO_BORDER);
 				pcell.setPadding(5);
 				cusTable.addCell(pcell);
 
 				pcell = new PdfPCell(new Paragraph("Last Date of Payment",
-						ReportUtil.f8));
+						ReportUtil.f10));
 				pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				pcell.setBorder(Rectangle.BOX);
 				cusTable.addCell(pcell);
 
 				pcell = new PdfPCell(new Paragraph(x.getLast_pay_date_w_sc(),
-						ReportUtil.f8B));
+						ReportUtil.f10B));
 				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				pcell.setBorder(Rectangle.BOX);				
 				cusTable.addCell(pcell);
 
 				pcell = new PdfPCell(new Paragraph("PROPITER NAME",
-						ReportUtil.f8));
+						ReportUtil.f10));
 				pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				pcell.setBorder(Rectangle.NO_BORDER);
 				pcell.setPadding(5);
 				cusTable.addCell(pcell);
 
 				pcell = new PdfPCell(new Paragraph(x.getProprietor_name(),
-						ReportUtil.f8B));
+						ReportUtil.f10B));
 				pcell.setColspan(3);
 				pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				pcell.setBorder(Rectangle.NO_BORDER);
 				pcell.setPadding(5);
 				cusTable.addCell(pcell);
 
-				pcell = new PdfPCell(new Paragraph("ADDRESS", ReportUtil.f8));
+				pcell = new PdfPCell(new Paragraph("ADDRESS", ReportUtil.f10));
 				pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				pcell.setBorder(Rectangle.NO_BORDER);
 				pcell.setPadding(5);
 				cusTable.addCell(pcell);
 
 				pcell = new PdfPCell(new Paragraph(x.getAddress(),
-						ReportUtil.f8B));
+						ReportUtil.f10B));
 				pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				pcell.setColspan(3);
 				pcell.setPadding(5);
@@ -313,33 +313,33 @@ public class BillNonMeteredCustomer extends BaseAction implements
 				applianceList = ms.getCustomerApplianceList(x.getCustomer_id());
 				
 				
-				pcell = new PdfPCell(new Paragraph(" ", ReportUtil.f8B));
+				pcell = new PdfPCell(new Paragraph(" ", ReportUtil.f10B));
 				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				pcell.setBorder(Rectangle.NO_BORDER);
-				pcell.setPadding(10);
+				pcell.setPadding(20);
 				pcell.setColspan(4);
 				ApplianceTable.addCell(pcell);
 
-				pcell = new PdfPCell(new Paragraph("Apliance Name", ReportUtil.f8B));
+				pcell = new PdfPCell(new Paragraph("Apliance Name", ReportUtil.f10B));
 				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				pcell.setBorder(Rectangle.BOX);
 				pcell.setPadding(5);
 				ApplianceTable.addCell(pcell);
 
 				pcell = new PdfPCell(new Paragraph("Apliance Quantity",
-						ReportUtil.f8B));
+						ReportUtil.f10B));
 				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				pcell.setBorder(Rectangle.BOX);
 				pcell.setPadding(5);
 				ApplianceTable.addCell(pcell);
 
-				pcell = new PdfPCell(new Paragraph("Apliance Rate", ReportUtil.f8B));
+				pcell = new PdfPCell(new Paragraph("Apliance Rate", ReportUtil.f10B));
 				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				pcell.setBorder(Rectangle.BOX);
 				pcell.setPadding(5);
 				ApplianceTable.addCell(pcell);
 
-				pcell = new PdfPCell(new Paragraph("Amount", ReportUtil.f8B));
+				pcell = new PdfPCell(new Paragraph("Amount", ReportUtil.f10B));
 				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				pcell.setBorder(Rectangle.BOX);
 				pcell.setPadding(5);
@@ -350,21 +350,21 @@ public class BillNonMeteredCustomer extends BaseAction implements
 				for (CustomerApplianceDTO a : applianceList) {
 
 					pcell = new PdfPCell(new Paragraph(a.getApplianc_name(),
-							ReportUtil.f8));
+							ReportUtil.f10));
 					pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 					pcell.setBorder(Rectangle.BOX);
 					pcell.setPadding(5);
 					ApplianceTable.addCell(pcell);
 
 					pcell = new PdfPCell(new Paragraph(a.getApplianc_qnt(),
-							ReportUtil.f8));
+							ReportUtil.f10));
 					pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 					pcell.setBorder(Rectangle.BOX);
 					pcell.setPadding(5);
 					ApplianceTable.addCell(pcell);
 
 					pcell = new PdfPCell(new Paragraph(a.getApplianc_rate(),
-							ReportUtil.f8));
+							ReportUtil.f10));
 					pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 					pcell.setBorder(Rectangle.BOX);
 					pcell.setPadding(5);
@@ -374,7 +374,7 @@ public class BillNonMeteredCustomer extends BaseAction implements
 					
 					if(i==1)
 					{
-					pcell = new PdfPCell(new Paragraph(x.getBilled_amount(),ReportUtil.f8));
+					pcell = new PdfPCell(new Paragraph(x.getBilled_amount(),ReportUtil.f10));
 					pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 					pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);					
 					pcell.setRowspan(applianceList.size());
@@ -386,7 +386,7 @@ public class BillNonMeteredCustomer extends BaseAction implements
 				}
 				
 				pcell = new PdfPCell(new Paragraph("Total Amount: ",
-						ReportUtil.f8B));
+						ReportUtil.f10B));
 				pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				pcell.setBorder(Rectangle.BOX);
 				pcell.setPadding(5);
@@ -394,20 +394,21 @@ public class BillNonMeteredCustomer extends BaseAction implements
 				ApplianceTable.addCell(pcell);
 
 				pcell = new PdfPCell(new Paragraph(
-						x.getBilled_amount() + ".00", ReportUtil.f8B));
+						x.getBilled_amount() + ".00", ReportUtil.f10B));
 				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				pcell.setBorder(Rectangle.BOX);	
 				pcell.setPadding(5);
 				ApplianceTable.addCell(pcell);
 
-				pcell = new PdfPCell(new Paragraph(" ", ReportUtil.f8B));
+				pcell = new PdfPCell(new Paragraph(" ", ReportUtil.f10B));
 				pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				pcell.setColspan(4);
+				pcell.setPadding(20);
 				pcell.setBorder(Rectangle.NO_BORDER);
 				ApplianceTable.addCell(pcell);
 
 				pcell = new PdfPCell(new Paragraph("IN WORD: "
-						+ x.getAmount_in_word(), ReportUtil.f8B));
+						+ x.getAmount_in_word(), ReportUtil.f10B));
 				pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				pcell.setBorder(Rectangle.NO_BORDER);
 				pcell.setPadding(5);
@@ -418,6 +419,8 @@ public class BillNonMeteredCustomer extends BaseAction implements
 
 			PdfPTable signTable = new PdfPTable(3);
 			signTable.setWidthPercentage(100);
+			signTable.setTotalWidth(document.right(document.rightMargin())
+				    - document.left(document.leftMargin()));
 
 			pcell = new PdfPCell(new Paragraph(" ", font3));
 			pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -452,7 +455,13 @@ public class BillNonMeteredCustomer extends BaseAction implements
 			document.add(subhTable);
 			document.add(cusTable);
 			document.add(ApplianceTable);
-			document.add(signTable);
+			//document.add(signTable);
+			
+			signTable.writeSelectedRows(0, -1,
+				    document.left(document.leftMargin()),
+				    signTable.getTotalHeight() + document.bottom(document.bottomMargin()), 
+				    writer.getDirectContent());
+			
 			document.close();
 			ReportUtil rptUtil = new ReportUtil();
 			rptUtil.downloadPdf(baos, getResponse(), fileName);

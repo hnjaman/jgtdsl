@@ -416,7 +416,7 @@ public class MonthlySalesStatement extends BaseAction {
 		String currnertType="";
 		try {
 		
-			String sql1="select MCC.CATEGORY_ID, CATEGORY_NAME" +
+			String sql1="select MCC.CATEGORY_ID, CATEGORY_NAME||' ( '||COUNT(SR.CUSTOMER_ID)||' )' CATEGORY_NAME" +
 						",MCC.CATEGORY_TYPE,"+
 						"sum(ACTUAL_EXCEPT_MINIMUM) ACTUAL_EXCEPT_MINIMUM,sum(ACTUAL_WITH_MINIMUM) ACTUAL_WITH_MINIMUM, "+
 						"sum(BILLING_UNIT) BILLING_UNIT, sum(DIFFERENCE) DIFFERENCE,sum(TOTAL_ACTUAL_CONSUMPTION) TOTAL_ACTUAL_CONSUMPTION,RATE ,"+
@@ -1044,6 +1044,8 @@ public class MonthlySalesStatement extends BaseAction {
 		BigDecimal totalBillunit=BigDecimal.ZERO;
 		BigDecimal totalDiff=BigDecimal.ZERO;
 		BigDecimal totalTotalCon=BigDecimal.ZERO;
+		int total_SB=0;
+		int total_DB=0;
 		BigDecimal totalValueOfActCon=BigDecimal.ZERO;
 		BigDecimal totalMinCharge=BigDecimal.ZERO;
 		BigDecimal totalHHV=BigDecimal.ZERO;
@@ -1053,13 +1055,22 @@ public class MonthlySalesStatement extends BaseAction {
 		
 		
 	
-		
+		PdfPTable datatable1 =null;
 	
+		if(customer_category.equals("01")|| customer_category.equals("09")){
+			
+			datatable1 = new PdfPTable(10);
+			datatable1.setWidthPercentage(100);
+			datatable1.setWidths(new float[] {15,15,50,15,15,30,40,30,30,40});	
+			
+		}else{
+			
+			datatable1 = new PdfPTable(8);
+			datatable1.setWidthPercentage(100);
+			datatable1.setWidths(new float[] {15,25,70,30,40,30,30,40});
+			
+		}
 		
-		PdfPTable datatable1 = new PdfPTable(8);
-		
-		datatable1.setWidthPercentage(100);
-		datatable1.setWidths(new float[] {15,25,70,30,40,30,30,40});
 		datatable1.setHeaderRows(3);
 		
 		
@@ -1078,7 +1089,18 @@ public class MonthlySalesStatement extends BaseAction {
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		datatable1.addCell(pcell);
 		
-		
+		if(customer_category.equals("01")|| customer_category.equals("09")){
+			
+			pcell=new PdfPCell(new Paragraph("SB",font3));
+			pcell.setRowspan(3);
+			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			datatable1.addCell(pcell);
+			
+			pcell=new PdfPCell(new Paragraph("DB",font3));
+			pcell.setRowspan(3);
+			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			datatable1.addCell(pcell);
+		}
 		
 		pcell=new PdfPCell(new Paragraph("Monthly Gas Consumption m3",font3));
 		//pcell.setColspan(5);
@@ -1198,8 +1220,11 @@ public class MonthlySalesStatement extends BaseAction {
 		try {
 		
 			String sql1="select MCC.CATEGORY_ID,decode(SR.IS_METER,1,substr(CATEGORY_NAME,1,length(CATEGORY_NAME)-7),0,substr(CATEGORY_NAME,1,length(CATEGORY_NAME)-7)||' (Non-Meter)') CATEGORY_NAME" +
-						",MCC.CATEGORY_TYPE,SR.IS_METER,FULL_NAME, SR.customer_id CODE,"+
-						" ACTUAL_EXCEPT_MINIMUM, ACTUAL_WITH_MINIMUM, "+
+						",MCC.CATEGORY_TYPE,SR.IS_METER,FULL_NAME, SR.customer_id CODE,";
+			if(customer_category.equals("01")|| customer_category.equals("09")){
+				   sql1+="getBurner(SR.customer_id) BURNER,";	
+			}
+			       sql1+=" ACTUAL_EXCEPT_MINIMUM, ACTUAL_WITH_MINIMUM, "+
 						" BILLING_UNIT,  DIFFERENCE,TOTAL_ACTUAL_CONSUMPTION,RATE ,"+
 						" VALUE_OF_ACTUAL_CONSUMPTION,MINIMUM_CHARGE, METER_RENT, "+
 						" SURCHARGE_AMOUNT, HHV_NHV_AMOUNT, TOTAL_AMOUNT "+
@@ -1229,7 +1254,20 @@ public class MonthlySalesStatement extends BaseAction {
     			pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
     			datatable1.addCell(pcell);
     			
-    			
+    			if(customer_category.equals("01")|| customer_category.equals("09")){
+    				String burner = rs1.getString("BURNER");
+    				String[] brnrArray = burner.split("#");
+    				total_SB+=Integer.parseInt(brnrArray[0]);
+    				total_DB+=Integer.parseInt(brnrArray[1]);
+    				
+    				pcell=new PdfPCell(new Paragraph(brnrArray[0],font2));
+        			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        			datatable1.addCell(pcell);
+        			
+        			pcell=new PdfPCell(new Paragraph(brnrArray[1],font2));
+        			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+        			datatable1.addCell(pcell);
+    			}
     			
 //    			totalActExpMin=totalActExpMin.add(rs1.getBigDecimal("ACTUAL_EXCEPT_MINIMUM")); // new solution	    			  		
 //    			pcell=new PdfPCell(new Paragraph(consumption_format.format(rs1.getBigDecimal("ACTUAL_EXCEPT_MINIMUM")),font2));//new solution
@@ -1311,11 +1349,29 @@ public class MonthlySalesStatement extends BaseAction {
 			{e.printStackTrace();}conn = null;}
 	        
 		
-    		
-    		pcell=new PdfPCell(new Paragraph("Total:",font3));
+		if(customer_category.equals("01")|| customer_category.equals("09")){
+			pcell=new PdfPCell(new Paragraph("Total:",font3));
 			pcell.setColspan(3);
 			pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 			datatable1.addCell(pcell);
+			
+			pcell=new PdfPCell(new Paragraph(String.valueOf(total_SB),ReportUtil.f9B));
+			pcell.setColspan(1);
+			pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			datatable1.addCell(pcell);
+			
+			pcell=new PdfPCell(new Paragraph(String.valueOf(total_DB),ReportUtil.f9B));
+			pcell.setColspan(1);
+			pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			datatable1.addCell(pcell);
+			
+		}else{
+			pcell=new PdfPCell(new Paragraph("Total:",font3));
+			pcell.setColspan(5);
+			pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+			datatable1.addCell(pcell);
+		}
+    		
 			
 //			pcell=new PdfPCell(new Paragraph(consumption_format.format(totalActExpMin),ReportUtil.f9B));
 //			pcell.setColspan(1);
