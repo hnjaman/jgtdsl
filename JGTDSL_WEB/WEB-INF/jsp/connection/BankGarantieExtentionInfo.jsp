@@ -59,7 +59,7 @@
 						    		
 						    	</td>
 						    	<td width="40%" align="right">
-						    		<button class="btn btn-beoro-3" type="button" id="btn_delete" onclick="$dialog.dialog('open');" disabled="disabled"><span class="splashy-gem_remove"/>
+						    		<button class="btn btn-beoro-3" type="button" id="btn_delete" onclick="$dialog.dialog('open');"><span class="splashy-gem_remove"/>
 						    		Delete</button>
 									<button class="btn btn-beoro-3" type="button" id="btn_close" onclick="callAction('blankPage.action')"><i class="splashy-folder_classic_remove"/>
 									Close</button>

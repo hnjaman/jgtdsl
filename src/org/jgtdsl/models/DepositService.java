@@ -1045,47 +1045,47 @@ public class DepositService {
 		
 		return expireChangeList;
 	}
-	public ResponseDTO deleteBankGarantieExpireChangeInfo(String pId)
+	public ResponseDTO deleteBankGarantieExpireChangeInfo(String depositId)
 	{		
 		ResponseDTO response=new ResponseDTO();
 		TransactionManager transactionManager=new TransactionManager();
 		Connection conn = transactionManager.getConnection();
 
-		String sqlBGChangeInfo="select PID,DEPOSIT_ID,OLD_EXPIRE_DATE from BG_EXPIRE_CHANGE_HISTORY Where PID=?";						  
-		String sqlCountBgChangInfo="select COUNT(PID) from BG_EXPIRE_CHANGE_HISTORY Where PID=?";
-		String sqlDeleteBgChangInfo="Delete BG_EXPIRE_CHANGE_HISTORY Where PID=?";
-		String sqlUpdate=" Update MST_DEPOSIT set VALID_TO=TO_DATE(?, 'DD-MM-YYYY') WHERE  DEPOSIT_ID=?";
+		//String sqlBGChangeInfo="select PID,DEPOSIT_ID,OLD_EXPIRE_DATE from BG_EXPIRE_CHANGE_HISTORY Where DEPOSIT_ID=?";						  
+		//String sqlCountBgChangInfo="select COUNT(DEPOSIT_ID) from BG_EXPIRE_CHANGE_HISTORY Where DEPOSIT_ID=?";
+		String sqlDeleteBgChangInfo="Delete BG_EXPIRE_CHANGE_HISTORY Where DEPOSIT_ID=?";
+		//String sqlUpdate=" Update MST_DEPOSIT set VALID_TO=TO_DATE(?, 'DD-MM-YYYY') WHERE  DEPOSIT_ID=?";
+		String mstDepositDelete=" Delete MST_DEPOSIT WHERE  DEPOSIT_ID=?";
 		
 		PreparedStatement stmt = null;
 			try
 			{
-				stmt = conn.prepareStatement(sqlBGChangeInfo);
-				stmt.setString(1,pId);				
-				ResultSet r =stmt.executeQuery();
-				String deposit_id="";
-				String old_expire_date="";
-				String old_rent="";
-				
-				if (r.next())
-				{
-					deposit_id=r.getString("DEPOSIT_ID");
-					old_expire_date=r.getString("OLD_EXPIRE_DATE");
-				}
+//				stmt = conn.prepareStatement(sqlBGChangeInfo);
+//				stmt.setString(1,depositId);				
+//				ResultSet r =stmt.executeQuery();
+//				String deposit_id="";
+//				String old_expire_date="";
+//				String old_rent="";
+//				
+//				if (r.next())
+//				{
+//					deposit_id=r.getString("DEPOSIT_ID");
+//					old_expire_date=r.getString("OLD_EXPIRE_DATE");
+//				}
 				
 			
 				stmt = conn.prepareStatement(sqlDeleteBgChangInfo);
-				stmt.setString(1,pId);
+				stmt.setString(1,depositId);
 				stmt.execute();
 				
 			
-				stmt = conn.prepareStatement(sqlUpdate);
-				stmt.setString(1,old_expire_date);
-				stmt.setString(2,pId);
+				stmt = conn.prepareStatement(mstDepositDelete);
+				stmt.setString(1,depositId);
 				stmt.execute();
 				
 				transactionManager.commit();
 				
-				response.setMessasge("Successfully Deleted Meter Rent Change Information.");
+				response.setMessasge("Successfully Deleted BG Information.");
 				response.setResponse(true);				
 			} 
 			

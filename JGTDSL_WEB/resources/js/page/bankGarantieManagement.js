@@ -219,11 +219,11 @@ $("#comm_customer_id").autocomplete($.extend(true, {}, acMCustomerOption,{
 
 var $dialog = $('<div id="dialog-confirm"></div>')
 .html("<p> "+
- 	"Are you sure you want to delete the Meter rent Change Information?"+
+ 	"Are you sure you want to delete the BG Information?"+
 	"<div id='del_holiday'></div> "+
    "</p>")
 .dialog({
-		title: 'Meter Rent Change Delete Confirmation',
+		title: 'BG Delete Confirmation',
 		resizable: false,
 		autoOpen: false,
 		height:150,
@@ -231,7 +231,8 @@ var $dialog = $('<div id="dialog-confirm"></div>')
 		modal: true,
 		buttons: {
 				"Delete": {text:"Delete","class":'btn btn-danger',click:function() {
-					deleteBankGarantieExpireChangeInfo();          
+					deleteBankGarantieExpireChangeInfo(); 
+					//$( this ).dialog( "close" );
 				}},
 				"Cancel": {text:"Cancel","class":'btn btn-beoro-3',click:function() {
 					$( this ).dialog( "close" );
@@ -239,21 +240,31 @@ var $dialog = $('<div id="dialog-confirm"></div>')
 		}
 	});
 function deleteBankGarantieExpireChangeInfo(){
+	//alert("");
 	$.ajax({
 	    url: 'deleteBankGarantieExpireChangeInfo.action',
 	    type: 'POST',
-	    data: {pId:$("#pid").val()},
+	    data: {deposit_id:$("#deposit_id").val()},
 	    cache: false,
 	    success: function (response) {
-	    	meterRentChangeForm(clearField);	    
-	    	$dialog.dialog("close");
-	    	reloadGrid("meterRent_change_history_this_grid");
-	    	reloadGrid("meterRent_change_history_all_grid");
+	    		meterRentChangeForm(clearField);	
+		    	$dialog.dialog("close");
+		    	$('#meterReconnForm').trigger("reset");
+		    	$('#bgCustomerInfo').trigger("reset");
+		    	//alert(response.message);
+		    	reloadGrid("customer_grid");
+		    	reloadGrid("meterRent_change_history_this_grid");
+		    	reloadGrid("meterRent_change_history_all_grid");
+		    	$.jgrid.info_dialog(response.dialogCaption,response.message,jqDialogClose,jqDialogParam);
+	    },
+	    error: function(response) {
+           // alert("error");
 	    	$.jgrid.info_dialog(response.dialogCaption,response.message,jqDialogClose,jqDialogParam);
-	    }
+        },
 	    
 	  });
 }
+
 Calendar.setup($.extend(true, {}, calOptions,{
     inputField : "entry_date",
     trigger    : "entry_date"}));
@@ -281,6 +292,10 @@ function reloadMeterRentChangeHistory(customer_id,deposit_id){
 	var postdata=getPostFilter("meterRent_change_history_this_grid",ruleArray);
     $("#meterRent_change_history_this_grid").jqGrid('setGridParam',{search: true,postData: postdata,page:1,datatype:'json'});    	
    	reloadGrid("meterRent_change_history_this_grid");
+}
+
+function reloadBankGarantieExpireInfoForCustomer(){
+	
 }
 
 
@@ -311,6 +326,7 @@ $('#days').keyup(function(e){
 
 function validateAndSaveGankGarantieExpireExtentionInfo(){
 	
+	
 	var validate=false;
 	
 	validate=validateGankGarantieExpireExtentionInfo();
@@ -320,14 +336,17 @@ function validateAndSaveGankGarantieExpireExtentionInfo(){
 }
 
 function validateGankGarantieExpireExtentionInfo(){
+	
 	var isValid=false;	
-    isValid=validateField("entry_date","old_expire_date","new_expire_date","remarks","deposit_id");		
+    isValid=validateField("entry_date","old_expire_date","new_expire_date","deposit_id");		
 	return isValid;
 }
 function saveGankGarantieExpireExtentionInfo(){
+	
 	bankGarantieExpireExtentionForm(enableField);
 	bankGarantieExpireExtentionForm(readOnlyField);
 	var deposit_id=$("#deposit_id").val();
+	
 	var formData = new FormData($('form')[0]);
 	 $.ajax({
 		    url: 'saveGankGarantieExpireExtentionInfo.action',
