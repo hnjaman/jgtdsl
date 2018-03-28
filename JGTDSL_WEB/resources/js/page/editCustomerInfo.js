@@ -107,7 +107,7 @@ function validateAndSaveCustomerInfo(){
 }
 
 function validateCustomerInfo(){
-	return validateField("full_name","father_name","mother_name","gender","mobile","division_id","division_id","upazila_id","road_house_no");	
+	return validateField("full_name","gender","mobile","division_id","district_id","upazila_id");	
 }
 
 function updateCustomerInfo(){
