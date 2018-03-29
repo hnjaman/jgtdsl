@@ -124,15 +124,12 @@
 var branch_sbox = { targetElm :"branch_id",zeroIndex : 'Select Branch',action_name:'fetchBranches.action',data_key:'bank_id'};
 var account_sbox = { targetElm :"account_id", zeroIndex : 'Select Account', action_name:'fetchAccounts.action',data_key:'branch_id'};
 
-//alert(deposit_id_temp);
-
 $("#deposit_type_id").val(deposit_id_temp);
 if($("#deposit_type_id").val()=="0")
 {
-	$("#fromDateSpan").hide();
-	$("#toDateSpan").hide();
+$("#fromDateSpan").hide();
+$("#toDateSpan").hide();
 }
-
 var bank=bank_temp;
 $("#bank_id").val(bank);
 fetchSelectBox(branch_sbox);
@@ -332,27 +329,24 @@ function resetDepositForm()
 }
 
 function controlDepositType(depositType){
-	
-	alert(depositType);
-	
- 	if(depositType=="0"){
- 		hideElement("fromDateSpan","toDateSpan","account_info_BG");
- 		showElement("account_info");	
- 	}else{
- 		showElement("fromDateSpan","toDateSpan","account_info");
- 		hideElement("account_info_BG");
+ if(depositType=="0"){
+ 	hideElement("fromDateSpan","toDateSpan","account_info_BG");
+ 	showElement("account_info");	}
+ else{
+ 	showElement("fromDateSpan","toDateSpan","account_info");
+ 	hideElement("account_info_BG");
  	}
  	
- 	if(depositType=="1"||depositType=="3"){
- 		hideElement("account_info");
- 		showElement("account_info_BG");
-	 	
-	 	if(depositType=="1"){
-	 		$("#account_info_BG").find('label').text('Remarks on BG');
-	 	}else if(depositType=="3"){
-	 		$("#account_info_BG").find('label').text('Remarks on FDR');
-	 	}
- 	}	
+ if(depositType=="1"||depositType=="3"){
+ 	hideElement("account_info");
+ 	showElement("account_info_BG");
+		 	if(depositType=="1"){
+		 	$("#account_info_BG").find('label').text('Remarks on BG');
+		 	}else if(depositType=="3"){
+		 	$("#account_info_BG").find('label').text('Remarks on FDR');
+		 	}
+ 	
+ }	
 }
 
 hideElement("account_info_BG");

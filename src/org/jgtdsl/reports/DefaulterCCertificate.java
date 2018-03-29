@@ -71,6 +71,7 @@ public class DefaulterCCertificate extends ActionSupport implements
 	private String calender_year;
 	private String officer_name;
 	private String officer_desig;
+	private String certification_id;
 	private ServletContext servlet;
 	String yearsb;
 	ArrayList<ClearnessDTO> CustomerList = new ArrayList<ClearnessDTO>();
@@ -143,11 +144,13 @@ public class DefaulterCCertificate extends ActionSupport implements
 				if (download_type.equals("individual_wise")) {
 					customerInfo = getCustomerInfo(customer_id, area, calender_year, collection_month);
 					customer = getCustomerInfo(customer_id);
+					certification_id=customer_id+collection_month+calender_year;
+					
 					applianceList = ms.getCustomerApplianceList(customer_id);
 				} else {
 
 					customerInfo = getCustomerInfo(CustomerList.get(i).getCustomerID(), area, calender_year, collection_month);
-					
+					certification_id=CustomerList.get(i).getCustomerID()+collection_month+calender_year;
 					customer = getCustomerInfo(CustomerList.get(i).getCustomerID());					
 					applianceList = ms.getCustomerApplianceList(CustomerList.get(i).getCustomerID());
 				}
@@ -166,6 +169,14 @@ public class DefaulterCCertificate extends ActionSupport implements
 					over = stamp.getOverContent(1);
 
 					over.beginText();
+					//certification ID
+					
+					over.setFontAndSize(bfb, 8);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							certification_id, 95, 660, 0);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							certification_id, 95, 354, 0);
+					
 					// Date
 
 					over.setFontAndSize(bfb, 8);
@@ -256,8 +267,7 @@ public class DefaulterCCertificate extends ActionSupport implements
 					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
 							officer_name + ", " + officer_desig, 457, 156, 0);
 
-					// /////////////////////////////////for
-					// defaulter//////////////////////////////////////////////////////////////////
+					///////////////////////////////////for defaulter//////////////////////////////////////
 
 				} else {
 					reader = new PdfReader(new FileInputStream(realPathD));
@@ -266,6 +276,15 @@ public class DefaulterCCertificate extends ActionSupport implements
 					over = stamp.getOverContent(1);
 
 					over.beginText();
+					
+					//certification ID
+					
+					over.setFontAndSize(bfb, 8);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							certification_id, 95, 660, 0);
+					over.showTextAligned(PdfContentByte.ALIGN_LEFT,
+							certification_id, 95, 357, 0);
+					
 					// date
 					DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyy");
 					Date date = new Date();
@@ -448,7 +467,7 @@ public class DefaulterCCertificate extends ActionSupport implements
 				over.endText();
 				stamp.close();
 				readers.add(new PdfReader(certificate.toByteArray()));
-				insertClarificationHistory(customerInfo.getCustomerID(), dateFormat.format(date), officer_name, (int) customerInfo.getDueAmount());
+				insertClarificationHistory(customer.getCustomer_id(), dateFormat.format(date), officer_name, (int) customerInfo.getDueAmount());
 			}
 			if (readers.size() > 0) {
 				PdfWriter writer = PdfWriter.getInstance(document, out);
@@ -578,6 +597,14 @@ public class DefaulterCCertificate extends ActionSupport implements
 
 	public ClearnessDTO getCto() {
 		return cto;
+	}
+
+	public String getCertification_id() {
+		return certification_id;
+	}
+
+	public void setCertification_id(String certification_id) {
+		this.certification_id = certification_id;
 	}
 
 	public void setCto(ClearnessDTO cto) {
@@ -760,6 +787,7 @@ public class DefaulterCCertificate extends ActionSupport implements
 
 			if (r.next()) {
 				customer = new CustomerDTO();
+				customer.setCustomer_id(r.getString("CUSTOMER_ID"));
 				customer.setAddress(r.getString("ADDRESS"));
 				customer.setCustomer_name(r.getString("FULL_NAME"));
 			}
@@ -841,6 +869,10 @@ public class DefaulterCCertificate extends ActionSupport implements
 	public void insertClarificationHistory(String cust_id, String issue_date,
 			String insert_by, int dues_status) {
 		ResponseDTO response = new ResponseDTO();
+		
+		if(collection_month.length()<2){
+			collection_month="0"+collection_month;
+		}
 		TransactionManager transactionManager = new TransactionManager();
 		Connection conn = transactionManager.getConnection();
 
@@ -851,10 +883,10 @@ public class DefaulterCCertificate extends ActionSupport implements
 		String sqlInsert = "INSERT INTO CLARIFICATION_HISTORY ( "
 				+ "   CUSTOMER_ID, CALENDER_YEAR, ISSUE_DATE,  "
 				+ "   STATUS, DUES_STATUS, INSERTED_ON,  "
-				+ "   INSERTED_BY)  "
-				+ "   VALUES ( ?,?,sysdate,?,?,sysdate,?)";
+				+ "   INSERTED_BY, CALENDER_MONTH, CERTIFICATION_ID )  "
+				+ "   VALUES ( ?,?,sysdate,?,?,sysdate,?,?,?)";
 
-		String checkIsAvailable = "Select count(customer_id) CUS_COUNT from CLARIFICATION_HISTORY where CALENDER_YEAR=? and customer_id=?";
+		String checkIsAvailable = "Select count(customer_id) CUS_COUNT from CLARIFICATION_HISTORY where CALENDER_MONTH=? and CALENDER_YEAR=? and customer_id=?";
 
 		PreparedStatement stmt = null;
 		ResultSet r = null;
@@ -862,8 +894,9 @@ public class DefaulterCCertificate extends ActionSupport implements
 
 		try {
 			stmt = conn.prepareStatement(checkIsAvailable);
-			stmt.setString(1, calender_year);
-			stmt.setString(2, cust_id);
+			stmt.setString(1, collection_month);
+			stmt.setString(2, calender_year);
+			stmt.setString(3, cust_id);
 			r = stmt.executeQuery();
 			if (r.next())
 				count = r.getInt("CUS_COUNT");
@@ -875,6 +908,8 @@ public class DefaulterCCertificate extends ActionSupport implements
 				stmt.setInt(3, 1); // / 1 means all generated(approved)
 				stmt.setInt(4, dues_status);
 				stmt.setString(5, insert_by);
+				stmt.setString(6, collection_month);
+				stmt.setString(7, certification_id);
 				stmt.execute();
 			}
 			transactionManager.commit();

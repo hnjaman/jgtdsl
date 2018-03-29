@@ -246,16 +246,17 @@ function deleteBankGarantieExpireChangeInfo(){
 	    type: 'POST',
 	    data: {deposit_id:$("#deposit_id").val()},
 	    cache: false,
-	    success: function (response) {
+	    success: function (data) {
+	    	alert(data.message);
 	    		meterRentChangeForm(clearField);	
 		    	$dialog.dialog("close");
 		    	$('#meterReconnForm').trigger("reset");
 		    	$('#bgCustomerInfo').trigger("reset");
-		    	//alert(response.message);
+		    	alert(response.message);
 		    	reloadGrid("customer_grid");
 		    	reloadGrid("meterRent_change_history_this_grid");
 		    	reloadGrid("meterRent_change_history_all_grid");
-		    	$.jgrid.info_dialog(response.dialogCaption,response.message,jqDialogClose,jqDialogParam);
+		    	//$.jgrid.info_dialog(response.dialogCaption,response.message,jqDialogClose,jqDialogParam);
 	    },
 	    error: function(response) {
            // alert("error");
@@ -338,7 +339,8 @@ function validateAndSaveGankGarantieExpireExtentionInfo(){
 function validateGankGarantieExpireExtentionInfo(){
 	
 	var isValid=false;	
-    isValid=validateField("entry_date","old_expire_date","new_expire_date","deposit_id");		
+    isValid=validateField("entry_date","old_expire_date","new_expire_date","deposit_id");	
+   // alert(isValid);
 	return isValid;
 }
 function saveGankGarantieExpireExtentionInfo(){
@@ -346,7 +348,7 @@ function saveGankGarantieExpireExtentionInfo(){
 	bankGarantieExpireExtentionForm(enableField);
 	bankGarantieExpireExtentionForm(readOnlyField);
 	var deposit_id=$("#deposit_id").val();
-	
+	//alert(deposit_id);
 	var formData = new FormData($('form')[0]);
 	 $.ajax({
 		    url: 'saveGankGarantieExpireExtentionInfo.action',

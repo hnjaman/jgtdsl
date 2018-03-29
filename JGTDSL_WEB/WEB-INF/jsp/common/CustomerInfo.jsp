@@ -1,5 +1,5 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
-<form id="bgCustomerInfo" name="bgCustomerInfo">
+<!--  <form id="bgCustomerInfo" name="bgCustomerInfo"> -->
 	<div class="span12" >
 		<div class="w-box">
 			<div class="w-box-header">
@@ -65,4 +65,4 @@
 			</div>
 		</div>
 	</div>
-</form>
+<!--  </form> -->
