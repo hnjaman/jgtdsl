@@ -246,17 +246,16 @@ function deleteBankGarantieExpireChangeInfo(){
 	    type: 'POST',
 	    data: {deposit_id:$("#deposit_id").val()},
 	    cache: false,
-	    success: function (data) {
-	    	alert(data.message);
+	    success: function (response) {
 	    		meterRentChangeForm(clearField);	
 		    	$dialog.dialog("close");
 		    	$('#meterReconnForm').trigger("reset");
-		    	$('#bgCustomerInfo').trigger("reset");
-		    	alert(response.message);
+		    	//$('#bgCustomerInfo').trigger("reset");
+		    	//alert(response.message);
 		    	reloadGrid("customer_grid");
 		    	reloadGrid("meterRent_change_history_this_grid");
 		    	reloadGrid("meterRent_change_history_all_grid");
-		    	//$.jgrid.info_dialog(response.dialogCaption,response.message,jqDialogClose,jqDialogParam);
+		    	$.jgrid.info_dialog(response.dialogCaption,response.message,jqDialogClose,jqDialogParam);
 	    },
 	    error: function(response) {
            // alert("error");
