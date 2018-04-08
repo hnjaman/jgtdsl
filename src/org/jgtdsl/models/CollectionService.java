@@ -651,7 +651,7 @@ public class CollectionService {
 				/*~~~~~~ Update Collection Information [Start] ~~~~~~~~*/				
 				if(isMeteredStatus.equalsIgnoreCase("1")){
 					stmt = conn.prepareStatement(sql_update_metered);
-					stmt.setDouble(1,collection.getCollected_amount());
+					stmt.setDouble(1,collection.getCollected_amount()+ collection.getTax_amount());
 					stmt.setString(2, collection.getCollection_date());
 					stmt.setString(3,collection.getBranch_id());
 					stmt.setString(4,collection.getBill_id());

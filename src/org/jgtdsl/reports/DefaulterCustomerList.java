@@ -115,14 +115,14 @@ public class DefaulterCustomerList extends BaseAction {
 			mTable.addCell(pcell);
 
 			pcell = new PdfPCell(new Paragraph("(A company of PetroBangla)",
-					ReportUtil.f8B));
+					ReportUtil.f10B));
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setBorder(0);
 			mTable.addCell(pcell);
 
-			Chunk chunk1 = new Chunk("Regional Office :", ReportUtil.f8B);
+			Chunk chunk1 = new Chunk("Regional Office :", ReportUtil.f10B);
 			Chunk chunk2 = new Chunk(String.valueOf(Area.values()[Integer
-					.valueOf(area) - 1]), ReportUtil.f8B);
+					.valueOf(area) - 1]), ReportUtil.f10B);
 			Paragraph p = new Paragraph();
 			p.add(chunk1);
 			p.add(chunk2);
@@ -144,7 +144,7 @@ public class DefaulterCustomerList extends BaseAction {
 			headLinetable.setWidthPercentage(100);
 			headLinetable.setWidths(new float[] { 30, 50, 30 });
 
-			pcell = new PdfPCell(new Paragraph("", ReportUtil.f9B));
+			pcell = new PdfPCell(new Paragraph("", ReportUtil.f10B));
 			pcell.setMinimumHeight(18f);
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -159,14 +159,14 @@ public class DefaulterCustomerList extends BaseAction {
 			pcell.setBorderColor(BaseColor.WHITE);
 			headLinetable.addCell(pcell);
 
-			pcell = new PdfPCell(new Paragraph("", ReportUtil.f9B));
+			pcell = new PdfPCell(new Paragraph("", ReportUtil.f10B));
 			pcell.setMinimumHeight(18f);
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			pcell.setBorderColor(BaseColor.WHITE);
 			headLinetable.addCell(pcell);
 
-			pcell = new PdfPCell(new Paragraph("", ReportUtil.f9B));
+			pcell = new PdfPCell(new Paragraph("", ReportUtil.f10B));
 			pcell.setMinimumHeight(18f);
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -182,7 +182,7 @@ public class DefaulterCustomerList extends BaseAction {
 			pcell.setBorderColor(BaseColor.WHITE);
 			headLinetable.addCell(pcell);
 
-			pcell = new PdfPCell(new Paragraph("", ReportUtil.f9B));
+			pcell = new PdfPCell(new Paragraph("", ReportUtil.f10B));
 			pcell.setMinimumHeight(18f);
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -202,7 +202,7 @@ public class DefaulterCustomerList extends BaseAction {
 				symbol = "less than equal to";
 			}
 
-			pcell = new PdfPCell(new Paragraph("", ReportUtil.f9B));
+			pcell = new PdfPCell(new Paragraph("", ReportUtil.f10B));
 			pcell.setMinimumHeight(18f);
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -217,7 +217,7 @@ public class DefaulterCustomerList extends BaseAction {
 			pcell.setBorderColor(BaseColor.WHITE);
 			headLinetable.addCell(pcell);
 
-			pcell = new PdfPCell(new Paragraph("", ReportUtil.f9B));
+			pcell = new PdfPCell(new Paragraph("", ReportUtil.f10B));
 			pcell.setMinimumHeight(18f);
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -264,7 +264,7 @@ public class DefaulterCustomerList extends BaseAction {
 										new Paragraph(
 												"Total Records:"
 														+ String.valueOf(totalRecordsPerCategory),
-												ReportUtil.f9B));
+												ReportUtil.f10B));
 								pcell.setMinimumHeight(18f);
 								pcell.setColspan(2);
 								pcell.setBorder(0);
@@ -273,7 +273,7 @@ public class DefaulterCustomerList extends BaseAction {
 								ptable.addCell(pcell);
 
 								pcell = new PdfPCell(new Paragraph("",
-										ReportUtil.f9B));
+										ReportUtil.f10B));
 								pcell.setMinimumHeight(18f);
 								pcell.setColspan(2 + space);
 								pcell.setBorder(0);
@@ -283,7 +283,7 @@ public class DefaulterCustomerList extends BaseAction {
 
 								pcell = new PdfPCell(new Paragraph(
 										taka_format.format(subTotal_amount),
-										ReportUtil.f9B));
+										ReportUtil.f10B));
 								pcell.setMinimumHeight(18f);
 								pcell.setColspan(1);
 								pcell.setBorder(0);
@@ -293,7 +293,7 @@ public class DefaulterCustomerList extends BaseAction {
 
 								pcell = new PdfPCell(new Paragraph(
 										String.valueOf(subTotal_month),
-										ReportUtil.f9B));
+										ReportUtil.f10B));
 								pcell.setMinimumHeight(18f);
 								pcell.setColspan(1);
 								pcell.setBorder(0);
@@ -302,7 +302,7 @@ public class DefaulterCustomerList extends BaseAction {
 								ptable.addCell(pcell);
 
 								// pcell=new PdfPCell(new
-								// Paragraph("",ReportUtil.f9B));
+								// Paragraph("",ReportUtil.f10B));
 								// pcell.setMinimumHeight(18f);
 								// pcell.setColspan(1);
 								// pcell.setBorder(0);
@@ -355,7 +355,7 @@ public class DefaulterCustomerList extends BaseAction {
 						pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 						ptable.addCell(pcell);
 
-						pcell = new PdfPCell(new Paragraph("", ReportUtil.f9B));
+						pcell = new PdfPCell(new Paragraph("", ReportUtil.f10B));
 						pcell.setMinimumHeight(18f);
 						pcell.setColspan(6);
 						pcell.setBorder(0);
@@ -364,7 +364,7 @@ public class DefaulterCustomerList extends BaseAction {
 						ptable.addCell(pcell);
 
 						pcell = new PdfPCell(new Paragraph("Serial No.",
-								ReportUtil.f8));
+								ReportUtil.f10));
 						pcell.setMinimumHeight(18f);
 						pcell.setRowspan(2);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -372,7 +372,7 @@ public class DefaulterCustomerList extends BaseAction {
 						ptable.addCell(pcell);
 
 						pcell = new PdfPCell(new Paragraph("Customer Code",
-								ReportUtil.f9B));
+								ReportUtil.f10B));
 						pcell.setMinimumHeight(18f);
 						pcell.setRowspan(2);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -380,7 +380,7 @@ public class DefaulterCustomerList extends BaseAction {
 						ptable.addCell(pcell);
 
 						pcell = new PdfPCell(new Paragraph(
-								"Customer Name & Address", ReportUtil.f9B));
+								"Customer Name & Address", ReportUtil.f10B));
 						pcell.setMinimumHeight(18f);
 						pcell.setRowspan(2);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -389,7 +389,7 @@ public class DefaulterCustomerList extends BaseAction {
 
 						if (customer_type.equals("metered")) {
 							pcell = new PdfPCell(new Paragraph(
-									"LOAD (M3/Month)", ReportUtil.f9B));
+									"LOAD (M3/Month)", ReportUtil.f10B));
 							pcell.setMinimumHeight(18f);
 							pcell.setColspan(2);
 							pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -397,7 +397,7 @@ public class DefaulterCustomerList extends BaseAction {
 							ptable.addCell(pcell);
 						}else{
 							pcell = new PdfPCell(new Paragraph(
-									"Burner", ReportUtil.f9B));
+									"Burner", ReportUtil.f10B));
 							pcell.setMinimumHeight(18f);
 							pcell.setColspan(2);
 							pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -406,7 +406,7 @@ public class DefaulterCustomerList extends BaseAction {
 						}
 
 						pcell = new PdfPCell(new Paragraph("Dues Months",
-								ReportUtil.f9B));
+								ReportUtil.f10B));
 						pcell.setMinimumHeight(18f);
 						pcell.setRowspan(2);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -414,7 +414,7 @@ public class DefaulterCustomerList extends BaseAction {
 						ptable.addCell(pcell);
 
 						// pcell=new PdfPCell(new
-						// Paragraph("Total Month",ReportUtil.f9B));
+						// Paragraph("Total Month",ReportUtil.f10B));
 						// pcell.setMinimumHeight(18f);
 						// pcell.setRowspan(2);
 						// pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -422,7 +422,7 @@ public class DefaulterCustomerList extends BaseAction {
 						// ptable.addCell(pcell);
 
 						pcell = new PdfPCell(new Paragraph("Total Due Amount",
-								ReportUtil.f9B));
+								ReportUtil.f10B));
 						pcell.setMinimumHeight(18f);
 						pcell.setRowspan(2);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -430,7 +430,7 @@ public class DefaulterCustomerList extends BaseAction {
 						ptable.addCell(pcell);
 
 						pcell = new PdfPCell(new Paragraph("Remarks",
-								ReportUtil.f9B));
+								ReportUtil.f10B));
 						pcell.setMinimumHeight(18f);
 						pcell.setRowspan(2);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -439,28 +439,28 @@ public class DefaulterCustomerList extends BaseAction {
 
 						if (customer_type.equals("metered")) {
 							pcell = new PdfPCell(new Paragraph("Max",
-									ReportUtil.f9B));
+									ReportUtil.f10B));
 							pcell.setMinimumHeight(18f);
 							pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 							pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 							ptable.addCell(pcell);
 
 							pcell = new PdfPCell(new Paragraph("Min",
-									ReportUtil.f9B));
+									ReportUtil.f10B));
 							pcell.setMinimumHeight(18f);
 							pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 							pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 							ptable.addCell(pcell);
 						}else{
 							pcell = new PdfPCell(new Paragraph("Single",
-									ReportUtil.f9B));
+									ReportUtil.f10B));
 							pcell.setMinimumHeight(18f);
 							pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 							pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 							ptable.addCell(pcell);
 
 							pcell = new PdfPCell(new Paragraph("Double",
-									ReportUtil.f9B));
+									ReportUtil.f10B));
 							pcell.setMinimumHeight(18f);
 							pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 							pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -480,7 +480,7 @@ public class DefaulterCustomerList extends BaseAction {
 										new Paragraph(
 												"Total Records:"
 														+ String.valueOf(totalRecordsPerCategory),
-												ReportUtil.f9B));
+												ReportUtil.f10B));
 								pcell.setMinimumHeight(18f);
 								pcell.setColspan(2);
 								pcell.setBorder(0);
@@ -489,7 +489,7 @@ public class DefaulterCustomerList extends BaseAction {
 								ptable.addCell(pcell);
 
 								pcell = new PdfPCell(new Paragraph("",
-										ReportUtil.f9B));
+										ReportUtil.f10B));
 								pcell.setMinimumHeight(18f);
 								pcell.setColspan(2 + space);
 								pcell.setBorder(0);
@@ -499,7 +499,7 @@ public class DefaulterCustomerList extends BaseAction {
 
 								pcell = new PdfPCell(new Paragraph(
 										taka_format.format(subTotal_amount),
-										ReportUtil.f9B));
+										ReportUtil.f10B));
 								pcell.setMinimumHeight(18f);
 								pcell.setColspan(1);
 								pcell.setBorder(0);
@@ -509,7 +509,7 @@ public class DefaulterCustomerList extends BaseAction {
 
 								pcell = new PdfPCell(new Paragraph(
 										String.valueOf(subTotal_month),
-										ReportUtil.f9B));
+										ReportUtil.f10B));
 								pcell.setMinimumHeight(18f);
 								pcell.setColspan(1);
 								pcell.setBorder(0);
@@ -518,7 +518,7 @@ public class DefaulterCustomerList extends BaseAction {
 								ptable.addCell(pcell);
 
 								// pcell=new PdfPCell(new
-								// Paragraph("",ReportUtil.f9B));
+								// Paragraph("",ReportUtil.f10B));
 								// pcell.setMinimumHeight(18f);
 								// pcell.setColspan(1);
 								// pcell.setBorder(0);
@@ -571,7 +571,7 @@ public class DefaulterCustomerList extends BaseAction {
 						pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 						ptable.addCell(pcell);
 
-						pcell = new PdfPCell(new Paragraph("", ReportUtil.f9B));
+						pcell = new PdfPCell(new Paragraph("", ReportUtil.f10B));
 						pcell.setMinimumHeight(18f);
 						pcell.setColspan(6);
 						pcell.setBorder(0);
@@ -580,7 +580,7 @@ public class DefaulterCustomerList extends BaseAction {
 						ptable.addCell(pcell);
 
 						pcell = new PdfPCell(new Paragraph("Serial No.",
-								ReportUtil.f8));
+								ReportUtil.f10));
 						pcell.setMinimumHeight(18f);
 						pcell.setRowspan(2);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -588,7 +588,7 @@ public class DefaulterCustomerList extends BaseAction {
 						ptable.addCell(pcell);
 
 						pcell = new PdfPCell(new Paragraph("Customer Code",
-								ReportUtil.f9B));
+								ReportUtil.f10B));
 						pcell.setMinimumHeight(18f);
 						pcell.setRowspan(2);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -596,7 +596,7 @@ public class DefaulterCustomerList extends BaseAction {
 						ptable.addCell(pcell);
 
 						pcell = new PdfPCell(new Paragraph(
-								"Customer Name & Address", ReportUtil.f9B));
+								"Customer Name & Address", ReportUtil.f10B));
 						pcell.setMinimumHeight(18f);
 						pcell.setRowspan(2);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -605,7 +605,7 @@ public class DefaulterCustomerList extends BaseAction {
 
 						if (customer_type.equals("metered")) {
 							pcell = new PdfPCell(new Paragraph(
-									"LOAD (M3/Month)", ReportUtil.f9B));
+									"LOAD (M3/Month)", ReportUtil.f10B));
 							pcell.setMinimumHeight(18f);
 							pcell.setColspan(2);
 							pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -613,7 +613,7 @@ public class DefaulterCustomerList extends BaseAction {
 							ptable.addCell(pcell);
 						}else{
 							pcell = new PdfPCell(new Paragraph(
-									"Burner", ReportUtil.f9B));
+									"Burner", ReportUtil.f10B));
 							pcell.setMinimumHeight(18f);
 							pcell.setColspan(2);
 							pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -622,7 +622,7 @@ public class DefaulterCustomerList extends BaseAction {
 						}
 
 						pcell = new PdfPCell(new Paragraph("Dues Months",
-								ReportUtil.f9B));
+								ReportUtil.f10B));
 						pcell.setMinimumHeight(18f);
 						pcell.setRowspan(2);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -630,7 +630,7 @@ public class DefaulterCustomerList extends BaseAction {
 						ptable.addCell(pcell);
 
 						// pcell=new PdfPCell(new
-						// Paragraph("Total Month",ReportUtil.f9B));
+						// Paragraph("Total Month",ReportUtil.f10B));
 						// pcell.setMinimumHeight(18f);
 						// pcell.setRowspan(2);
 						// pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -638,7 +638,7 @@ public class DefaulterCustomerList extends BaseAction {
 						// ptable.addCell(pcell);
 
 						pcell = new PdfPCell(new Paragraph("Total Due Amount",
-								ReportUtil.f9B));
+								ReportUtil.f10B));
 						pcell.setMinimumHeight(18f);
 						pcell.setRowspan(2);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -646,7 +646,7 @@ public class DefaulterCustomerList extends BaseAction {
 						ptable.addCell(pcell);
 
 						pcell = new PdfPCell(new Paragraph("Remarks",
-								ReportUtil.f9B));
+								ReportUtil.f10B));
 						pcell.setMinimumHeight(18f);
 						pcell.setRowspan(2);
 						pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -655,28 +655,28 @@ public class DefaulterCustomerList extends BaseAction {
 
 						if (customer_type.equals("metered")) {
 							pcell = new PdfPCell(new Paragraph("Max",
-									ReportUtil.f9B));
+									ReportUtil.f10B));
 							pcell.setMinimumHeight(18f);
 							pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 							pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 							ptable.addCell(pcell);
 
 							pcell = new PdfPCell(new Paragraph("Min",
-									ReportUtil.f9B));
+									ReportUtil.f10B));
 							pcell.setMinimumHeight(18f);
 							pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 							pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 							ptable.addCell(pcell);
 						}else{
 							pcell = new PdfPCell(new Paragraph("Single",
-									ReportUtil.f9B));
+									ReportUtil.f10B));
 							pcell.setMinimumHeight(18f);
 							pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 							pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 							ptable.addCell(pcell);
 
 							pcell = new PdfPCell(new Paragraph("Double",
-									ReportUtil.f9B));
+									ReportUtil.f10B));
 							pcell.setMinimumHeight(18f);
 							pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 							pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -686,14 +686,14 @@ public class DefaulterCustomerList extends BaseAction {
 				}
 
 				pcell = new PdfPCell(new Paragraph(String.valueOf(serial + 1),
-						ReportUtil.f8));
+						ReportUtil.f10));
 				pcell.setMinimumHeight(16f);
 				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				ptable.addCell(pcell);
 
 				pcell = new PdfPCell(new Paragraph(
-						defaulterDto.getCustomer_id(), ReportUtil.f8));
+						defaulterDto.getCustomer_id(), ReportUtil.f10));
 				pcell.setMinimumHeight(16f);
 				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -702,7 +702,7 @@ public class DefaulterCustomerList extends BaseAction {
 				String name_address = "" + defaulterDto.getFull_name() + "\n"
 						+ defaulterDto.getAddress();
 
-				pcell = new PdfPCell(new Paragraph(name_address, ReportUtil.f8));
+				pcell = new PdfPCell(new Paragraph(name_address, ReportUtil.f10));
 				pcell.setMinimumHeight(16f);
 				pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -711,7 +711,7 @@ public class DefaulterCustomerList extends BaseAction {
 				if (customer_type.equals("metered")) {
 					pcell = new PdfPCell(new Paragraph(
 							taka_format.format(defaulterDto.getMaxLoad()),
-							ReportUtil.f8));
+							ReportUtil.f10));
 					pcell.setMinimumHeight(16f);
 					pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 					pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -719,19 +719,19 @@ public class DefaulterCustomerList extends BaseAction {
 
 					pcell = new PdfPCell(new Paragraph(
 							taka_format.format(defaulterDto.getMinLoad()),
-							ReportUtil.f8));
+							ReportUtil.f10));
 					pcell.setMinimumHeight(16f);
 					pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 					pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 					ptable.addCell(pcell);
 				}else{
-					pcell = new PdfPCell(new Paragraph(String.valueOf(defaulterDto.getSingle_burner()),ReportUtil.f8));
+					pcell = new PdfPCell(new Paragraph(String.valueOf(defaulterDto.getSingle_burner()),ReportUtil.f10));
 					pcell.setMinimumHeight(16f);
 					pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 					pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 					ptable.addCell(pcell);
 
-					pcell = new PdfPCell(new Paragraph(String.valueOf(defaulterDto.getDouble_burner()),ReportUtil.f8));
+					pcell = new PdfPCell(new Paragraph(String.valueOf(defaulterDto.getDouble_burner()),ReportUtil.f10));
 					pcell.setMinimumHeight(16f);
 					pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 					pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -739,7 +739,7 @@ public class DefaulterCustomerList extends BaseAction {
 				}
 				
 				pcell = new PdfPCell(new Paragraph(defaulterDto.getDue_month(),
-						ReportUtil.f8));
+						ReportUtil.f10));
 				pcell.setMinimumHeight(16f);
 				pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -755,7 +755,7 @@ public class DefaulterCustomerList extends BaseAction {
 
 				pcell = new PdfPCell(new Paragraph(
 						taka_format.format(defaulterDto.getAmount()),
-						ReportUtil.f8B));
+						ReportUtil.f10B));
 				pcell.setMinimumHeight(16f);
 				pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -768,9 +768,9 @@ public class DefaulterCustomerList extends BaseAction {
 				pcell = new PdfPCell(new Paragraph(st_status
 						+ ",\nTotal- "
 						+ String.valueOf(defaulterDto.getTotal_month()
-								+ " Months"), ReportUtil.f8));
+								+ " Months"), ReportUtil.f10));
 				// pcell = new PdfPCell(new
-				// Paragraph(String.valueOf(defaulterDto.getTotal_month()),ReportUtil.f8B));
+				// Paragraph(String.valueOf(defaulterDto.getTotal_month()),ReportUtil.f10B));
 				pcell.setMinimumHeight(16f);
 				pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
@@ -784,7 +784,7 @@ public class DefaulterCustomerList extends BaseAction {
 			}
 			/* [[[[[[[[[Start--->For Last row]]]]]]]]] */
 			pcell = new PdfPCell(new Paragraph("Total Records:"
-					+ String.valueOf(totalRecordsPerCategory), ReportUtil.f9B));
+					+ String.valueOf(totalRecordsPerCategory), ReportUtil.f10B));
 			pcell.setMinimumHeight(18f);
 			pcell.setColspan(2);
 			pcell.setBorder(0);
@@ -792,7 +792,7 @@ public class DefaulterCustomerList extends BaseAction {
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ptable.addCell(pcell);
 
-			pcell = new PdfPCell(new Paragraph("", ReportUtil.f9B));
+			pcell = new PdfPCell(new Paragraph("", ReportUtil.f10B));
 			pcell.setMinimumHeight(18f);
 			pcell.setColspan(2 + space);
 			pcell.setBorder(0);
@@ -801,7 +801,7 @@ public class DefaulterCustomerList extends BaseAction {
 			ptable.addCell(pcell);
 
 			pcell = new PdfPCell(new Paragraph(
-					taka_format.format(subTotal_amount), ReportUtil.f9B));
+					taka_format.format(subTotal_amount), ReportUtil.f10B));
 			pcell.setMinimumHeight(18f);
 			pcell.setColspan(1);
 			pcell.setBorder(0);
@@ -810,7 +810,7 @@ public class DefaulterCustomerList extends BaseAction {
 			ptable.addCell(pcell);
 
 			pcell = new PdfPCell(new Paragraph(String.valueOf(subTotal_month),
-					ReportUtil.f9B));
+					ReportUtil.f10B));
 			pcell.setMinimumHeight(18f);
 			pcell.setColspan(1);
 			pcell.setBorder(0);
@@ -818,7 +818,7 @@ public class DefaulterCustomerList extends BaseAction {
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ptable.addCell(pcell);
 
-			// pcell=new PdfPCell(new Paragraph("",ReportUtil.f9B));
+			// pcell=new PdfPCell(new Paragraph("",ReportUtil.f10B));
 			// pcell.setMinimumHeight(18f);
 			// pcell.setColspan(1);
 			// pcell.setBorder(0);
@@ -831,7 +831,7 @@ public class DefaulterCustomerList extends BaseAction {
 
 			// // Grand total starts here
 			pcell = new PdfPCell(new Paragraph("Grand Total: "
-					+ String.valueOf(grandTotalCustomer), ReportUtil.f9B));
+					+ String.valueOf(grandTotalCustomer), ReportUtil.f10B));
 			pcell.setMinimumHeight(18f);
 			pcell.setColspan(3);
 			pcell.setBorder(0);
@@ -839,7 +839,7 @@ public class DefaulterCustomerList extends BaseAction {
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			ptable.addCell(pcell);
 
-			pcell = new PdfPCell(new Paragraph("", ReportUtil.f9B));
+			pcell = new PdfPCell(new Paragraph("", ReportUtil.f10B));
 			pcell.setMinimumHeight(18f);
 			pcell.setColspan(1 + space);
 			pcell.setBorder(0);
@@ -848,7 +848,7 @@ public class DefaulterCustomerList extends BaseAction {
 			ptable.addCell(pcell);
 
 			pcell = new PdfPCell(new Paragraph(
-					taka_format.format(grandTotal_amount), ReportUtil.f9B));
+					taka_format.format(grandTotal_amount), ReportUtil.f10B));
 			pcell.setMinimumHeight(18f);
 			pcell.setColspan(1);
 			pcell.setBorder(0);
@@ -857,7 +857,7 @@ public class DefaulterCustomerList extends BaseAction {
 			ptable.addCell(pcell);
 
 			pcell = new PdfPCell(new Paragraph(
-					String.valueOf(grandTotal_month), ReportUtil.f9B));
+					String.valueOf(grandTotal_month), ReportUtil.f10B));
 			pcell.setMinimumHeight(18f);
 			pcell.setColspan(1);
 			pcell.setBorder(0);

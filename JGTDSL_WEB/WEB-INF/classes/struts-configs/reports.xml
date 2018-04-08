@@ -236,6 +236,20 @@
 	  </result> 
 	</action>
 	
+	<action name="clearnessCertificateInfoPrePrinted"  class="org.jgtdsl.reports.DefaulterCertificatePrePrinted" method="clearnessCertificateInfoPrePrinted">
+	  <result type="stream">
+	    <param name="contentType">application/pdf</param>
+	    <param name="inputName">inputStream</param>
+	  </result> 
+	</action>
+	
+	<action name="clearnessUnderCertificateInfo"  class="org.jgtdsl.reports.DefaulterCertificatePrePrinted" method="clearnessUnderCertificateInfo">
+	  <result type="stream">
+	    <param name="contentType">application/pdf</param>
+	    <param name="inputName">inputStream</param>
+	  </result> 
+	</action>
+	
 	<action name="reconciliationReport"  class="org.jgtdsl.reports.ReconciliationReport">
 	  <result type="stream">
 	    <param name="contentType">application/pdf</param>

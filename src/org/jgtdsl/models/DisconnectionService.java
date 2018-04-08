@@ -48,7 +48,7 @@ public class DisconnectionService {
 
 		int totalDayDiff = Utils.getDateDiffInDays(
 				reading.getPrev_reading_date(), reading.getCurr_reading_date());
-		totalDayDiff = totalDayDiff + 1;
+		//totalDayDiff = totalDayDiff + 1;
 		float propMinLoad = Utils.getProportionalLoad(reading.getMin_load(),
 				totalDayDiff, reading.getBilling_month(),
 				reading.getBilling_year());

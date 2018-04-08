@@ -34,8 +34,11 @@ import com.itextpdf.text.Image;
 import com.itextpdf.text.PageSize;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.ColumnText;
+import com.itextpdf.text.pdf.PdfContentByte;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfWriter;
 
 public class LedgerPrinting extends BaseAction implements ServletContextAware {
@@ -81,7 +84,7 @@ public class LedgerPrinting extends BaseAction implements ServletContextAware {
 		try {
 			ReportFormat Event = new ReportFormat(getServletContext());
 			PdfWriter writer = PdfWriter.getInstance(document, baos);
-			// writer.setPageEvent(Event);
+			writer.setPageEvent(Event);
 			PdfPCell pcell = null;
 
 			document.open();
@@ -106,6 +109,7 @@ public class LedgerPrinting extends BaseAction implements ServletContextAware {
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setBorder(Rectangle.NO_BORDER);
 			mTable.addCell(pcell);
+			
 
 			pcell = new PdfPCell(new Paragraph("(A COMPANY OF PETROBANGLA)",
 					ReportUtil.f8B));
@@ -129,6 +133,8 @@ public class LedgerPrinting extends BaseAction implements ServletContextAware {
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setBorder(Rectangle.NO_BORDER);
 			mTable.addCell(pcell);
+			
+			
 			///////////////////////////////////////
 			PdfPTable ledger1 = new PdfPTable(3);
 			ledger1.setWidthPercentage(98);
@@ -423,6 +429,8 @@ public class LedgerPrinting extends BaseAction implements ServletContextAware {
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			mainledger.addCell(pcell);
 			
+			
+			
 			this.mainLedger= ls.getCustomerLedger(this.customer_id);
 			
 			for(CustomerLedgerDTO x: mainLedger){
@@ -480,7 +488,9 @@ public class LedgerPrinting extends BaseAction implements ServletContextAware {
 				pcell=new PdfPCell(new Paragraph(x.getDue_date(),font3));
 				pcell.setPadding(3);
 				pcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
-				mainledger.addCell(pcell);					
+				mainledger.addCell(pcell);
+				
+				mainledger.setHeaderRows(2);
 				
 			}
 			
@@ -490,20 +500,16 @@ public class LedgerPrinting extends BaseAction implements ServletContextAware {
 			
 			if (customer.getConnectionInfo().getIsMetered_name().equalsIgnoreCase("Metered")) {
 				ledger1.addCell(meterTable);
+				ledger1.addCell(secLedMetered);
 			}else{				
 				ledger1.addCell(burnerTable);
-			}
-			
-			if (customer.getConnectionInfo().getIsMetered_name().equalsIgnoreCase("Metered")) {
-				ledger1.addCell(secLedMetered);
-			}else{
 				ledger1.addCell(connLdgr);
 			}
-			
-
+						
 			document.add(mTable);
 			document.add(ledger1);
 			document.add(mainledger);
+
 			
 			
 			document.close();

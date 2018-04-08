@@ -72,6 +72,7 @@ public class DefaulterCCertificate extends ActionSupport implements
 	private String officer_name;
 	private String officer_desig;
 	private String certification_id;
+	private String report_type;
 	private ServletContext servlet;
 	String yearsb;
 	ArrayList<ClearnessDTO> CustomerList = new ArrayList<ClearnessDTO>();
@@ -591,6 +592,15 @@ public class DefaulterCCertificate extends ActionSupport implements
 		return clearnessDTO;
 	}
 
+	
+	public String getReport_type() {
+		return report_type;
+	}
+
+	public void setReport_type(String report_type) {
+		this.report_type = report_type;
+	}
+
 	public void setClearnessDTO(ClearnessDTO clearnessDTO) {
 		this.clearnessDTO = clearnessDTO;
 	}
@@ -842,8 +852,8 @@ public class DefaulterCCertificate extends ActionSupport implements
 					"    FROM "+bill_table+" bi, CUSTOMER_CONNECTION cc " +
 					"   WHERE     BI.CUSTOMER_ID = CC.CUSTOMER_ID " +
 					"         AND CC.STATUS = 1 " +
-					"         AND bi.STATUS = 1 " +
-					"         AND bi.area_id = '01' " +
+					//"         AND bi.STATUS = 1 " +
+					"         AND bi.area_id = '"+area+"' " +
 					whereClause+
 					"                 AND BILL_YEAR || LPAD (BILL_MONTH, 2, 0) <= '"+ calender_year+collection_month+
 					"'  GROUP BY BI.CUSTOMER_ID, CUSTOMER_CATEGORY, bi.AREA_ID " +

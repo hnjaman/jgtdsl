@@ -25,6 +25,35 @@ public class ClearnessDTO {
 	private String prattayanDate;
 	private String billMonth;
 	private String phoneNo;
+	
+	private int single_burner;
+	private int double_burner;
+	private int other_burner;
+
+
+	public int getSingle_burner() {
+		return single_burner;
+	}
+
+	public void setSingle_burner(int single_burner) {
+		this.single_burner = single_burner;
+	}
+
+	public int getDouble_burner() {
+		return double_burner;
+	}
+
+	public void setDouble_burner(int double_burner) {
+		this.double_burner = double_burner;
+	}
+
+	public int getOther_burner() {
+		return other_burner;
+	}
+
+	public void setOther_burner(int other_burner) {
+		this.other_burner = other_burner;
+	}
 
 	private String billId;
 

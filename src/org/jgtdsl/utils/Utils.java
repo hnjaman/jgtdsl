@@ -249,6 +249,10 @@ public class Utils {
 			 calendar.set(Calendar.YEAR, year);
 			 calendar.set(Calendar.MONTH, month-1);
 			 int numDays = calendar.getActualMaximum(Calendar.DATE);
+			 
+			 if(numDays==31)
+				 numDays=30;
+			 
 			 System.out.println("days"+numDays);
 				 return (load/numDays)*dayDiff;
 			

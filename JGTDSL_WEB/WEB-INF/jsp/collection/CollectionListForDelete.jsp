@@ -80,6 +80,30 @@
 
 <script type="text/javascript" >
 
+
+var $dialog = $('<div id="dialog-confirm"></div>')
+.html("<p> "+
+ 	"Are you sure you want to delete this Collection?"+
+	"<div id='del_holiday'></div> "+
+   "</p>")
+.dialog({
+		title: 'Collection Delete Confirmation',
+		resizable: false,
+		autoOpen: false,
+		height:150,
+		width:450,
+		modal: true,
+		buttons: {
+				"Delete": {text:"Delete","class":'btn btn-danger',click:function() {
+					deleteBankGarantieExpireChangeInfo(); 
+					//$( this ).dialog( "close" );
+				}},
+				"Cancel": {text:"Cancel","class":'btn btn-beoro-3',click:function() {
+					$( this ).dialog( "close" );
+				}},
+		}
+	});
+
 function deleteWrongCollection(scrollno) {
 	var	a=scrollno;
 		//alert(a);

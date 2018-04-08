@@ -2,6 +2,7 @@ package org.jgtdsl.reports;
 
 import java.io.ByteArrayOutputStream;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -310,7 +311,7 @@ public class BillNonMeteredCustomer extends BaseAction implements
 				pcell.setBorder(Rectangle.NO_BORDER);				
 				cusTable.addCell(pcell);
 
-				applianceList = ms.getCustomerApplianceList(x.getCustomer_id());
+				applianceList = getCustomerApplianceList(x.getCustomer_id());
 				
 				
 				pcell = new PdfPCell(new Paragraph(" ", ReportUtil.f10B));
@@ -583,6 +584,59 @@ public class BillNonMeteredCustomer extends BaseAction implements
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+	
+	public ArrayList<CustomerApplianceDTO> getCustomerApplianceList(
+			String customer_id) {
+		UserDTO loggedInUser = (UserDTO) ServletActionContext.getRequest()
+				.getSession().getAttribute("user");
+		ArrayList<CustomerApplianceDTO> applianceList = new ArrayList<CustomerApplianceDTO>();
+		Connection conn = ConnectionManager.getConnection();
+		String sql = "";
+
+		sql = "SELECT * " +
+				"    FROM BURNER_QNT_CHANGE BQC, (select * from appliance_rate_history where  AREA_ID='24' and SLNO in( " +
+				"select max(SLNO) from appliance_rate_history where AREA_ID=? " +
+				"group by APPLIANCE_ID)) AI " +
+				"   WHERE     BQC.APPLIANCE_TYPE_CODE = AI.APPLIANCE_ID          " +
+				"         AND PID IN (  SELECT MAX (PID) " +
+				"                         FROM BURNER_QNT_CHANGE " +
+				"                        WHERE CUSTOMER_ID = ? " +
+				"                     GROUP BY APPLIANCE_TYPE_CODE) " +
+				"ORDER BY BQC.APPLIANCE_TYPE_CODE " ;
+
+
+		PreparedStatement stmt = null;
+		ResultSet r = null;
+		CustomerApplianceDTO appliance = null;
+		try {
+			stmt = conn.prepareStatement(sql);
+			stmt.setString(1, loggedInUser.getArea_id());
+			stmt.setString(2, customer_id);
+			r = stmt.executeQuery();
+			while (r.next()) {
+				appliance = new CustomerApplianceDTO();
+				
+				appliance.setApplianc_name(r.getString("APPLIANCE_NAME"));
+				appliance.setApplianc_qnt(r.getString("NEW_APPLIANCE_QNT"));
+				appliance.setApplianc_rate(r.getString("APPLIANCE_RATE"));				
+				applianceList.add(appliance);
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				ConnectionManager.closeConnection(conn);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			stmt = null;
+			conn = null;
+		}
+
+		return applianceList;
 	}
 
 }

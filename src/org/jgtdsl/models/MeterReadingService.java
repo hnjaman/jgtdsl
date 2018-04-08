@@ -217,6 +217,9 @@ public class MeterReadingService {
 		
 		// for jalalabad. without event partial load = min/max load
 		if(hasEvent(reading.getCustomer_id(),reading.getBilling_month(),reading.getBilling_year())){
+			
+			if(hasEventRec(reading.getCustomer_id(),reading.getBilling_month(),reading.getBilling_year()))
+				totalDayDiff=totalDayDiff+1;
 			 propMinLoad=Utils.getProportionalLoad(reading.getMin_load(), totalDayDiff,reading.getBilling_month(),reading.getBilling_year());
 			 propMaxLoad=Utils.getProportionalLoad(reading.getMax_load(), totalDayDiff,reading.getBilling_month(),reading.getBilling_year());
 			
@@ -719,6 +722,61 @@ public class MeterReadingService {
 	}
 	
 	
+	public boolean hasEventDis(String customer_id, int bmonth, int byear )
+	{		
+		Connection conn = ConnectionManager.getConnection();
+		String yearMonth=String.valueOf(byear)+String.format("%02d", bmonth);
+		String sql="select Count(*) cn from ( " +
+				" select CUSTOMER_ID from DISCONN_METERED where CUSTOMER_ID='"+customer_id+"' and to_char(DISCONNECT_DATE,'YYYYMM')='"+ yearMonth+"')";
+				
+
+		PreparedStatement stmt = null;
+		ResultSet r = null;
+		   
+		try
+			{
+				stmt = conn.prepareStatement(sql);
+				r = stmt.executeQuery();
+				if (r.next())
+				{									
+					return r.getInt("cn")>0?true:false;				
+				}
+			} 
+			catch (Exception e){e.printStackTrace();}
+	 		finally{try{stmt.close();ConnectionManager.closeConnection(conn);} catch (Exception e)
+				{e.printStackTrace();}stmt = null;conn = null;}
+		
+		
+		return false;	 	
+	}
+	
+	
+	public boolean hasEventRec(String customer_id, int bmonth, int byear )
+	{		
+		Connection conn = ConnectionManager.getConnection();
+		String yearMonth=String.valueOf(byear)+String.format("%02d", bmonth);
+		String sql="select Count(*) cn from ( " +				
+				" select CUSTOMER_ID from RECONN_METERED where CUSTOMER_ID='"+customer_id+"' and to_char(RECONNECT_DATE,'YYYYMM')='"+ yearMonth+"') " ;
+
+		PreparedStatement stmt = null;
+		ResultSet r = null;
+		   
+		try
+			{
+				stmt = conn.prepareStatement(sql);
+				r = stmt.executeQuery();
+				if (r.next())
+				{									
+					return r.getInt("cn")>0?true:false;				
+				}
+			} 
+			catch (Exception e){e.printStackTrace();}
+	 		finally{try{stmt.close();ConnectionManager.closeConnection(conn);} catch (Exception e)
+				{e.printStackTrace();}stmt = null;conn = null;}
+		
+		
+		return false;	 	
+	}
 	
 	public boolean canDeleteReadingEntry(String reading_id)
 	{		

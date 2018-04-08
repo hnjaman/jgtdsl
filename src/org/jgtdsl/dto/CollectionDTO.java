@@ -60,7 +60,7 @@ public class CollectionDTO {
 	private double vat_rebate_amount;
 	private double payable_amount;
 	private double surcharge_amount_metered;
-	private double tax_amount;
+	private double tax_amount=0.0;
 	private String tax_no;
 	private String tax_date;
 	private double net_payable_amount;	

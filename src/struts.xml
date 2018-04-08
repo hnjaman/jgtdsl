@@ -21,7 +21,7 @@
 					<param name="excludeActions">CustomError,index,userList,gridRecordFetcher,addNewForm,dashBoard,
 					checkValidity,logout,login,getServerMessage,fetchAllRoleTypes,fetchCustomerCategory,fetchBanks,fetchBranches,fetchZones,
 					fetchZone,fetchDistrict,fetchUpazila,downloadMeteredBill, printLedger, downloadNonMeteredBill,BillPreview,
-					getCustomerBillInfo,downloadMeteredBill, printLedger, downloadNonMeteredBill,clearnessCertificateHome,clearnessCertificateInfo,
+					getCustomerBillInfo,downloadMeteredBill, printLedger, downloadNonMeteredBill,clearnessCertificateHome,clearnessCertificateInfo, clearnessCertificateInfoPrePrinted, clearnessUnderCertificateInfo,
 					getBillInfo,payInfo,getIpgConfirmationPage,receiveIpgResponse,getiPgDetailInfo,payIpgBill
 					</param>
 				</interceptor-ref>
@@ -109,7 +109,7 @@
 								 
 								 getDuesListByString,isDefaulterOrNot,marginCalculationInfo,
 								 saveGasPurchaseInfo,gasPurchaseHome,bankbook,addMoreReconcilationHome,bankBookInfo,bankBookReportHome,variousMarginHome,variousMarginInfo,gasConsumptionHome,gasConsumptionInfo,
-								 clearnessCertificateHome,clearnessCertificateInfo,reconciliationReport,reconciliationReportHome,isReconiliatedOrNot,getClosingBalance,
+								 clearnessCertificateHome,clearnessCertificateInfo, clearnessCertificateInfoPrePrinted, clearnessUnderCertificateInfo,reconciliationReport,reconciliationReportHome,isReconiliatedOrNot,getClosingBalance,
 								 collectionStatementReportHome,disconnHome,disconnInfo,yearlyBalanceSheetHome,yearlyBalanceSheetInfo,balanceSheetInfo,balanceSheetHome,
 								 accountsPayableHome,accountsPayableInfo,saveAdjustmentAccountPayable,securityBankBookHome,securityBankBookInfo,securityNoticeHome,securityNoticeInfo,
 								 bankBookjvHome,bankBookjvInfo,securitybankBookjvHome,securitybankBookjvInfo,vatRebatejvHome,vatRebatejvInfo,freedomjvHome,freedomjvInfo,areaSecurityHome,areaSecurityInfo,
@@ -208,7 +208,7 @@
 								 
 								 getDuesListByString,isDefaulterOrNot,marginCalculationInfo,
 								 saveGasPurchaseInfo,gasPurchaseHome,bankbook,addMoreReconcilationHome,bankBookInfo,bankBookReportHome,variousMarginHome,variousMarginInfo,gasConsumptionHome,gasConsumptionInfo,
-								 clearnessCertificateHome,clearnessCertificateInfo,reconciliationReport,reconciliationReportHome,isReconiliatedOrNot,getClosingBalance,
+								 clearnessCertificateHome,clearnessCertificateInfo, clearnessCertificateInfoPrePrinted, clearnessUnderCertificateInfo,reconciliationReport,reconciliationReportHome,isReconiliatedOrNot,getClosingBalance,
 								 collectionStatementReportHome,disconnHome,disconnInfo,yearlyBalanceSheetHome,yearlyBalanceSheetInfo,balanceSheetInfo,balanceSheetHome,securityBankBookHome,securityBankBookInfo,
 								 
 								 bankDepositWithdrawHome,saveBankTransaction,transactionAuthorization,authorizeTransaction,deleteBankTransaction,getTotalDebitCredit,
@@ -298,7 +298,7 @@
 								 approveCC,
 								 
 								 collectionStatementReportHome,
-								 clearnessCertificateHome,clearnessCertificateInfo,
+								 clearnessCertificateHome,clearnessCertificateInfo, clearnessCertificateInfoPrePrinted, clearnessUnderCertificateInfo,
 								 
 								 bankDepositWithdrawHome,saveBankTransaction,transactionAuthorization,authorizeTransaction,deleteBankTransaction,getTotalDebitCredit,
 								 journalVoucher,saveCustomerAccountCorrection,saveBankAccountCorrection,
