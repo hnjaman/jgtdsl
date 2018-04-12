@@ -1045,7 +1045,7 @@ public class CustomerService {
 		String personalInfoSql=" Update CUSTOMER_PERSONAL_INFO Set FULL_NAME=?, FATHER_NAME=?, MOTHER_NAME=?, " +
 							   " GENDER=?, EMAIL=?, PHONE=?, MOBILE=?, FAX=?, NATIONAL_ID=?, PASSPORT_NO=?, LICENSE_NUMBER=?,VAT_REG_NO=?,FREEDOM_FIGHTER=? Where CUSTOMER_ID=?";
 		String personalInfoSqlforMinistry="update CUSTOMER_CONNECTION set MINISTRY_ID=? Where CUSTOMER_ID=?";
-		String addressInfoSql=" Update CUSTOMER_ADDRESS Set DIVISION=?,DISTRICT=?,UPAZILA=?,ROAD_HOUSE_NO=?,POST_OFFICE=?,POST_CODE=?,ADDRESS_LINE1=?,ADDRESS_LINE2=? Where Customer_Id=?";
+		String addressInfoSql=" Update CUSTOMER_ADDRESS Set DIVISION=?,DISTRICT=?,UPAZILA=?,ROAD_HOUSE_NO=?,POST_OFFICE=?,POST_CODE=?,ADDRESS_LINE1=?,ADDRESS_LINE2=?,ZONE_ID=? Where Customer_Id=?";
 		PreparedStatement stmt = null;
 		
 		
@@ -1083,7 +1083,8 @@ public class CustomerService {
 			stmt.setString(6,address.getPost_code());
 			stmt.setString(7,address.getAddress_line1());
 			stmt.setString(8,address.getAddress_line2());
-			stmt.setString(9,customer.getCustomer_id());			
+			stmt.setString(9,address.getZone_id());
+			stmt.setString(10,customer.getCustomer_id());			
 			stmt.execute();			
 			
 			transactionManager.commit();

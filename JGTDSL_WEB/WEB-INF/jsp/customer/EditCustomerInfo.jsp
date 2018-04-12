@@ -122,7 +122,7 @@ min-height: 33px !important;
 						  	<div class="span6 extra">
 			                    <label style="width: 30%">Ministry</label>	
 			                    <select name="personal.ministry_id" id="ministry_id"  style="width: 65%;">
-			                        <option value="" selected="selected">Select Category</option>
+			                        <option value="" selected="selected">Select Ministry</option>
 			                        <s:iterator value="%{#application.ALL_MINISTRY}" id="ministryList">
 			                            <option value="<s:property value="ministry_id" />" >
 			                                <s:property value="ministry_name" />

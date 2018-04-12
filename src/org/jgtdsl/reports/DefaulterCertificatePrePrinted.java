@@ -165,7 +165,7 @@ public class DefaulterCertificatePrePrinted extends ActionSupport implements
 
 			document.open();
 
-			PdfPTable mainTable = new PdfPTable(6);
+			PdfPTable mainTable = new PdfPTable(8);
 			Rectangle page = document.getPageSize();
 			/*
 			 * headerTable.setTotalWidth(page.getWidth()); float
@@ -212,29 +212,46 @@ public class DefaulterCertificatePrePrinted extends ActionSupport implements
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			pcell.setBorder(Rectangle.NO_BORDER);
 			mTable.addCell(pcell);
-
+					
 			pcell = new PdfPCell(new Paragraph(
 					"Subject: Under Certitificate Posting", ReportUtil.f10));
-			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-			pcell.setPaddingBottom(8);
+			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);			
 			pcell.setBorder(Rectangle.BOTTOM);
+			pcell.setPaddingBottom(10);
+			mTable.addCell(pcell);
+			
+			Paragraph para = new Paragraph(); 
+			if(report_type.equals("DC")){
+				para= new Paragraph("For Defaulter Customers",ReportUtil.f10B);
+			}else{
+				para= new Paragraph("For Non-Defaulter Customers",ReportUtil.f10B);		
+				}
+			
+			pcell=new PdfPCell(para);
+			pcell.setPaddingTop(8);			
+			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			pcell.setBorder(Rectangle.NO_BORDER);
 			mTable.addCell(pcell);
 
 			document.add(mTable);
 
 			// //////////headerTable//////////////
 
-			mainTable.setWidths(new float[] { 10, 20, 41, 7, 7, 25 });
+			mainTable.setWidths(new float[] { 8, 15,25, 40, 5, 5, 25, 10 });
+			mainTable.setWidthPercentage(95);
+			
+			
+			mTable.addCell(pcell);	
 
-			pcell = new PdfPCell(new Paragraph(" ", ReportUtil.f10B));
-			pcell.setColspan(6);
+			pcell = new PdfPCell(new Paragraph(" ", ReportUtil.f8B));
+			pcell.setColspan(8);
 			pcell.setPadding(5);
 			pcell.setRowspan(2);
 			pcell.setBorder(0);
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			mainTable.addCell(pcell);
 
-			pcell = new PdfPCell(new Paragraph("Sl No.", ReportUtil.f10B));
+			pcell = new PdfPCell(new Paragraph("Sl No.", ReportUtil.f8B));
 			pcell.setRowspan(2);
 			pcell.setPadding(5);
 			// pcell.setMinimumHeight(20f);
@@ -242,7 +259,7 @@ public class DefaulterCertificatePrePrinted extends ActionSupport implements
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			mainTable.addCell(pcell);
 
-			pcell = new PdfPCell(new Paragraph("Customer ID", ReportUtil.f10B));
+			pcell = new PdfPCell(new Paragraph("ID", ReportUtil.f8B));
 			pcell.setRowspan(2);
 			pcell.setPadding(5);
 			// pcell.setMinimumHeight(20f);
@@ -251,7 +268,16 @@ public class DefaulterCertificatePrePrinted extends ActionSupport implements
 			mainTable.addCell(pcell);
 
 			pcell = new PdfPCell(
-					new Paragraph("Customer Name", ReportUtil.f10B));
+					new Paragraph("Name", ReportUtil.f8B));
+			pcell.setRowspan(2);
+			pcell.setPadding(5);
+			// pcell.setMinimumHeight(20f);
+			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			mainTable.addCell(pcell);
+			
+			pcell = new PdfPCell(
+					new Paragraph("Address", ReportUtil.f8B));
 			pcell.setRowspan(2);
 			pcell.setPadding(5);
 			// pcell.setMinimumHeight(20f);
@@ -259,25 +285,33 @@ public class DefaulterCertificatePrePrinted extends ActionSupport implements
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			mainTable.addCell(pcell);
 
-			pcell = new PdfPCell(new Paragraph("Burner", ReportUtil.f10B));
+			pcell = new PdfPCell(new Paragraph("Burner", ReportUtil.f8B));
 			pcell.setColspan(2);
 			pcell.setPadding(5);
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			mainTable.addCell(pcell);
 
-			pcell = new PdfPCell(new Paragraph("Stamp", ReportUtil.f10B));
+			pcell = new PdfPCell(new Paragraph("Stamp", ReportUtil.f8B));
+			pcell.setRowspan(2);
+			pcell.setPadding(5);
+			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			mainTable.addCell(pcell);
+			
+			pcell = new PdfPCell(new Paragraph("Remarks", ReportUtil.f8B));
 			pcell.setRowspan(2);
 			pcell.setPadding(5);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			mainTable.addCell(pcell);
 
-			pcell = new PdfPCell(new Paragraph("S", ReportUtil.f10B));
+
+			pcell = new PdfPCell(new Paragraph("S", ReportUtil.f8B));
 			pcell.setPadding(5);
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			mainTable.addCell(pcell);
 
-			pcell = new PdfPCell(new Paragraph("D", ReportUtil.f10B));
+			pcell = new PdfPCell(new Paragraph("D", ReportUtil.f8B));
 			pcell.setPadding(5);
 			pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 			pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -285,9 +319,31 @@ public class DefaulterCertificatePrePrinted extends ActionSupport implements
 
 			// /
 			int w = 0;
+			ArrayList<String> custlistArrayList= new ArrayList<String>();
 			CustomerList = getCustomerList(from_customer_id, to_customer_id,
 					customer_category, area);
-			for (int i = 0; i < CustomerList.size(); i++) {
+			for(ClearnessDTO x: CustomerList){
+				ClearnessDTO checkList=	getCustomerInfo(x.getCustomerID(), area, calender_year, collection_month);
+				
+				if(checkList.getCustomerID()==null){
+					CustomerListClear.add(x.getCustomerID());
+				}else{
+					CustomerListDefaulters.add(x.getCustomerID());
+				}
+			}
+			for(int i = 0; i < CustomerListDefaulters.size(); i++){
+				if(report_type.equals("DC")){
+					custlistArrayList.add(CustomerListDefaulters.get(i));
+				}
+			}
+			for(int i = 0; i < CustomerListClear.size(); i++){
+				if(report_type.equals("NDC")){
+					custlistArrayList.add(CustomerListClear.get(i));
+				}
+			}
+			for (int i = 0; i < custlistArrayList.size(); i++) {
+				
+				ClearnessDTO info= getCustomerInfo(custlistArrayList.get(i));
 
 				w = i;
 
@@ -298,43 +354,53 @@ public class DefaulterCertificatePrePrinted extends ActionSupport implements
 				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				mainTable.addCell(pcell);
 
-				pcell = new PdfPCell(new Paragraph(CustomerList.get(i)
-						.getCustomerID(), ReportUtil.f10));
+				pcell = new PdfPCell(new Paragraph(info.getCustomerID(), ReportUtil.f8));
 				// pcell.setRowspan(1);
 				pcell.setPadding(5);
+				pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				mainTable.addCell(pcell);
 
-				pcell = new PdfPCell(new Paragraph(CustomerList.get(i)
-						.getCustomerName(), ReportUtil.f10));
+				pcell = new PdfPCell(new Paragraph(info.getCustomerName(), ReportUtil.f8));
+				pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				// pcell.setRowspan(1);
+				pcell.setPadding(5);
+				pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				mainTable.addCell(pcell);
+				
+				pcell = new PdfPCell(new Paragraph(info.getCustomerAddress(), ReportUtil.f8));
 				// pcell.setRowspan(1);
 				pcell.setPadding(5);
 				pcell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				mainTable.addCell(pcell);
 
-				pcell = new PdfPCell(new Paragraph(String.valueOf((CustomerList
-						.get(i).getSingle_burner() == 0) ? "0" : CustomerList
-						.get(i).getSingle_burner()), ReportUtil.f10));
+				pcell = new PdfPCell(new Paragraph(String.valueOf((info.getSingle_burner() == 0) ? "0" : info.getSingle_burner()), ReportUtil.f8));
 
 				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				mainTable.addCell(pcell);
 
-				pcell = new PdfPCell(new Paragraph(String.valueOf((CustomerList
-						.get(i).getDouble_burner() == 0 ? "0" : CustomerList
-						.get(i).getDouble_burner())), ReportUtil.f10));
+				pcell = new PdfPCell(new Paragraph(String.valueOf((info.getDouble_burner() == 0 ? "0" : info.getDouble_burner())), ReportUtil.f8));
 
 				pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				pcell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				mainTable.addCell(pcell);
 
 				if (w % 3 == 0) {
-					pcell = new PdfPCell(new Paragraph("", ReportUtil.f10));
+					pcell = new PdfPCell(new Paragraph("", ReportUtil.f8));
+					pcell.setRowspan(3);
+					pcell.setPadding(5);
+					pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+					mainTable.addCell(pcell);
+					
+					pcell = new PdfPCell(new Paragraph("", ReportUtil.f8));
 					pcell.setRowspan(3);
 					pcell.setPadding(5);
 					pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 					mainTable.addCell(pcell);
 				}
+				
+				
 
 			}
 			mainTable.setHeaderRows(4);
@@ -421,10 +487,10 @@ public class DefaulterCertificatePrePrinted extends ActionSupport implements
 				String month_name = (Month.values()[Integer
 						.parseInt(collection_month) - 1].getLabel());
 				over.setFontAndSize(bfb, 12);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT, month_name,
+				over.showTextAligned(PdfContentByte.ALIGN_LEFT, month_name+", "+calender_year,
 						335, 705, 0);
 				over.setFontAndSize(bfb, 12);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT, month_name,
+				over.showTextAligned(PdfContentByte.ALIGN_LEFT, month_name+", "+calender_year,
 						335, 315, 0);
 				// due month
 				over.setFontAndSize(bf, 10);
@@ -432,7 +498,7 @@ public class DefaulterCertificatePrePrinted extends ActionSupport implements
 				String hsi = customerInfo.getDueMonth();
 				if (customerInfo.getDueMonth() != null)
 					hsi = customerInfo.getDueMonth().replaceAll("&#x26;", "&");
-				int size = 40;
+				int size = 43;
 				if (hsi != null && hsi.length() > size) {
 					String[] s1;
 					s1 = spitSrting(hsi, size);
@@ -647,10 +713,10 @@ public class DefaulterCertificatePrePrinted extends ActionSupport implements
 				String month_name = (Month.values()[Integer
 						.parseInt(collection_month) - 1].getLabel());
 				over.setFontAndSize(bfb, 12);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT, month_name,
+				over.showTextAligned(PdfContentByte.ALIGN_LEFT, month_name+", "+calender_year,
 						265, 700, 0);
 				over.setFontAndSize(bfb, 12);
-				over.showTextAligned(PdfContentByte.ALIGN_LEFT, month_name,
+				over.showTextAligned(PdfContentByte.ALIGN_LEFT, month_name+", "+calender_year,
 						265, 306, 0);
 
 				// burner
@@ -1012,23 +1078,15 @@ public class DefaulterCertificatePrePrinted extends ActionSupport implements
 		} else {
 			type = from_cus_id.substring(0, 4);
 		}
-		String bill_table;
-		if (type.equalsIgnoreCase(area + "01")
-				|| type.equalsIgnoreCase(area + "09")) {
-			bill_table = "BILL_NON_METERED";
-		} else {
-			bill_table = "BILL_METERED";
-		}
+		
 		String whereClause = null;
 		if (from_cus_id.isEmpty() && to_cus_id.isEmpty()) {
-			whereClause = "      AND BI.CUSTOMER_CATEGORY='"
-					+ this.customer_category + "'  ";
+			whereClause = "      AND bi.category_id='"+ this.customer_category + "'  ";
 		} else {
-			whereClause = "         AND BI.CUSTOMER_ID BETWEEN '" + from_cus_id
-					+ "' AND '" + to_cus_id + "' ";
+			whereClause = "      AND BI.CUSTOMER_ID BETWEEN '" + from_cus_id+ "' AND '" + to_cus_id + "' ";
 		}
 		try {
-			String transaction_sql = "  SELECT bi.CUSTOMER_ID, getBurner (bi.CUSTOMER_ID) BURNER, BI.CUSTOMER_NAME, COUNT (*) cnt "
+			/*String transaction_sql = "  SELECT bi.CUSTOMER_ID, getBurner (bi.CUSTOMER_ID) BURNER, BI.CUSTOMER_NAME, COUNT (*) cnt "
 					+ "    FROM "
 					+ bill_table
 					+ " bi, CUSTOMER_CONNECTION cc "
@@ -1044,15 +1102,33 @@ public class DefaulterCertificatePrePrinted extends ActionSupport implements
 					+ calender_year
 					+ collection_month
 					+ "'  GROUP BY BI.CUSTOMER_ID, BI.CUSTOMER_NAME, CUSTOMER_CATEGORY, bi.AREA_ID "
-					+ "  HAVING COUNT (*) >= 1 order by BI.CUSTOMER_ID asc";
+					+ "  HAVING COUNT (*) >= 1 ";*/
 
+			
+			
+			
+			
+			
+			
+			String transaction_sql= 
+					"  SELECT distinct(bi.CUSTOMER_ID), " +
+					"         getBurner (bi.CUSTOMER_ID) BURNER, " +
+					"         BI.Full_name " +
+					"    FROM MVIEW_CUSTOMER_INFO bi, CUSTOMER_CONNECTION cc " +
+					"   WHERE BI.CUSTOMER_ID = CC.CUSTOMER_ID " +
+					"         AND CC.STATUS = 1 " +
+					"         AND bi.area_id = '"+this.area+"' " +
+					whereClause+
+					"         order by BI.CUSTOMER_ID asc " ;
+
+			
 			PreparedStatement ps1 = conn.prepareStatement(transaction_sql);
 			ResultSet resultSet = ps1.executeQuery();
 			while (resultSet.next()) {
 				ClearnessDTO ClearnessDTO = new ClearnessDTO();
 				ClearnessDTO.setCustomerID(resultSet.getString("CUSTOMER_ID"));
 				ClearnessDTO.setCustomerName(resultSet
-						.getString("CUSTOMER_NAME"));
+						.getString("FULL_NAME"));
 				String burner = resultSet.getString("BURNER");
 				String[] brnrArray = burner.split("#");
 				ClearnessDTO.setSingle_burner(Integer.parseInt(brnrArray[0]));

@@ -18,9 +18,23 @@ public class AddressDTO {
 	private String post_office;
 	private String post_code;
 	private String address_line1;
-	private String address_line2;	
+	private String address_line2;
 	
+	private String zone_id;
+	private String zone_name;
 	
+	public String getZone_id() {
+		return zone_id;
+	}
+	public void setZone_id(String zone_id) {
+		this.zone_id = zone_id;
+	}
+	public String getZone_name() {
+		return zone_name;
+	}
+	public void setZone_name(String zone_name) {
+		this.zone_name = zone_name;
+	}
 	public String getDivision_id() {
 		return division_id;
 	}
