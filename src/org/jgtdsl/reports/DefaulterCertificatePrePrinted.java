@@ -93,7 +93,7 @@ public class DefaulterCertificatePrePrinted extends ActionSupport implements
 
 	UserDTO loggedInUser = (UserDTO) ServletActionContext.getRequest()
 			.getSession().getAttribute("user");
-	Connection conn = ConnectionManager.getConnection();
+	//Connection conn = ConnectionManager.getConnection();
 
 	// ////////////////////////////////////////////////////////
 	public String clearnessCertificateInfoPrePrinted()
@@ -183,7 +183,7 @@ public class DefaulterCertificatePrePrinted extends ActionSupport implements
 			// img.scalePercent(200f);
 			img.scaleAbsolute(28f, 31f);
 			// img.setAbsolutePosition(145f, 780f);
-			img.setAbsolutePosition(140f, 787f); // rotate
+			img.setAbsolutePosition(130f, 787f); // rotate
 
 			document.add(img);
 
@@ -331,6 +331,8 @@ public class DefaulterCertificatePrePrinted extends ActionSupport implements
 					CustomerListDefaulters.add(x.getCustomerID());
 				}
 			}
+			
+			
 			for(int i = 0; i < CustomerListDefaulters.size(); i++){
 				if(report_type.equals("DC")){
 					custlistArrayList.add(CustomerListDefaulters.get(i));
@@ -493,21 +495,27 @@ public class DefaulterCertificatePrePrinted extends ActionSupport implements
 				over.showTextAligned(PdfContentByte.ALIGN_LEFT, month_name+", "+calender_year,
 						335, 315, 0);
 				// due month
-				over.setFontAndSize(bf, 10);
+				over.setFontAndSize(bf, 8);
 
 				String hsi = customerInfo.getDueMonth();
 				if (customerInfo.getDueMonth() != null)
 					hsi = customerInfo.getDueMonth().replaceAll("&#x26;", "&");
-				int size = 43;
+				System.out.println(hsi.length());
+				int size = 49;
 				if (hsi != null && hsi.length() > size) {
 					String[] s1;
 					s1 = spitSrting(hsi, size);
-
+					
 					if (s1[1].length() <= size) {
 						over.setTextMatrix(00, 625);
 						over.showText(s1[0]);
+						over.setTextMatrix(00, 615);
+						over.showText(s1[1]);
 						over.setTextMatrix(00, 235);
 						over.showText(s1[0]);
+						over.setTextMatrix(00, 225);
+						over.showText(s1[1]);
+						
 					} else {
 						s1 = spitSrting(s1[1], size);
 						over.setTextMatrix(00, 625);
@@ -1010,13 +1018,6 @@ public class DefaulterCertificatePrePrinted extends ActionSupport implements
 		this.loggedInUser = loggedInUser;
 	}
 
-	public Connection getConn() {
-		return conn;
-	}
-
-	public void setConn(Connection conn) {
-		this.conn = conn;
-	}
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -1027,7 +1028,7 @@ public class DefaulterCertificatePrePrinted extends ActionSupport implements
 	}
 
 	public String[] spitSrting(String base, int size) {
-		char[] separator = { ' ', '.', ',', ';', ':' };
+		char[] separator = { ',' };
 		boolean separatorfound = false;
 		String s1[] = new String[2];
 		outer: for (int j = size; j >= 0; j--) {
@@ -1069,6 +1070,9 @@ public class DefaulterCertificatePrePrinted extends ActionSupport implements
 			String to_cus_id, String cust_cat_id, String area) {
 
 		ArrayList<ClearnessDTO> custList = new ArrayList<ClearnessDTO>();
+		Connection conn = ConnectionManager.getConnection();
+		PreparedStatement ps1=null;
+		ResultSet resultSet=null;
 		if (collection_month.length() < 2) {
 			collection_month = "0" + collection_month;
 		}
@@ -1122,8 +1126,8 @@ public class DefaulterCertificatePrePrinted extends ActionSupport implements
 					"         order by BI.CUSTOMER_ID asc " ;
 
 			
-			PreparedStatement ps1 = conn.prepareStatement(transaction_sql);
-			ResultSet resultSet = ps1.executeQuery();
+			ps1 = conn.prepareStatement(transaction_sql);
+			resultSet = ps1.executeQuery();
 			while (resultSet.next()) {
 				ClearnessDTO ClearnessDTO = new ClearnessDTO();
 				ClearnessDTO.setCustomerID(resultSet.getString("CUSTOMER_ID"));
@@ -1139,6 +1143,15 @@ public class DefaulterCertificatePrePrinted extends ActionSupport implements
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
+		 finally {
+				try {
+					ps1.close();
+					resultSet.close();
+					ConnectionManager.closeConnection(conn);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
 
 		return custList;
 
@@ -1179,6 +1192,7 @@ public class DefaulterCertificatePrePrinted extends ActionSupport implements
 		} finally {
 			try {
 				stmt.close();
+				r.close();
 				ConnectionManager.closeConnection(conn);
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -1193,6 +1207,10 @@ public class DefaulterCertificatePrePrinted extends ActionSupport implements
 
 	private ClearnessDTO getCustomerInfo(String customer_id, String area_id,
 			String year, String month) {
+		Connection conn = ConnectionManager.getConnection();
+		ResultSet resultSet= null;
+		Statement st= null;
+		
 		ClearnessDTO ctrInfo = new ClearnessDTO();
 		String type = customer_id.substring(0, 4);
 		String bill_table;
@@ -1259,9 +1277,10 @@ public class DefaulterCertificatePrePrinted extends ActionSupport implements
 					+ "         WHERE AA.CUSTOMER_ID = BB.CUSTOMER_ID) tmp2 "
 					+ " WHERE tmp1.CUSTOMER_ID = tmp2.CUSTOMER_ID ";
 
-			Statement st = conn.createStatement();// Statement(customer_info_sql);
+			st = conn.createStatement();// Statement(customer_info_sql);
+			
 
-			ResultSet resultSet = st.executeQuery(customer_info_sql);
+			resultSet = st.executeQuery(customer_info_sql);
 
 			while (resultSet.next()) {
 
@@ -1282,7 +1301,16 @@ public class DefaulterCertificatePrePrinted extends ActionSupport implements
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		}finally{
+			try{
+				st.close();
+				resultSet.close();
+				conn.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 		}
+		
 
 		return ctrInfo;
 	}

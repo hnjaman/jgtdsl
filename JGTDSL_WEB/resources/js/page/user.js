@@ -186,6 +186,7 @@ var addParams={
     		$("#userImg").attr("src",jsVar.NO_PHOTO_URL);    		
     		$('#password', frm ).val(jsVar.USER_DEFAULT_PASSWORD);
     		$("#userId").focus();
+    		alert("h1");
         },
         onInitializeForm: setFormEvents,
         addCaption: jqCaption.ADD_USER,		// var jqCaption

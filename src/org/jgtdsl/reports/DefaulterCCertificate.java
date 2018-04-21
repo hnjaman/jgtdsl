@@ -89,7 +89,7 @@ public class DefaulterCCertificate extends ActionSupport implements
 
 	UserDTO loggedInUser = (UserDTO) ServletActionContext.getRequest()
 			.getSession().getAttribute("user");
-	Connection conn = ConnectionManager.getConnection();
+	//Connection conn = ConnectionManager.getConnection();
 
 	public String execute() throws Exception {
 		HttpServletResponse response = ServletActionContext.getResponse();
@@ -502,6 +502,9 @@ public class DefaulterCCertificate extends ActionSupport implements
 
 	private ClearnessDTO getCustomerInfo(String customer_id, String area_id,
 			String year, String month) {
+		Connection conn = ConnectionManager.getConnection();
+		Statement st= null;
+		ResultSet resultSet=null;
 		ClearnessDTO ctrInfo = new ClearnessDTO();
 		String type = customer_id.substring(0, 4);
 		String bill_table;
@@ -565,9 +568,9 @@ public class DefaulterCCertificate extends ActionSupport implements
 					+ "         WHERE AA.CUSTOMER_ID = BB.CUSTOMER_ID) tmp2 "
 					+ " WHERE tmp1.CUSTOMER_ID = tmp2.CUSTOMER_ID ";
 
-			Statement st = conn.createStatement();//Statement(customer_info_sql);
+			st = conn.createStatement();//Statement(customer_info_sql);
 
-			ResultSet resultSet = st.executeQuery(customer_info_sql);
+			resultSet = st.executeQuery(customer_info_sql);
 
 			while (resultSet.next()) {
 
@@ -581,8 +584,16 @@ public class DefaulterCCertificate extends ActionSupport implements
 				ctrInfo.setAmountInWords(resultSet.getString("INWORDS"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
+		}finally{
+			try{
+				st.close();
+				resultSet.close();
+				conn.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 		}
 
 		return ctrInfo;
@@ -741,13 +752,7 @@ public class DefaulterCCertificate extends ActionSupport implements
 		this.loggedInUser = loggedInUser;
 	}
 
-	public Connection getConn() {
-		return conn;
-	}
-
-	public void setConn(Connection conn) {
-		this.conn = conn;
-	}
+	
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
@@ -824,6 +829,9 @@ public class DefaulterCCertificate extends ActionSupport implements
 			String to_cus_id, String cust_cat_id, String area) {
 
 		ArrayList<ClearnessDTO> custList = new ArrayList<ClearnessDTO>();
+		PreparedStatement ps1=null;
+		ResultSet resultSet=null;
+		Connection conn= null;
 		if(collection_month.length()<2){
 			collection_month="0"+collection_month;
 		}
@@ -859,8 +867,10 @@ public class DefaulterCCertificate extends ActionSupport implements
 					"'  GROUP BY BI.CUSTOMER_ID, CUSTOMER_CATEGORY, bi.AREA_ID " +
 					"  HAVING COUNT (*) >= 1 " ;
 
-			PreparedStatement ps1 = conn.prepareStatement(transaction_sql);
-			ResultSet resultSet = ps1.executeQuery();
+			
+			conn = ConnectionManager.getConnection();
+			ps1 = conn.prepareStatement(transaction_sql);
+			resultSet = ps1.executeQuery();
 			while (resultSet.next()) {
 				ClearnessDTO ClearnessDTO = new ClearnessDTO();
 				ClearnessDTO.setCustomerID(resultSet.getString("CUSTOMER_ID"));
@@ -869,6 +879,15 @@ public class DefaulterCCertificate extends ActionSupport implements
 
 		} catch (Exception e) {
 			// TODO: handle exception
+		}
+		finally{
+			try{
+				ps1.close();
+				resultSet.close();
+				conn.close();
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 		}
 
 		return custList;

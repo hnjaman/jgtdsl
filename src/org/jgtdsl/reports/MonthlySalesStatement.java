@@ -304,7 +304,7 @@ public class MonthlySalesStatement extends BaseAction {
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		datatable1.addCell(pcell);
 		
-		pcell=new PdfPCell(new Paragraph("Billimg Amount",font3));
+		pcell=new PdfPCell(new Paragraph("Billing Amount",font3));
 		pcell.setColspan(7);
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		datatable1.addCell(pcell);
@@ -352,7 +352,7 @@ public class MonthlySalesStatement extends BaseAction {
 		
 		
 		
-		pcell=new PdfPCell(new Paragraph("Actual Cons of Minimum Bills",font3));
+		pcell=new PdfPCell(new Paragraph("Actual Consumption of Minimum Bills",font3));
 		pcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 		datatable1.addCell(pcell);
 		pcell=new PdfPCell(new Paragraph("Billing Unit",font3));
