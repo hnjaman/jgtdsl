@@ -77,9 +77,9 @@ min-height: 33px !important;
 								<label style="width: 30%">Gender</label>	
 								<select name="personal.gender" id="gender"  style="width: 69.5%;">
 			                        	<option value="" selected="selected">Select Gender</option>
-			                            <option value="Male" >Male</option>
-			                            <option value="Female" >Female</option>
-			                            <option value="Others" >Others</option>
+			                            <option value="M" >Male</option>
+			                            <option value="F" >Female</option>
+			                            <option value="O" >Others</option>
 			                    </select>								
 								
 						  	</div>	

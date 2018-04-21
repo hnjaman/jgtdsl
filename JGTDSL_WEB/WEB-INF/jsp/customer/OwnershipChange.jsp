@@ -47,9 +47,20 @@
 								<label style="width: 25%">Gender</label>	
 								<select id="old_gender"  style="width: 73.5%;" disabled="disabled">
 			                        <option value="" selected="selected">Select Gender</option>
-			                            <option value="Male" >Male</option>
-			                            <option value="Female" >Female</option>
-			                            <option value="Others" >Others</option>
+			                            <option value="M" >Male</option>
+			                            <option value="F" >Female</option>
+			                            <option value="O" >Others</option>
+			                    </select>								
+								
+						  	</div>	
+						 </div>
+						 <div class="row-fluid">
+							<div class="span12">
+								<label style="width: 25%">Freedom Fighter</label>	
+								<select name="personal.freedom_fighter" id="freedom_fighter"  style="width: 73.5%;" disabled="disabled">
+			                        	<option value="" selected="selected">Select Yes or No</option>
+			                            <option value="Y" >Yes</option>
+			                            <option value="N" >No</option>
 			                    </select>								
 								
 						  	</div>	
@@ -151,14 +162,14 @@
 						 </div>
 						 <div class="row-fluid">
 							<div class="span12">
-								<label style="width: 25%">F/H Name<span style="color:red;font-size: 20px;">*</span></label>	
+								<label style="width: 25%">F/H Name<span style="color:red;font-size: 20px;"></span></label>	
 								<input type="text" style="width: 71%"  id="father_name" name="personal.father_name"  />									
 								
 						  	</div>	
 						 </div>
 						 <div class="row-fluid">
 							<div class="span12">
-								<label style="width: 25%">Mother Name<span style="color:red;font-size: 20px;">*</span></label>	
+								<label style="width: 25%">Mother Name<span style="color:red;font-size: 20px;"></span></label>	
 								<input type="text" style="width: 71%"  id="mother_name" name="personal.mother_name"  />									
 								
 						  	</div>	
@@ -172,6 +183,17 @@
 			                            <option value="Female" >Female</option>
 			                            <option value="Others" >Others</option>
 			                    </select>									
+								
+						  	</div>	
+						 </div>
+						  <div class="row-fluid">
+							<div class="span12">
+								<label style="width: 25%">Freedom Fighter</label>	
+								<select name="personal.freedom_fighter_new" id="freedom_fighter_new"  style="width: 73.5%;">
+			                        	<option value="" selected="selected">Select Yes or No</option>
+			                            <option value="Y" >Yes</option>
+			                            <option value="N" >No</option>
+			                    </select>								
 								
 						  	</div>	
 						 </div>

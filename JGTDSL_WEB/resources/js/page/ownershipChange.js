@@ -1,4 +1,4 @@
-var fields=["old_full_name","old_father_name","old_mother_name","old_gender","old_mobile","old_phone","old_fax","old_national_id","old_passport_no","old_email","old_tin" ,"old_organization_name"];
+var fields=["old_full_name","old_father_name","old_mother_name","old_gender","freedom_fighter","old_mobile","old_phone","old_fax","old_national_id","old_passport_no","old_email","old_tin" ,"old_organization_name"];
 var old_customer_fields=fields.slice();
 
 var newFields=["full_name","father_name","mother_name","gender","mobile","phone","fax","national_id","passport_no","email","tin","organization_name"];
@@ -26,7 +26,7 @@ function validateAndSaveChangeOwnershipInfo(){
 
 function validateOwnershipInfo(){
 	
-	var isValid=validateField("full_name","father_name","mother_name","gender");	
+	var isValid=validateField("full_name","gender");	
 	return isValid;
 }
 function saveOwnershipnfo(){
