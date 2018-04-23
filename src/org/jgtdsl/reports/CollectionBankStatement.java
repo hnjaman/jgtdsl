@@ -36,6 +36,8 @@ import org.jgtdsl.enums.Month;
 import org.jgtdsl.reports.ReportFormat;
 import org.jgtdsl.reports.ReportUtil;
 import org.jgtdsl.utils.connection.ConnectionManager;
+import org.jgtdsl.utils.jdbc.DebugLevel;
+import org.jgtdsl.utils.jdbc.StatementFactory;
 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Chunk;
@@ -2238,6 +2240,7 @@ public class CollectionBankStatement extends BaseAction {
 	  
 	  try {
 	  
+		 // DebugLevel debug = DebugLevel.ON;
 	   
 	   String account_info_sql="SELECT MCI.ACCOUNT_NO,mci.ACCOUNT_NAME,to_char(mci.AC_OPENING_DATE) AC_OPENING_DATE,mbi.BANK_NAME,BRANCH_NAME,MBRI.ADDRESS,MBRI.PHONE,MBRI.FAX,MBRI.EMAIL " +
 	     "  FROM MST_ACCOUNT_INFO mci, MST_BANK_INFO mbi, MST_BRANCH_INFO mbri " +
@@ -2251,12 +2254,16 @@ public class CollectionBankStatement extends BaseAction {
 	     
 	   
 	   PreparedStatement ps1=conn.prepareStatement(account_info_sql);
+	  // PreparedStatement ps = StatementFactory.getStatement(conn,account_info_sql,debug);
 	   ps1.setString(1, bank_id);
 	   ps1.setString(2, branch_id);
 	   ps1.setString(3, account_no);
 	  
 	         
 	         ResultSet resultSet=ps1.executeQuery();
+	         //System.out.println(ps1.toString()+"*****");
+	         //System.out.println(ps.toString()+"*****");
+	         //System.out.println(account_info_sql);
 	         
 	         
 	         while(resultSet.next())
@@ -2846,7 +2853,8 @@ public class CollectionBankStatement extends BaseAction {
 			
 			PreparedStatement ps1=conn.prepareStatement(transaction_sql);
 		
-        	
+        	System.out.println(ps1);
+        	System.out.println(transaction_sql);
         	ResultSet resultSet=ps1.executeQuery();
         	
         	
