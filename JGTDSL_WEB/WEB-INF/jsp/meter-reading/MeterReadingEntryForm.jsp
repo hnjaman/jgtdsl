@@ -137,26 +137,26 @@
 
 <div class="row-fluid"> 
 
-<div class="span6">
-       <label class="mr_lable">Pressure Factor</label>
-       <input type="text" name="reading.pressure_factor" id="pressure_factor"  class="mr_text" disabled="disabled" style="width: 59%;"/>									       
-   </div>
-
-<div class="span6">
-       <!--     <label class="mr_lable">Mtr. Type/Rate</label>      -->
-       <label class="mr_lable"></label>
-       <input type="hidden" name="reading.measurement_type_name" id="measurement_type_name"  class="mr_text1" disabled="disabled" style="width: 29%;"/>
-       <input type="hidden" name="reading.measurement_type_str" id="measurement_type_str" />
-       <input type="hidden" name="reading.rate" id="rate"  class="mr_text2" disabled="disabled" style="width: 25%;"/>
-       <input type="hidden" name="reading.tariff_id" id="tariff_id" />
-       <input type="hidden" name="reading.latest_tariff_id" id="latest_tariff_id" value=""/>
-       <input type="hidden" name="reading.latest_rate" id="latest_rate" />
-   </div>   
+	<div class="span6">
+	       <label class="mr_lable">Pressure Factor</label>
+	       <input type="text" name="reading.pressure_factor" id="pressure_factor"  class="mr_text" disabled="disabled" style="width: 59%;"/>									       
+	   </div>
+	
+		<div class="span6">
+	       <!--     <label class="mr_lable">Mtr. Type/Rate</label>      -->
+	       <label class="mr_lable"></label>
+	       <input type="hidden" name="reading.measurement_type_name" id="measurement_type_name"  class="mr_text1" disabled="disabled" style="width: 29%;"/>
+	       <input type="hidden" name="reading.measurement_type_str" id="measurement_type_str" />
+	       <input type="hidden" name="reading.rate" id="rate"  class="mr_text2" disabled="disabled" style="width: 25%;"/>
+	       <input type="hidden" name="reading.tariff_id" id="tariff_id" />
+	       <input type="hidden" name="reading.latest_tariff_id" id="latest_tariff_id" value=""/>
+	       <input type="hidden" name="reading.latest_rate" id="latest_rate" />
+	   	</div>   
 
 </div>
 
 
-<div class="row-fluid" style="display: ;"> 
+<div class="row-fluid"> 
     							   
    <div class="span6">
    		<label class="mr_lable">Act./Total Cons.</label>
@@ -168,7 +168,7 @@
    
    <div class="span6">
        <label class="mr_lable">Unit</label>
-       <input type="text" name="unit" id="unit"  class="mr_text1" disabled="disabled"  style="width: 29%;font-weight: bold;color: #3b5894;"/>       									      
+       <input type="text" name="reading.unit" id="unit"  class="mr_text1" disabled="disabled"  style="width: 29%;font-weight: bold;color: #3b5894;"/>       									      
    </div>
    
 </div>
