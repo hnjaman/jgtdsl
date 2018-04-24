@@ -149,7 +149,7 @@ public class BillNonMeteredCustomer extends BaseAction implements
 			// img.scalePercent(200f);
 			img.scaleAbsolute(30f, 34f);
 			// img.setAbsolutePosition(145f, 780f);
-			img.setAbsolutePosition(150f, 767f); // rotate
+			img.setAbsolutePosition(135f, 767f); // rotate
 
 			document.add(img);
 			
