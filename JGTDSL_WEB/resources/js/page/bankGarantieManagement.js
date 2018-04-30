@@ -239,6 +239,32 @@ var $dialog = $('<div id="dialog-confirm"></div>')
 				}},
 		}
 	});
+
+function PrintBGExpireListWithIn365Days(){
+	//alert("");
+	$.ajax({
+	    url: 'printBGExpireListWithIn365Days.action',
+//	    type: 'POST',
+//	    cache: false,
+//	    success: function (response) {
+////	    		meterRentChangeForm(clearField);	
+////		    	$dialog.dialog("close");
+////		    	$('#meterReconnForm').trigger("reset");
+////		    	//$('#bgCustomerInfo').trigger("reset");
+////		    	//alert(response.message);
+////		    	reloadGrid("customer_grid");
+////		    	reloadGrid("meterRent_change_history_this_grid");
+////		    	reloadGrid("meterRent_change_history_all_grid");
+////		    	$.jgrid.info_dialog(response.dialogCaption,response.message,jqDialogClose,jqDialogParam);
+//	    },
+//	    error: function(response) {
+//           // alert("error");
+//	    	//$.jgrid.info_dialog(response.dialogCaption,response.message,jqDialogClose,jqDialogParam);
+//        },
+	    
+	  });
+}
+
 function deleteBankGarantieExpireChangeInfo(){
 	//alert("");
 	$.ajax({

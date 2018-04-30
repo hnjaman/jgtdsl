@@ -33,6 +33,7 @@
 						setTitle("Collections Reports");
 					</script>
 					<li class="boxV" onclick="ajaxLoad('report_input_div','collectionReportHome.action')"><span>Collection Report</span> </li>
+					<li class="boxV" onclick="ajaxLoad('report_input_div','printBGExpireListWithIn365Days.action')"><span>BG Expire</span> </li>
 					<li class="boxV" onclick="ajaxLoad('report_input_div','collectionStatementReportHome.action')"><span>Collection Statement</span> </li>									
 					<li class="boxV" onclick="ajaxLoad('report_input_div','feesCollectionReportHome.action')"><span>Fees Collection</span> </li> 					
 					<li class="boxV" onclick="ajaxLoad('report_input_div','bankBookReportHome.action')"><span>Bank Book Report</span> </li>

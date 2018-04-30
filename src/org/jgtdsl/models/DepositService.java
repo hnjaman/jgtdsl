@@ -880,6 +880,93 @@ public class DepositService {
 
 		return expireList;
 	}
+	
+	// BG expire List report within 1 year
+	
+	public ArrayList<DepositDTO> getBGExpireWithinOneYear() {
+		DepositDTO deposit = null;
+		ArrayList<DepositDTO> expireList = new ArrayList<DepositDTO>();
+		Connection conn = ConnectionManager.getConnection();
+		
+		PreparedStatement stmt = null;
+		ResultSet r = null;
+		
+		try{
+			String sql = "SELECT deposit.deposit_id, " +
+					"         deposit.customer_id, " +
+					"         CUSTOMER_CATEGORY, " +
+					"         CATEGORY_NAME, " +
+					"         FULL_NAME, " +
+					"         bank.bank_id, " +
+					"         branch.branch_id, " +
+					"         account.account_no, " +
+					"         bank_name, " +
+					"         branch_name, " +
+					"         account_name, " +
+					"         total_deposit, " +
+					"         TO_CHAR (valid_to, 'dd-MM-YYYY') valid_to, " +
+					"         valid_to - TRUNC (SYSDATE) expire_in " +
+					"    FROM MST_DEPOSIT deposit, " +
+					"         CUSTOMER_PERSONAL_INFO CUSTOMER, " +
+					"         MST_BANK_INFO bank, " +
+					"         MST_BRANCH_INFO branch, " +
+					"         MST_ACCOUNT_INFO account, " +
+					"         CUSTOMER CUS, " +
+					"         MST_CUSTOMER_CATEGORY MCC " +
+					"   WHERE     bank.bank_id = deposit.bank_id " +
+					"         AND deposit.customer_id = CUSTOMER.CUSTOMER_ID " +
+					"         AND BANK.AREA_ID = BRANCH.AREA_ID " +
+					"         AND branch.branch_id = deposit.branch_id " +
+					"         AND account.account_no = deposit.account_no " +
+					"         AND CUS.CUSTOMER_ID = deposit.customer_id " +
+					"         AND MCC.CATEGORY_ID = CUS.CUSTOMER_CATEGORY " +
+					"         AND Deposit_Type = 1 " +
+					"         AND BRANCH.AREA_ID = '"+area_id+"' " +
+					"         AND ( (valid_to - TRUNC (SYSDATE)) <= 365) " +
+					"ORDER BY expire_in ASC ";
+		
+		//CustomerDTO cusDTO = new CustomerDTO();
+			stmt = conn.prepareStatement(sql);
+		
+			r = stmt.executeQuery();
+			while (r.next()) {
+				deposit = new DepositDTO();
+
+				deposit.setDeposit_id(r.getString("DEPOSIT_ID"));
+				deposit.setCustomer_id(r.getString("CUSTOMER_ID"));
+				deposit.setCustomer_name(r.getString("FULL_NAME"));
+				deposit.setCustomer_category(r.getString("CUSTOMER_CATEGORY"));
+				deposit.setCustomer_category_name(r.getString("CATEGORY_NAME"));
+				deposit.setBank(r.getString("BANK_ID"));
+				deposit.setBranch(r.getString("BRANCH_ID"));
+				deposit.setAccount_no(r.getString("ACCOUNT_NO"));
+				deposit.setBank_name(r.getString("BANK_NAME"));
+				deposit.setBranch_name(r.getString("BRANCH_NAME"));
+				deposit.setAccount_name(r.getString("ACCOUNT_NAME"));
+				deposit.setTotal_deposit(r.getString("TOTAL_DEPOSIT"));
+				deposit.setValid_to(r.getString("VALID_TO"));
+				deposit.setExpire_in(r.getString("EXPIRE_IN"));
+
+				expireList.add(deposit);
+			}			
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				ConnectionManager.closeConnection(conn);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			stmt = null;
+			conn = null;
+		}
+
+		return expireList;
+	}
+	
+	// end 1 year bg expire list report
 
 	public String getNextId(String data) {
 		Connection conn = ConnectionManager.getConnection();

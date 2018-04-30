@@ -102,6 +102,13 @@
 <!--  [End] Reports[Master Data] -->
 
 <!-- [Start] Sales Statement -->
+	
+	<action name="printBGExpireListWithIn365Days"  class="org.jgtdsl.reports.BGReport">
+		<result type="stream">
+				<param name="contentType">application/pdf</param>
+				<param name="inputName">inputStream</param>
+		</result>	
+	</action>
 
 	<action name="monthlySalesStmtReport"  class="org.jgtdsl.reports.MonthlySalesStatement">
 		<result type="stream">

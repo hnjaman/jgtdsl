@@ -206,6 +206,144 @@ public class LedgerService {
 
 		return ledger;
 	}
+	
+//For editing surcharge ~ Prince ~ april 25, 2018
+	
+	public ArrayList<CustomerLedgerDTO> getNMLedgerByMonthYear(String customer_id, int month, int year) {
+		
+		String sql = "";
+		CustomerLedgerDTO entry = null;
+		ArrayList<CustomerLedgerDTO> ledger = new ArrayList<CustomerLedgerDTO>();
+		
+		CustomerService customerService = new CustomerService();
+		CustomerDTO customer = customerService.getCustomerInfo(customer_id);
+		if(customer == null){
+			return ledger;
+		}
+		
+		Connection conn = ConnectionManager.getConnection();
+				
+		if (customer.getConnectionInfo().getIsMetered_name()
+				.equalsIgnoreCase("Metered")) {
+			System.out.println("This function works for non-metered customers only.");
+		}else{
+			sql = "SELECT bnm.CUSTOMER_ID, " +
+					"       bnm.BILL_ID, " +
+					"       MON || ', ' || BILL_YEAR DESCRIPTION, " +
+					"       BILLED_AMOUNT, " +
+					"       ACTUAL_SURCHARGE SURCHARGE_AMOUNT, " +
+					"       COLLECTED_BILLED_AMOUNT, " +
+					"       NVL (COLLECTED_SURCHARGE, 0) COLLECTED_SURCHARGE, " +
+					"       TO_CHAR (DUE_DATE, 'dd-mm-rrrr') DUE_DATE, " +
+					"       getBankBranch (BRANCH_ID) BANK_NAME, " +
+					"       TO_CHAR (bnm.COLLECTION_DATE) COLLECTION_DATE " +
+					"  FROM bill_non_metered bnm, MST_MONTH mm " +
+					" WHERE     BNM.BILL_MONTH = MM.M_ID " +
+					"       AND bnm.CUSTOMER_ID = ? " +
+					"       AND BILL_MONTH = ? " +
+					"       AND BILL_YEAR = ? "  ;
+		}
+			
+		
+
+	
+		PreparedStatement stmt = null;
+		ResultSet r = null;
+
+		try {
+			stmt = conn.prepareStatement(sql);
+		
+				stmt.setString(1, customer_id);
+				stmt.setInt(2, month);
+				stmt.setInt(3, year);
+			
+
+			r = stmt.executeQuery();
+
+			while (r.next()) {
+				entry = new CustomerLedgerDTO();
+				entry.setCustomer_id(r.getString("CUSTOMER_ID"));
+				entry.setEntry_type(r.getString("BILL_ID"));
+				entry.setParticulars(r.getString("DESCRIPTION"));
+				entry.setSales_amount(r.getString("BILLED_AMOUNT"));
+				entry.setSurcharge(r.getString("SURCHARGE_AMOUNT"));
+				entry.setCredit_amount(r.getString("COLLECTED_BILLED_AMOUNT"));
+				entry.setCredit_surcharge(r.getString("COLLECTED_SURCHARGE"));
+				entry.setDue_date(r.getString("DUE_DATE"));
+				entry.setBank_name(r.getString("BANK_NAME"));
+				entry.setIssue_paid_date(r.getString("COLLECTION_DATE"));
+				ledger.add(entry);
+			}
+
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				ConnectionManager.closeConnection(conn);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			stmt = null;
+			conn = null;
+		}
+
+		return ledger;
+	}
+
+	//end of - editing surcharge
+	
+	
+	//For updating surcharge ~ Prince ~ april 28, 2018
+	
+		public String updateNMSurcharge (CustomerLedgerDTO cl) {
+			
+			String sql = "";
+			String msg = "";
+			
+			Connection conn = ConnectionManager.getConnection();
+				sql = "UPDATE bill_non_metered " +
+						"SET ACTUAL_SURCHARGE = ?, " +
+						"    COLLECTED_SURCHARGE = ?, " +
+						"    ACTUAL_PAYABLE_AMOUNT = BILLED_AMOUNT+ NVL(?,0), " +
+						"    COLLECTED_PAYABLE_AMOUNT = COLLECTED_BILLED_AMOUNT + NVL(?,0) " +
+						"WHERE BILL_ID= ? ";
+				
+			PreparedStatement stmt = null;
+			//ResultSet r = null;
+			int affectedRows =0;
+
+			try {
+				stmt = conn.prepareStatement(sql);
+			
+					stmt.setInt(1, Integer.parseInt(cl.getSurcharge()));
+					stmt.setInt(2, Integer.parseInt(cl.getCredit_surcharge()));
+					stmt.setInt(3, Integer.parseInt(cl.getSurcharge()));
+					stmt.setInt(4, Integer.parseInt(cl.getCredit_surcharge()));
+					stmt.setString(5, cl.getEntry_type());
+					
+					affectedRows = stmt.executeUpdate();
+					msg = "Rows affected : " +affectedRows ;
+			} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				try {
+					stmt.close();
+					ConnectionManager.closeConnection(conn);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				stmt = null;
+				conn = null;
+			}
+
+			return  msg;
+		}
+
+		//end of - updating surcharge
+	
+	
 
 	public ArrayList<DepositLedgerDTO> getDepositLedger(String customer_id) {
 		DepositLedgerDTO entry = null;

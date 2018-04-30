@@ -33,6 +33,7 @@
             <ul>
                 <li><a>Customer List (<font color="red" style="font-weight: bold;">Expire List</font>)</a></li>
                 <li><a>Expire Change History (<font color="green" style="font-weight: bold;">For this customer</font>)</a></li>
+                <li><button type="button" class="btn btn-primary" onClick="PrintBGExpireListWithIn365Days();">Print</button></li>
             </ul>
             <div>
                 <div>
