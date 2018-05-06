@@ -595,7 +595,7 @@ public class BillNonMeteredCustomer extends BaseAction implements
 		String sql = "";
 
 		sql = "SELECT * " +
-				"    FROM BURNER_QNT_CHANGE BQC, (select * from appliance_rate_history where  AREA_ID='24' and SLNO in( " +
+				"    FROM BURNER_QNT_CHANGE BQC, (select * from appliance_rate_history where  AREA_ID= ? and SLNO in( " +
 				"select max(SLNO) from appliance_rate_history where AREA_ID=? " +
 				"group by APPLIANCE_ID)) AI " +
 				"   WHERE     BQC.APPLIANCE_TYPE_CODE = AI.APPLIANCE_ID          " +
@@ -612,7 +612,8 @@ public class BillNonMeteredCustomer extends BaseAction implements
 		try {
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, loggedInUser.getArea_id());
-			stmt.setString(2, customer_id);
+			stmt.setString(2, loggedInUser.getArea_id());
+			stmt.setString(3, customer_id);
 			r = stmt.executeQuery();
 			while (r.next()) {
 				appliance = new CustomerApplianceDTO();

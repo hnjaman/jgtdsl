@@ -1,7 +1,7 @@
 <%@ taglib prefix="s" uri="/struts-tags"%>
 <script type="text/javascript">
 	navCache("editSurcharge.action");
-	setTitle("Edit Surcharge");
+	setTitle("Edit Surcharge (Non-meter)");
 </script>
 <link href="/JGTDSL_WEB/resources/css/page/meterReading.css"
 	rel="stylesheet" type="text/css" />
@@ -27,7 +27,7 @@ input[type="radio"],input[type="checkbox"] {
 	<div class="row-fluid">
 		<div class="span9" id="rightSpan">
 			<div class="w-box-header">
-				<h4 id="rightSpan_caption">Edit Surcharge</h4>
+				<h4 id="rightSpan_caption">Edit Surcharge (Non-meter)</h4>
 			</div>
 			<div class="w-box-content" style="padding: 10px;" id="content_div">
 				<div class="row-fluid">
@@ -130,6 +130,8 @@ input[type="radio"],input[type="checkbox"] {
 			</div>
 		</div>
 	</div>
+	
+	<div id="show_msg" style="text-align:center;"></div>
 
 </div>
 
@@ -154,13 +156,10 @@ input[type="radio"],input[type="checkbox"] {
 			alert("Please enter a valid year");
 			return;
 		}
-
-		$("#detailDiv").html("");
-		$("#stat_div").show();
-		$("#loading_div")
-				.html(
-						jsImg.LOADING_MID
-								+ "<br/><br/><font style='color:white;font-weight:bold'>Please wait. Searching the Collection list </font>");
+		
+		$("#show_msg").html("");
+	
+		
 
 		$.ajax({
 			type : "POST",
@@ -267,29 +266,14 @@ input[type="radio"],input[type="checkbox"] {
 		    contentType: false,
 		    processData: false,
 		    success: function (response) {
-		        alert("in success");
-		        var msg = JSON.parse(response);
-		    	//clearing form
-		    	alert(msg);
-		    	/*
-		    	$("#from_month").prop('readonly', false);
-				$("#from_year").prop('readonly', false);
-				$("#to_month").prop('readonly', false);
-				$("#to_year").prop('readonly', false);
-				$("#advanced_amount").prop('disabled', false);
-				$("#surcharge_amount").prop('disabled', false);				
-				$("#bank_id").prop('disabled', false);
-				$("#branch_id").prop('disabled', false);
-				$("#account_id").prop('disabled', false);
-				$("#collection_date").prop('disabled', false);
-				$("#customer_name").prop('disabled', false);
-				$("#address").prop('disabled', false);
-				$("#btn_save_codeless").prop('disabled', false);
-				$("#btn_save_advance").prop('disabled', true);
-		    	//end of: clearing form
-				var fields = ["customer_name","customer_id","address","customerType","advanced_amount","from_month","to_month","from_year","to_year","surcharge_amount"];
+		        
+		        
+		        $("#show_msg").html(response);
+		    	
+		    	
+				var fields = ["entry_type","issue_paid_date","sales_amount","surcharge","credit_surcharge","credit_amount","due_date","bank_name","particulars"];
 		    	clearField.apply(this,fields);
-		    	*/
+
 		    
 		    	//$("#msg_div").html(response.message);		       
 		   }

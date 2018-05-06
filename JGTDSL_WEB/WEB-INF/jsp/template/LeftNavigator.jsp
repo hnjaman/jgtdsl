@@ -179,11 +179,11 @@
 				</a>
 				<a href="javascript:void(0)" onclick="callAction('billCreationHome.action?bill_parameter.isMetered_str=1')" class="list-group-item">
 					<img src="/JGTDSL_WEB/resources/images/icons/sb_bill_process_16.png" />
-					Bill Creation(Metered)
+					Bill Creation(Meter)
 				</a>
 				<a href="javascript:void(0)" onclick="callAction('billCreationHome.action?bill_parameter.isMetered_str=0')" class="list-group-item">
 					<img src="/JGTDSL_WEB/resources/images/icons/sb_calcualte_16.png" />
-					Bill Creation(Non-Metered) <font style="color: gray;"></font>
+					Bill Creation(Non-meter) <font style="color: gray;"></font>
 				</a>
 				<a href="javascript:void(0)" onclick="callAction('billCreationHome.action?bill_parameter.isMetered_str=ministry')" class="list-group-item">
 					<img src="/JGTDSL_WEB/resources/images/icons/sb_calcualte_16.png" />
@@ -199,7 +199,7 @@
 				</a>
 				<a href="javascript:void(0)" onclick="callAction('editSurcharge.action')" class="list-group-item">
 					<img src="/JGTDSL_WEB/resources/images/icons/sb_surcharge_16.png" />
-					Edit Surcharge
+					Edit Surcharge (Non-meter)
 				</a>
 				<a href="javascript:void(0)" onclick="callAction('billAdjustmentOtherHome.action')" class="list-group-item">
 					<img src="/JGTDSL_WEB/resources/images/icons/sb_adjustment_16.png" />

@@ -107,11 +107,6 @@ public class WebSite extends BaseAction{
 				"padding-top: 10px;" +
 				"font-size: 23px;" +
 			"}" +
-			"#flip" +
-			"{"+
-				  "width: 200px;"+
-				  "float: left;"+
-			"}"+
 			
 			
 		"</style>";
@@ -346,6 +341,15 @@ public class WebSite extends BaseAction{
 			 		
 					//"document.getElementById('TotalBill').innerHTML = total + ' /-';"+
 				"}"+
+	
+//	// toggle payment method icon 1
+//	
+////		"$(document).ready(function(){"+
+////		    "$('#tog').click(function(){"+
+////		        "$('im').toggle(1000);"+
+////		    "});"+
+////		"});"+
+		    
 
 				//toggle payment method icon 2
 		
@@ -354,6 +358,12 @@ public class WebSite extends BaseAction{
 				        "$('.peymentMethods').slideToggle('slow');"+
 				    "});"+
 				"});"+
+		
+	// selest img as radio 
+	
+//		"$('.img-ms-form').click(function(){"+
+//			  "$(this).next('div.radio').find('input[type='radio']').prop('checked', true);"+
+//			"});"+
 
 
 			// function validate
@@ -424,7 +434,7 @@ responseHtml+="<div id='div__3' style=''><table width='1000px'  id='rounded-corn
 												"<td align=center colspan=2 style='color:blue;font-weight:bold;'>"+bill_amount+"</td>"+
 												"<td align=center colspan=1 style='color:blue;font-weight:bold;'>"+dueInfo.get(i).getDueSurcharge()+"</td>"+
 												//"<td align=center colspan=2 style='color:blue;font-weight:bold;'><input type='checkbox' name='Bill' value='"+bill_amount+"' onClick='test(this);'/></td>"+
-												"<td align=center colspan=2 style='color:blue;font-weight:bold;'><input type='checkbox' name='selectedBills' value='"+dueInfo.get(i).getBillId()+"' /></td>"+	//onClick='test(this);'
+												"<td align=center colspan=2 style='color:blue;font-weight:bold;'><input type='checkbox' name='selectedBills' value='"+dueInfo.get(i).getBillId()+"' onClick='test(this);'/></td>"+
 												"</tr>";
 										totalDueAmount=totalDueAmount+dueInfo.get(i).getDueAmount()+dueInfo.get(i).getDueSurcharge();				
 									}
@@ -444,19 +454,17 @@ responseHtml+="<div id='div__3' style=''><table width='1000px'  id='rounded-corn
 									 * */
 						
 								responseHtml+="<div id='flip'>"+
-										"<table width='200px' border='0' id='rounded-corner'>"+
+										"<table width='1000px' border='0' id='rounded-corner'>"+
 											"<tbody>"+
 												"<tr>"+
-												
-												   "<td align=center >Select Payment Method</td>"+
+												   "<td align=center colspan=7>Select Payment Method</td>"+
 												"</tr>"+			
 											"</tbody>"+
 										"</table>"+
 									"</div>";
-								
 						
 								responseHtml+="<div class='peymentMethods'>"+
-												"<table width='500px' border='0' id='rounded-corner'>"+
+												"<table width='1000px' border='0' id='rounded-corner'>"+
 													"<tbody>"+
 														"<tr>"+
 														   "<td align=center colspan=1></td>"+
@@ -468,7 +476,7 @@ responseHtml+="<div id='div__3' style=''><table width='1000px'  id='rounded-corn
 														   "<td align=center colspan=1></td>"+
 														 "</tr>"+
 														 "<tr>"+
-															"<td align=center colspan=7><input style='font-size: 25px;' type='submit' onsubmit='return validate()' value='Confirm Payment'></td>"+		//onClick='validate();' //onsubmit='return validate()'
+															"<td align=center colspan=7><input style='font-size: 25px;' type='submit' value='Confirm Payment'></td>"+		//onClick='validate();' //onsubmit='return validate()'
 														"</tr>"+
 													"</tbody>"+
 												"</table>"+
